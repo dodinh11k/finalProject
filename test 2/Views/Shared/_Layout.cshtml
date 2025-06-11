@@ -1,0 +1,47 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName");
+
+    // Để các partial view có thể sử dụng
+    ViewData["username"] = username;
+    ViewData["fullname"] = fullname;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Trang đặt lịch bảo dưỡng ô tô" />
+    <meta name="keywords" content="Bảo dưỡng ô tô, đặt lịch, garage, dịch vụ ô tô" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Đặt lịch bảo dưỡng ô tô</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet" />
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="~/layout1/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/nice-select.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/jquery-ui.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/style.css" asp-append-version="true" />
+</head>
+<body>
+    <div id="preloder"><div class="loader"></div></div>
+
+    @await Html.PartialAsync("_MobileMenu", new { username, fullname })
+    @* @await Html.PartialAsync("_Topbar", new { username, fullname }) *@
+    @await Html.PartialAsync("_Header")
+
+    <main class="container my-4">
+        @RenderBody()
+    </main>
+
+    @await Html.PartialAsync("_Footer")
+    @await Html.PartialAsync("_Scripts")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

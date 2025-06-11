@@ -1,0 +1,220 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName");
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Trang đặt lịch bảo dưỡng ô tô" />
+    <meta name="keywords" content="Bảo dưỡng ô tô, đặt lịch, garage, dịch vụ ô tô" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Đặt lịch bảo dưỡng ô tô</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet" />
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="~/layout1/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/nice-select.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/jquery-ui.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/style.css" asp-append-version="true" />
+</head>
+
+<body>
+    <!-- Page Preloader -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="@Url.Action("Index", "Home")"><img src="~/layout1/img/logo2.png" alt="MyGarage Logo" /></a>
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Home")">Trang chủ</a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Services" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Services")">Dịch vụ</a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Appointments" ? "active" : "")">
+                    <a href="@Url.Action("Create", "Appointments")">Đặt lịch</a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Garages" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Garages")">Garage</a>
+                </li>
+
+                @if (string.IsNullOrEmpty(username))
+                {
+                    <li><a href="@Url.Action("Login", "AccountLogin")">Đăng nhập</a></li>
+                    <li><a href="@Url.Action("Register", "AccountRegister")">Đăng kí</a></li>
+                }
+                else
+                {
+                    <li>
+                        <a href="#">Xin chào, @fullname</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Logout", "AccountLogin")">Đăng xuất</a>
+                    </li>
+                }
+                <li><a href="@Url.Action("Contact", "Home")">Liên hệ</a></li>
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+    </div>
+    <!-- Humberger End -->
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> support@mygarage.com</li>
+                                <li><i class="fa fa-phone"></i> 1900 1234</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            </div>
+                            <div class="header__top__right__auth">
+                                @if (string.IsNullOrEmpty(username))
+                                {
+                                    <a href="@Url.Action("Login", "AccountLogin")"><i class="fa fa-user"></i> Đăng nhập</a>
+                                    <a href="@Url.Action("Register", "AccountRegister")"><i class="fa fa-user"></i> Đăng kí</a>
+                                }
+                                else
+                                {
+                                    <span><i class="fa fa-user"></i> Xin chào, @fullname</span>
+                                    <a href="@Url.Action("Logout", "AccountLogin")" style="margin-left:10px;">Đăng xuất</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="@Url.Action("Index", "Home")"><img src="~/layout1/img/logo2.png" alt="MyGarage Logo" /></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Home")">Trang chủ</a>
+                            </li>
+                            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Services" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Services")">Dịch vụ</a>
+                            </li>
+                            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Appointments" ? "active" : "")">
+                                <a href="@Url.Action("Create", "Appointments")">Đặt lịch</a>
+                            </li>
+                            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Garages" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Garages")">Garage</a>
+                            </li>
+                            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Contact" ? "active" : "")">
+                                <a href="@Url.Action("Contact", "Home")">Liên hệ</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <!-- Nếu có giỏ hàng, có thể chỉnh sửa hoặc bỏ phần này -->
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <main class="container my-4">
+        @RenderBody()
+    </main>
+
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="@Url.Action("Index", "Home")"><img src="~/layout1/img/logo2.png" alt="MyGarage Logo" /></a>
+                        </div>
+                        <p>Dịch vụ bảo dưỡng ô tô chuyên nghiệp, uy tín và nhanh chóng.</p>
+                        <div class="footer__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Liên hệ</h6>
+                        <ul>
+                            <li><i class="fa fa-map-marker"></i> 123 Đường Lớn, Quận 1, TP. HCM</li>
+                            <li><i class="fa fa-phone"></i> 1900 1234</li>
+                            <li><i class="fa fa-envelope"></i> support@mygarage.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Giờ làm việc</h6>
+                        <ul>
+                            <li>Thứ 2 - Thứ 6: 8:00 - 18:00</li>
+                            <li>Thứ 7: 8:00 - 14:00</li>
+                            <li>Chủ Nhật: Nghỉ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col text-center text-muted">
+                    © 2025 MyGarage. Bản quyền thuộc về MyGarage.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Js Plugins -->
+    <script src="~/layout1/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery-ui.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery.slicknav.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/main.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

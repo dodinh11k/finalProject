@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // hoặc đường dẫn layout bạn đang dùng
+}
+
+<style>
+    .banner {
+        width: 100%;
+        height: 350px;
+        background-image: url('/images/4.png');
+        background-size: cover;
+        background-position: center;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .intro {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+        .intro h2 {
+            font-size: 32px;
+            color: #2c3e50;
+        }
+
+        .intro p {
+            font-size: 18px;
+            color: #555;
+            max-width: 800px;
+            margin: auto;
+        }
+
+    .gallery {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+        .gallery img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+            .gallery img:hover {
+                transform: scale(1.05);
+            }
+</style>
+
+<div class="banner"></div>
+
+<div class="intro">
+    <h2>Chào mừng đến với MyGarage</h2>
+    <p>
+        Chúng tôi chuyên cung cấp dịch vụ bảo trì, sửa chữa và chăm sóc xe chuyên nghiệp.
+        Đội ngũ kỹ thuật viên giàu kinh nghiệm cùng trang thiết bị hiện đại giúp đảm bảo chất lượng dịch vụ tốt nhất cho bạn.
+    </p>
+</div>
+
+<div class="gallery">
+    <img src="/images/1.png" alt="Dịch vụ 1">
+    <img src="/images/2.png" alt="Dịch vụ 2">
+    <img src="/images/3.png" alt="Dịch vụ 3">
+</div>
