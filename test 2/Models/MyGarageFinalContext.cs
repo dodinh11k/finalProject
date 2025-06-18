@@ -39,13 +39,13 @@ public partial class MyGarageFinalContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-QUAIVAT;Initial Catalog=MyGarageFinal;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-QUAIVAT;Initial Catalog=MyGarageFinal;Integrated Security=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AdminActivity>(entity =>
         {
-            entity.HasKey(e => e.ActivityId).HasName("PK__AdminAct__45F4A7F1428348E4");
+            entity.HasKey(e => e.ActivityId).HasName("PK__AdminAct__45F4A7F19EE4BC17");
 
             entity.Property(e => e.ActivityId).HasColumnName("ActivityID");
             entity.Property(e => e.ActionType).HasMaxLength(100);
@@ -57,12 +57,12 @@ public partial class MyGarageFinalContext : DbContext
 
             entity.HasOne(d => d.Admin).WithMany(p => p.AdminActivities)
                 .HasForeignKey(d => d.AdminId)
-                .HasConstraintName("FK__AdminActi__Admin__4BAC3F29");
+                .HasConstraintName("FK__AdminActi__Admin__40058253");
         });
 
         modelBuilder.Entity<Appointment>(entity =>
         {
-            entity.HasKey(e => e.AppointmentId).HasName("PK__Appointm__8ECDFCA2221F534A");
+            entity.HasKey(e => e.AppointmentId).HasName("PK__Appointm__8ECDFCA283DDC55B");
 
             entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
             entity.Property(e => e.AppointmentTime).HasColumnType("datetime");
@@ -79,39 +79,58 @@ public partial class MyGarageFinalContext : DbContext
 
             entity.HasOne(d => d.Garage).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.GarageId)
-                .HasConstraintName("FK__Appointme__Garag__32E0915F");
+                .HasConstraintName("FK__Appointme__Garag__2739D489");
 
             entity.HasOne(d => d.Service).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.ServiceId)
-                .HasConstraintName("FK__Appointme__Servi__33D4B598");
+                .HasConstraintName("FK__Appointme__Servi__282DF8C2");
 
             entity.HasOne(d => d.Technician).WithMany(p => p.AppointmentTechnicians)
                 .HasForeignKey(d => d.TechnicianId)
-                .HasConstraintName("FK__Appointme__Techn__34C8D9D1");
+                .HasConstraintName("FK__Appointme__Techn__29221CFB");
 
             entity.HasOne(d => d.User).WithMany(p => p.AppointmentUsers)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Appointme__UserI__30F848ED");
+                .HasConstraintName("FK__Appointme__UserI__25518C17");
 
             entity.HasOne(d => d.Vehicle).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.VehicleId)
-                .HasConstraintName("FK__Appointme__Vehic__31EC6D26");
+                .HasConstraintName("FK__Appointme__Vehic__2645B050");
         });
 
         modelBuilder.Entity<Garage>(entity =>
         {
-            entity.HasKey(e => e.GarageId).HasName("PK__Garages__5D8BEEB1FF3115B3");
+            entity.HasKey(e => e.GarageId).HasName("PK__Garages__5D8BEEB1A56F6E90");
 
             entity.Property(e => e.GarageId).HasColumnName("GarageID");
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.OperatingArea).HasMaxLength(100);
+
+            entity.HasMany(d => d.Services).WithMany(p => p.Garages)
+                .UsingEntity<Dictionary<string, object>>(
+                    "GarageService",
+                    r => r.HasOne<Service>().WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__GarageSer__Servi__22751F6C"),
+                    l => l.HasOne<Garage>().WithMany()
+                        .HasForeignKey("GarageId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__GarageSer__Garag__2180FB33"),
+                    j =>
+                    {
+                        j.HasKey("GarageId", "ServiceId").HasName("PK__GarageSe__E1DA55BFB5B9DAD0");
+                        j.ToTable("GarageServices");
+                        j.IndexerProperty<int>("GarageId").HasColumnName("GarageID");
+                        j.IndexerProperty<int>("ServiceId").HasColumnName("ServiceID");
+                    });
         });
 
         modelBuilder.Entity<GarageSchedule>(entity =>
         {
-            entity.HasKey(e => e.ScheduleId).HasName("PK__GarageSc__9C8A5B690D2A35B7");
+            entity.HasKey(e => e.ScheduleId).HasName("PK__GarageSc__9C8A5B69238885F7");
 
             entity.Property(e => e.ScheduleId).HasColumnName("ScheduleID");
             entity.Property(e => e.DayOfWeek).HasMaxLength(20);
@@ -119,12 +138,12 @@ public partial class MyGarageFinalContext : DbContext
 
             entity.HasOne(d => d.Garage).WithMany(p => p.GarageSchedules)
                 .HasForeignKey(d => d.GarageId)
-                .HasConstraintName("FK__GarageSch__Garag__4F7CD00D");
+                .HasConstraintName("FK__GarageSch__Garag__43D61337");
         });
 
         modelBuilder.Entity<Notification>(entity =>
         {
-            entity.HasKey(e => e.NotificationId).HasName("PK__Notifica__20CF2E32DE412EF6");
+            entity.HasKey(e => e.NotificationId).HasName("PK__Notifica__20CF2E32BE08AC25");
 
             entity.Property(e => e.NotificationId).HasColumnName("NotificationID");
             entity.Property(e => e.CreatedAt)
@@ -137,12 +156,12 @@ public partial class MyGarageFinalContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Notifications)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Notificat__UserI__4222D4EF");
+                .HasConstraintName("FK__Notificat__UserI__367C1819");
         });
 
         modelBuilder.Entity<RepairStatus>(entity =>
         {
-            entity.HasKey(e => e.StatusId).HasName("PK__RepairSt__C8EE2043CE0D7330");
+            entity.HasKey(e => e.StatusId).HasName("PK__RepairSt__C8EE2043DD98F1C8");
 
             entity.ToTable("RepairStatus");
 
@@ -156,12 +175,12 @@ public partial class MyGarageFinalContext : DbContext
 
             entity.HasOne(d => d.Appointment).WithMany(p => p.RepairStatuses)
                 .HasForeignKey(d => d.AppointmentId)
-                .HasConstraintName("FK__RepairSta__Appoi__38996AB5");
+                .HasConstraintName("FK__RepairSta__Appoi__2CF2ADDF");
         });
 
         modelBuilder.Entity<Review>(entity =>
         {
-            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79AE3419A5AC");
+            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79AE402CA0EE");
 
             entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
             entity.Property(e => e.Comment).HasMaxLength(500);
@@ -173,31 +192,30 @@ public partial class MyGarageFinalContext : DbContext
 
             entity.HasOne(d => d.Garage).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.GarageId)
-                .HasConstraintName("FK__Reviews__GarageI__3D5E1FD2");
+                .HasConstraintName("FK__Reviews__GarageI__31B762FC");
 
             entity.HasOne(d => d.User).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Reviews__UserID__3C69FB99");
+                .HasConstraintName("FK__Reviews__UserID__30C33EC3");
         });
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Services__C51BB0EA81D78BEA");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Services__C51BB0EA80262B77");
 
             entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
             entity.Property(e => e.Description).HasMaxLength(255);
-            entity.Property(e => e.GarageId).HasColumnName("GarageID");
+            entity.Property(e => e.image_url)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("image_url");
             entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.ServiceName).HasMaxLength(100);
-
-            entity.HasOne(d => d.Garage).WithMany(p => p.Services)
-                .HasForeignKey(d => d.GarageId)
-                .HasConstraintName("FK__Services__Garage__2E1BDC42");
         });
 
         modelBuilder.Entity<TechnicalReport>(entity =>
         {
-            entity.HasKey(e => e.ReportId).HasName("PK__Technica__D5BD48E5EA433717");
+            entity.HasKey(e => e.ReportId).HasName("PK__Technica__D5BD48E5EA31FB0C");
 
             entity.Property(e => e.ReportId).HasColumnName("ReportID");
             entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
@@ -211,18 +229,18 @@ public partial class MyGarageFinalContext : DbContext
 
             entity.HasOne(d => d.Appointment).WithMany(p => p.TechnicalReports)
                 .HasForeignKey(d => d.AppointmentId)
-                .HasConstraintName("FK__Technical__Appoi__46E78A0C");
+                .HasConstraintName("FK__Technical__Appoi__3B40CD36");
 
             entity.HasOne(d => d.Technician).WithMany(p => p.TechnicalReports)
                 .HasForeignKey(d => d.TechnicianId)
-                .HasConstraintName("FK__Technical__Techn__47DBAE45");
+                .HasConstraintName("FK__Technical__Techn__3C34F16F");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC4A2D9ED3");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC3F76243E");
 
-            entity.HasIndex(e => e.Username, "UQ__Users__536C85E4B2020C26").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__Users__536C85E423976E92").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Address).HasMaxLength(255);
@@ -240,7 +258,7 @@ public partial class MyGarageFinalContext : DbContext
 
         modelBuilder.Entity<Vehicle>(entity =>
         {
-            entity.HasKey(e => e.VehicleId).HasName("PK__Vehicles__476B54B285DEB84B");
+            entity.HasKey(e => e.VehicleId).HasName("PK__Vehicles__476B54B2780F93D7");
 
             entity.Property(e => e.VehicleId).HasColumnName("VehicleID");
             entity.Property(e => e.LicensePlate).HasMaxLength(20);
@@ -251,7 +269,7 @@ public partial class MyGarageFinalContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Vehicles)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Vehicles__UserID__29572725");
+                .HasConstraintName("FK__Vehicles__UserID__1AD3FDA4");
         });
 
         OnModelCreatingPartial(modelBuilder);

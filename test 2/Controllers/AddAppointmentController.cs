@@ -1,89 +1,136 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using test_2.Models;
 
-namespace test_2.Controllers
+public class AddAppointmentController : Controller
 {
-    public class AddAppointmentController : Controller
+    private readonly MyGarageFinalContext _context;
+
+    public AddAppointmentController(MyGarageFinalContext context)
     {
-        private readonly MyGarageFinalContext _context;
+        _context = context;
+    }
 
-        public AddAppointmentController(MyGarageFinalContext context)
+    // GET: AddAppointment/Create
+    public async Task<IActionResult> Create()
+    {
+        var model = new AppointmentViewModel();
+        await LoadDropdowns(model);
+        return View("~/Views/Appointment/Create.cshtml", model);
+    }
+
+    // POST: AddAppointment/Create
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(AppointmentViewModel model)
+    {
+        if (!ModelState.IsValid || string.IsNullOrWhiteSpace(model.Phone))
         {
-            _context = context;
+            ModelState.AddModelError("Phone", "Số điện thoại là bắt buộc.");
+            await LoadDropdowns(model);
+            return View("~/Views/Appointment/Create.cshtml", model);
         }
 
-        // GET: AddAppointment/Create
-        public IActionResult Create()
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Phone == model.Phone);
+        if (user == null)
         {
-            LoadDropdownData();
-            return View("~/Views/Appointment/Create.cshtml");
+            user = new User
+            {
+                FullName = model.CustomerName,
+                Phone = model.Phone,
+                Username = model.Phone,
+                PasswordHash = "",
+                Role = "User",
+                CreatedAt = DateTime.UtcNow,
+                IsActive = true
+            };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
         }
 
-        // POST: AddAppointment/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AppointmentViewModel model)
+        var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.UserId == user.UserId);
+        if (vehicle == null)
         {
-            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(model.Phone))
-            {
-                ModelState.AddModelError("Phone", "Số điện thoại là bắt buộc.");
-                LoadDropdownData();
-                return View("~/Views/Appointment/Create.cshtml", model);
-            }
-
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Phone == model.Phone);
-            if (user == null)
-            {
-                user = new User
-                {
-                    FullName = model.CustomerName,
-                    Phone = model.Phone,
-                    Address = "", // Địa chỉ bỏ qua
-                    CreatedAt = DateTime.UtcNow,
-                    IsActive = true
-                };
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-            }
-
-            var technician = await _context.Users
-                .Where(u => u.Role == "Technician")
-                .OrderBy(u => _context.Appointments.Count(a => a.TechnicianId == u.UserId && a.Status == "Pending"))
-                .FirstOrDefaultAsync();
-
-            if (technician == null)
-            {
-                ModelState.AddModelError("", "Không có kỹ thuật viên khả dụng.");
-                LoadDropdownData();
-                return View("~/Views/Appointment/Create.cshtml", model);
-            }
-
-            var appointment = new Appointment
+            vehicle = new Vehicle
             {
                 UserId = user.UserId,
-                ServiceId = model.ServiceId,
-                GarageId = model.GarageId,
-                TechnicianId = technician.UserId,
-                AppointmentTime = model.AppointmentTime,
-                Notes = model.Notes,
-                Status = "Pending",
-                CreatedAt = DateTime.UtcNow
+                Make = "Chưa xác định",
+                Model = "Chưa xác định",
+                LicensePlate = "Chưa rõ",
+                Year = DateTime.Now.Year,
+                Notes = "Xe mặc định tạo khi đặt lịch"
             };
-
-            _context.Appointments.Add(appointment);
+            _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();
-
-            return RedirectToAction("Details", "Appointment", new { id = appointment.AppointmentId });
         }
 
-        private void LoadDropdownData()
+        var technician = await _context.Users
+            .Where(u => u.Role == "Technician")
+            .OrderBy(u => _context.Appointments.Count(a => a.TechnicianId == u.UserId && a.Status == "Pending"))
+            .FirstOrDefaultAsync();
+
+        if (technician == null)
         {
-            ViewBag.Services = _context.Services.ToList();
-            ViewBag.Garages = _context.Garages.ToList();
+            ModelState.AddModelError("", "Không có kỹ thuật viên khả dụng.");
+            await LoadDropdowns(model);
+            return View("~/Views/Appointment/Create.cshtml", model);
         }
+
+        var appointment = new Appointment
+        {
+            UserId = user.UserId,
+            VehicleId = vehicle.VehicleId,
+            ServiceId = model.ServiceId,
+            GarageId = model.GarageId,
+            TechnicianId = technician.UserId,
+            AppointmentTime = model.AppointmentTime,
+            Notes = model.Notes,
+            Status = "Pending",
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Appointments.Add(appointment);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Details", "AddAppointment", new { id = appointment.AppointmentId });
+    }
+
+    private async Task LoadDropdowns(AppointmentViewModel model)
+    {
+        model.ServiceList = await _context.Services
+            .Select(s => new SelectListItem
+            {
+                Value = s.ServiceId.ToString(),
+                Text = s.ServiceName
+            }).ToListAsync();
+
+        model.GarageList = await _context.Garages
+            .Select(g => new SelectListItem
+            {
+                Value = g.GarageId.ToString(),
+                Text = g.Address // hoặc g.Address nếu bạn muốn hiển thị địa chỉ
+            }).ToListAsync();
+    }
+
+    // GET: AddAppointment/Details/{id}
+    public async Task<IActionResult> Details(int id)
+    {
+        var appointment = await _context.Appointments
+            .Include(a => a.User)
+            .Include(a => a.Vehicle)
+            .Include(a => a.Service)
+            .Include(a => a.Garage)
+            .FirstOrDefaultAsync(a => a.AppointmentId == id);
+
+        if (appointment == null)
+        {
+            return NotFound();
+        }
+
+        return View("~/Views/Appointment/Details.cshtml", appointment);
     }
 }

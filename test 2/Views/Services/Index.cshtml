@@ -1,7 +1,10 @@
-﻿@model IEnumerable<test_2.Models.Service>
+﻿@model IEnumerable<test_2.Models.ServiceViewModel>
+
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Danh sách dịch vụ";
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
 }
 
 <style>
@@ -43,19 +46,27 @@
         color: #2c3e50;
     }
 
-    .service-card-garage {
-        font-size: 16px;
-        color: #7f8c8d;
-    }
-
     .no-services {
         padding: 20px;
         font-size: 18px;
         color: #888;
     }
+
+    .add-service-btn {
+        margin: 20px;
+    }
 </style>
 
 <h2 style="margin-left: 20px;">Danh sách dịch vụ</h2>
+
+@if (role == "Admin")
+{
+    <div class="add-service-btn">
+        <a class="btn btn-success" asp-action="Create" asp-controller="AddServices">
+            ➕ Thêm dịch vụ
+        </a>
+    </div>
+}
 
 @if (Model == null || !Model.Any())
 {
@@ -63,29 +74,18 @@
 }
 else
 {
-    @* <!-- Đoạn debug hiển thị ImageUrl từng service --> *@
-    @* <div style="margin: 20px;"> *@
-    @*     <h3>Debug ImageUrl của các dịch vụ:</h3> *@
-    @*     @foreach (var s in Model) *@
-    @*     { *@
-    @*         <p>@s.ServiceName - ImageUrl: '@(s.image_url ?? "NULL")'</p> *@
-    @*     } *@
-    @* </div> *@
-
     <div class="services-container">
         @foreach (var service in Model)
         {
             <div class="service-card">
-
                 <img src="@(
-                    !string.IsNullOrEmpty(service.image_url)
-                    ? Url.Content("~/" + service.image_url.TrimStart('/'))
-                    : Url.Content("~/images/default-image.png")
+                    !string.IsNullOrWhiteSpace(service.image_url)
+                    ? Url.Content("~/" + service.image_url.Trim())
+                    : Url.Content("~/images/RuaXe.png")
                 )" alt="@service.ServiceName" />
 
                 <div class="service-card-body">
                     <div class="service-card-title">@service.ServiceName</div>
-                    <div class="service-card-garage">Garage: @service.Garage?.Name</div>
                     <div style="margin-top: 10px; font-size: 14px; color: #bbb;">Mã dịch vụ: @service.ServiceId</div>
                 </div>
             </div>

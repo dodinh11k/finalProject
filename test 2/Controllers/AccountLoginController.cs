@@ -15,20 +15,22 @@ namespace test_2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl = null)
         {
-            // Nếu đã đăng nhập (đã có session) thì chuyển về Home
+            // Nếu đã đăng nhập (đã có session) thì chuyển về trang chính
             if (HttpContext.Session.GetString("Username") != null)
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            ViewBag.ReturnUrl = returnUrl;
             return View("~/Views/Account/Login.cshtml");
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(string username, string password, string? returnUrl = null)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 ViewBag.Error = "Vui lòng nhập đủ thông tin.";
                 return View("~/Views/Account/Login.cshtml");
@@ -36,7 +38,7 @@ namespace test_2.Controllers
 
             var user = _context.Users.FirstOrDefault(u =>
                 u.Username == username &&
-                u.PasswordHash == password &&
+                u.PasswordHash == password && // Chưa mã hóa, nên bạn có thể thêm mã hóa sau nếu muốn
                 u.IsActive == true);
 
             if (user == null)
@@ -45,10 +47,16 @@ namespace test_2.Controllers
                 return View("~/Views/Account/Login.cshtml");
             }
 
-            // Lưu thông tin user vào Session
+            // Lưu thông tin người dùng vào Session
             HttpContext.Session.SetString("Username", user.Username);
             HttpContext.Session.SetString("FullName", user.FullName ?? "");
             HttpContext.Session.SetString("Role", user.Role ?? "Customer");
+
+            // Quay lại trang trước đó (nếu có)
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -56,8 +64,7 @@ namespace test_2.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            // Xóa toàn bộ session khi logout
-            HttpContext.Session.Clear();
+            HttpContext.Session.Clear(); // Xoá toàn bộ session
             return RedirectToAction("Login", "AccountLogin");
         }
     }
