@@ -1,0 +1,90 @@
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+@{
+    var username = ViewData["username"] as string ?? "";
+    var fullname = ViewData["fullname"] as string ?? "";
+}
+
+<div class="container-fluid d-flex justify-content-end align-items-center px-4" style="height: 40px;">
+    <div class="d-flex align-items-center gap-3">
+
+        @if (string.IsNullOrEmpty(username))
+        {
+            <!-- Dropdown khi chưa đăng nhập -->
+            <div class="dropdown">
+                <a class="btn btn-outline-light btn-sm dropdown-toggle" href="#" role="button" id="guestDropdown"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Tài khoản
+                </a>
+                <ul class="dropdown-menu custom-dropdown" aria-labelledby="guestDropdown">
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("Login", "AccountLogin")">
+                            <i class="fa fa-sign-in"></i> Đăng nhập
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("Register", "AccountRegister")">
+                            <i class="fa fa-user-plus"></i> Đăng ký
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <!-- Dropdown khi đã đăng nhập -->
+            <div class="dropdown">
+                <a class="btn btn-outline-light btn-sm dropdown-toggle" href="#" role="button" id="userDropdown"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Xin chào, @fullname
+                </a>
+                <ul class="dropdown-menu custom-dropdown" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="/Account/Profile">Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" href="/Account/Favorites">Sản phẩm ưu thích</a></li>
+                    <li><a class="dropdown-item" href="/Account/Cart">Giỏ Hàng</a></li>
+                    <li><a class="dropdown-item" href="/Account/Logout">Đăng xuất</a></li>
+                </ul>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 text-center">
+            <h2 class="fw-bold mb-3" style="font-size:2.2rem;">Chào mừng đến trang quản trị <span style="color:#007bff">Admin</span></h2>
+            <p class="text-muted">Quản lý hệ thống dịch vụ, người dùng và đơn đặt lịch một cách dễ dàng!</p>
+        </div>
+    </div>
+    <div class="row justify-content-center g-4">
+        <div class="col-12 col-md-4">
+            <div class="card shadow h-100 text-center p-4 border-0">
+                <div class="mb-3" style="font-size:2.5rem; color:#007bff;"><i class="fa fa-users"></i></div>
+                <h5 class="fw-bold mb-2">Quản lý User/Staff/Tech</h5>
+                <p class="text-muted mb-3">Xem, thêm, sửa, xóa tài khoản người dùng, nhân viên, kỹ thuật viên.</p>
+                <a href="@Url.Action("Users")" class="btn btn-primary w-100">Quản lý User</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card shadow h-100 text-center p-4 border-0">
+                <div class="mb-3" style="font-size:2.5rem; color:#28a745;"><i class="fa fa-cogs"></i></div>
+                <h5 class="fw-bold mb-2">Quản lý Dịch vụ</h5>
+                <p class="text-muted mb-3">Thêm mới, chỉnh sửa, xóa các dịch vụ bảo dưỡng, sửa chữa.</p>
+                <a href="@Url.Action("Services")" class="btn btn-success w-100">Quản lý Dịch vụ</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card shadow h-100 text-center p-4 border-0">
+                <div class="mb-3" style="font-size:2.5rem; color:#ffc107;"><i class="fa fa-calendar-check-o"></i></div>
+                <h5 class="fw-bold mb-2">Quản lý Đơn đặt lịch</h5>
+                <p class="text-muted mb-3">Kiểm tra, xác nhận, quản lý các đơn đặt lịch dịch vụ.</p>
+                <a href="@Url.Action("Orders")" class="btn btn-warning w-100 text-white">Quản lý Đơn đặt lịch</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome CDN nếu chưa có -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> 
