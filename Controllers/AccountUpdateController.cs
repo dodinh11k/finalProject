@@ -57,7 +57,50 @@ namespace test_2.Controllers
             }
 
             TempData["success"] = "Cập nhật thông tin thành công!";
-            return RedirectToAction("Profile");
+            return RedirectToAction("Profile"); // Action name = Profile
+        }
+        [HttpGet("ChangePassword")]
+        public IActionResult ChangePassword()
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+                return RedirectToAction("Login", "AccountLogin");
+
+            return View("~/Views/Account/ChangePassword.cshtml");
+        }
+
+        // [POST] /Account/ChangePassword
+        [HttpPost("ChangePassword")]
+        public IActionResult ChangePassword(string currentPassword, string newPassword, string confirmPassword)
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+                return RedirectToAction("Login", "AccountLogin");
+
+            if (string.IsNullOrWhiteSpace(currentPassword) || string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(confirmPassword))
+            {
+                TempData["error"] = "Vui lòng nhập đầy đủ thông tin.";
+                return RedirectToAction("ChangePassword");
+            }
+
+            if (newPassword != confirmPassword)
+            {
+                TempData["error"] = "Mật khẩu mới không khớp.";
+                return RedirectToAction("ChangePassword");
+            }
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == username && u.PasswordHash == currentPassword);
+            if (user == null)
+            {
+                TempData["error"] = "Mật khẩu hiện tại không đúng.";
+                return RedirectToAction("ChangePassword");
+            }
+
+            user.PasswordHash = newPassword;
+            _context.SaveChanges();
+
+            TempData["success"] = "Đổi mật khẩu thành công.";
+            return RedirectToAction("ChangePassword");
         }
     }
 }

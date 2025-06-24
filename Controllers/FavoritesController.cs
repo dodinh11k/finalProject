@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using test_2.Models;
+using System;
 
 namespace test_2.Controllers
 {
@@ -16,6 +17,7 @@ namespace test_2.Controllers
             _context = context;
         }
 
+        // GET: /Account/Favorites
         [HttpGet("Favorites")]
         public IActionResult Favorites()
         {
@@ -35,6 +37,42 @@ namespace test_2.Controllers
             return View("~/Views/Account/Favorites.cshtml", favorites);
         }
 
+        // POST: /Account/AddFavorite
+        [HttpPost("AddFavorite")]
+        public IActionResult AddFavorite(int productId)
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+                return RedirectToAction("Login", "AccountLogin");
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            if (user == null)
+                return RedirectToAction("Login", "AccountLogin");
+
+            bool exists = _context.FavoriteProducts.Any(f => f.UserId == user.UserId && f.ProductId == productId);
+
+            if (!exists)
+            {
+                var fav = new FavoriteProduct
+                {
+                    UserId = user.UserId,
+                    ProductId = productId,
+                    CreatedAt = DateTime.Now
+                };
+
+                _context.FavoriteProducts.Add(fav);
+                _context.SaveChanges();
+                TempData["success"] = "Đã thêm vào yêu thích.";
+            }
+            else
+            {
+                TempData["info"] = "Sản phẩm đã có trong danh sách yêu thích.";
+            }
+
+            return RedirectToAction("Index", "Products");
+        }
+
+        // POST: /Account/RemoveFavorite
         [HttpPost("RemoveFavorite")]
         public IActionResult RemoveFavorite(int productId)
         {
@@ -53,6 +91,7 @@ namespace test_2.Controllers
             {
                 _context.FavoriteProducts.Remove(favorite);
                 _context.SaveChanges();
+                TempData["success"] = "Đã xóa khỏi danh sách yêu thích.";
             }
 
             return RedirectToAction("Favorites");

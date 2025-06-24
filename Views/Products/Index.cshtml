@@ -1,4 +1,18 @@
 ﻿@model IEnumerable<test_2.Models.Product>
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["info"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData["info"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
 <h2 class="mb-4">Danh sách sản phẩm</h2>
 
@@ -36,7 +50,7 @@
                         </form>
 
                         <!-- Nút Thêm vào yêu thích -->
-                        <form asp-controller="Favorites" asp-action="Add" method="post" class="d-inline">
+                        <form asp-controller="Favorites" asp-action="AddFavorite" method="post" class="d-inline">
                             <input type="hidden" name="productId" value="@product.ProductId" />
                             <button type="submit" class="btn btn-outline-danger btn-sm w-100">
                                 <i class="fa fa-heart"></i> Yêu thích
