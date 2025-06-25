@@ -1,0 +1,58 @@
+@model test_2.Models.Order
+@{
+    ViewData["Title"] = "Giỏ hàng";
+}
+<h2 class="text-center my-4">Giỏ hàng của bạn</h2>
+<div class="mb-4 text-center">
+    <a href="@Url.Action("Index", "Products")" class="btn btn-secondary">Quay về sản phẩm</a>
+</div>
+@if (Model == null || Model.OrderItems == null || !Model.OrderItems.Any())
+{
+    <div class="alert alert-info text-center">Giỏ hàng của bạn đang trống.</div>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Product?.ImageUrl))
+                    {
+                        <img src="@Url.Content("~/" + item.Product.ImageUrl)" alt="Ảnh" style="height:50px;object-fit:cover;" />
+                    }
+                </td>
+                <td>@item.Product?.ProductName</td>
+                <td>@item.UnitPrice.ToString("N0") đ</td>
+                <td>@item.Quantity</td>
+                <td>@((item.UnitPrice * item.Quantity).ToString("N0")) đ</td>
+                <td>
+                    <form asp-action="Remove" method="post" style="display:inline;">
+                        <input type="hidden" name="orderItemId" value="@item.OrderItemId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-end fw-bold">Tổng cộng:</td>
+                <td colspan="2" class="fw-bold text-primary">
+                    @Model.OrderItems.Sum(i => i.UnitPrice * i.Quantity).ToString("N0") đ
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+} 

@@ -1,0 +1,75 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username") ?? "";
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "";
+}
+<link rel="stylesheet" href="~/css/_Header.cshtml.css" asp-append-version="true" />
+
+<header class="header position-absolute top-0 start-0 w-100 z-3" style="background: transparent;">
+    <!-- Dòng trên cùng chứa thông tin đăng nhập nằm bên phải -->
+    <div class="container-fluid d-flex justify-content-end align-items-center px-4" style="height: 40px;">
+        <div class="d-flex align-items-center gap-3">
+
+            @if (string.IsNullOrEmpty(username))
+            {
+                <!-- Dropdown khi chưa đăng nhập -->
+                <div class="dropdown">
+                    <a class="btn btn-outline-light btn-sm dropdown-toggle" href="#" role="button" id="guestDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Tài khoản
+                    </a>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="guestDropdown">
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Login", "AccountLogin")">
+                                <i class="fa fa-sign-in"></i> Đăng nhập
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Register", "AccountRegister")">
+                                <i class="fa fa-user-plus"></i> Đăng ký
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <!-- Dropdown khi đã đăng nhập -->
+                <div class="dropdown">
+                    <a class="btn btn-outline-light btn-sm dropdown-toggle" href="#" role="button" id="userDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Xin chào, @fullname
+                    </a>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/Account/Profile">Thông tin cá nhân</a></li>
+                        
+                        <li><a class="dropdown-item" href="/Account/Favorites">Sản phẩm ưu thích</a></li>
+                        <li><a class="dropdown-item" href="/Cart/Index">Giỏ Hàng</a></li>
+                        <li><a class="dropdown-item" href="/Account/ChangePassword">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="/Account/Logout">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <!-- Dòng menu chính giữa -->
+    <div class="container d-flex justify-content-center align-items-end py-4 mt-4 flex-wrap" style="gap: 30px;">
+        <!-- Menu trái -->
+        <a href="@Url.Action("Index", "Services")" class="text-white text-uppercase" style="font-size: 1rem;">Dịch vụ</a>
+        <a href="@Url.Action("Index", "Products")" class="text-white text-uppercase" style="font-size: 1rem;">Sản phẩm</a>
+        <a href="@Url.Action("Index", "FavoriteProducts")" class="text-white text-uppercase" style="font-size: 1rem;">Ưa thích</a>
+
+        <!-- Logo ở giữa -->
+        <a href="@Url.Action("Index", "Home")" style="transform: translateY(-20px);">
+            <img src="~/layout1/img/logo3-removebg-preview.png" alt="Logo" style="height: 100px;" />
+        </a>
+
+        <!-- Menu phải -->
+        <a href="@Url.Action("Create", "AddAppointment")" class="text-white text-uppercase" style="font-size: 1rem;">Đặt lịch</a>
+        <a href="@Url.Action("Index", "Garages")" class="text-white text-uppercase" style="font-size: 1rem;">Garage</a>
+        <a href="@Url.Action("Contact", "Home")" class="text-white text-uppercase" style="font-size: 1rem;">Liên hệ</a>
+    </div>
+</header>

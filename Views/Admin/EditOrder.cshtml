@@ -1,0 +1,24 @@
+@model test_2.Models.Appointment
+@{
+    ViewBag.Title = "Sửa Order";
+}
+<div class="d-flex justify-content-center align-items-center mt-7" style="min-height:80vh; margin-top: 100px !important;">
+    <div class="card shadow p-4" style="max-width: 500px; width: 100%; border-radius: 16px;">
+        <h2 class="text-center mb-4" style="font-weight:bold;">Sửa Order</h2>
+        <form asp-action="EditOrder" method="post">
+            <input type="hidden" asp-for="AppointmentId" />
+            <div class="mb-3">
+                <label class="form-label">Trạng thái</label>
+                <input asp-for="Status" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ghi chú</label>
+                <input asp-for="Notes" class="form-control" />
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success px-4">Lưu</button>
+                <a href="@Url.Action("Orders")" class="btn btn-secondary px-4">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div> 
