@@ -35,8 +35,7 @@
                             </button>
                         </form>
 
-                        <!-- Nút Thêm vào yêu thích -->
-                        <form asp-controller="Favorites" asp-action="Add" method="post" class="d-inline">
+                        <form asp-controller="Favorites" asp-action="AddFavorite" method="post" class="d-inline">
                             <input type="hidden" name="productId" value="@product.ProductId" />
                             <button type="submit" class="btn btn-outline-danger btn-sm w-100">
                                 <i class="fa fa-heart"></i> Yêu thích
