@@ -1,0 +1,62 @@
+﻿@model test_2.Models.Service
+
+<form id="editServiceForm">
+    <div class="mb-3">
+        <label asp-for="ServiceName" class="form-label">Tên dịch vụ</label>
+        <input asp-for="ServiceName" class="form-control" />
+        <span asp-validation-for="ServiceName" class="text-danger" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Giá (VNĐ)</label>
+        <input asp-for="Price" type="number" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Mô tả</label>
+        <textarea asp-for="Description" rows="4" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="image_url" class="form-label">Đường dẫn ảnh (tùy chọn)</label>
+        <input asp-for="image_url" class="form-control" />
+        <span asp-validation-for="image_url" class="text-danger" />
+    </div>
+
+    <input type="hidden" asp-for="ServiceId" />
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById("editServiceForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const form = this;
+            const formData = new FormData(form);
+
+            fetch('/Service/EditPartial', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Cập nhật thành công!");
+                    location.reload(); // hoặc update UI động nếu bạn không muốn reload
+                } else {
+                    alert("Cập nhật thất bại.");
+                }
+            })
+            .catch(() => {
+                alert("Đã xảy ra lỗi khi gửi yêu cầu.");
+            });
+        });
+    </script>
+}
