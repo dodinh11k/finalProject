@@ -1,0 +1,29 @@
+@model IEnumerable<test_2.Models.Appointment>
+@{
+    ViewBag.Title = "Quản lý Đơn đặt lịch (Order)";
+}
+<h2>Quản lý Đơn đặt lịch (Order)</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th><th>Khách hàng</th><th>Dịch vụ</th><th>Garage</th><th>Kỹ thuật viên</th><th>Thời gian</th><th>Trạng thái</th><th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var o in Model) {
+        <tr>
+            <td>@o.AppointmentId</td>
+            <td>@o.User?.FullName</td>
+            <td>@o.Service?.ServiceName</td>
+            <td>@o.Garage?.Name</td>
+            <td>@o.Technician?.FullName</td>
+            <td>@o.AppointmentTime</td>
+            <td>@o.Status</td>
+            <td>
+                <a href="@Url.Action("EditOrder", new { id = o.AppointmentId })" class="btn btn-primary btn-sm">Sửa</a>
+                <a href="@Url.Action("DeleteOrder", new { id = o.AppointmentId })" class="btn btn-danger btn-sm" onclick="return confirm('Xóa order này?');">Xóa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table> 

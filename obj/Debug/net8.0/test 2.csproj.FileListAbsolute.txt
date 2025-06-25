@@ -1,0 +1,723 @@
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.csproj.AssemblyReference.cache
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.AssemblyInfoInputs.cache
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.AssemblyInfo.cs
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.RazorAssemblyInfo.cache
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.RazorAssemblyInfo.cs
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.sourcelink.json
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\appsettings.json
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\test 2.staticwebassets.runtime.json
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\test 2.staticwebassets.endpoints.json
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\test 2.exe
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\test 2.deps.json
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\test 2.runtimeconfig.json
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\test 2.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\test 2.pdb
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Azure.Core.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Humanizer.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Build.Locator.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.ClientModel.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.CodeDom.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Composition.Convention.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Composition.Hosting.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Composition.Runtime.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Composition.TypedParts.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Formats.Asn1.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.IO.Pipelines.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Runtime.Caching.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Security.Permissions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Text.Json.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\System.Windows.Extensions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Account\Login.cshtml.rz.scp.css
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Account\Register.cshtml.rz.scp.css
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Appointment\Create.cshtml.rz.scp.css
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Appointment\Details.cshtml.rz.scp.css
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Booking\Create.cshtml.rz.scp.css
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\scopedcss\bundle\test 2.styles.css
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\scopedcss\projectbundle\test 2.bundle.scp.css
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets\msbuild.test 2.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets\msbuild.test 2.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets\msbuild.build.test 2.props
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.test 2.props
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.test 2.props
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.csproj.Up2Date
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\refint\test 2.dll
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.pdb
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\test 2.genruntimeconfig.cache
+C:\Users\ADMIN\source\repos\test 2\test 2\obj\Debug\net8.0\ref\test 2.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\appsettings.Development.json
+E:\code\test 2\test 2\bin\Debug\net8.0\appsettings.json
+E:\code\test 2\test 2\bin\Debug\net8.0\test 2.staticwebassets.runtime.json
+E:\code\test 2\test 2\bin\Debug\net8.0\test 2.staticwebassets.endpoints.json
+E:\code\test 2\test 2\bin\Debug\net8.0\test 2.exe
+E:\code\test 2\test 2\bin\Debug\net8.0\test 2.deps.json
+E:\code\test 2\test 2\bin\Debug\net8.0\test 2.runtimeconfig.json
+E:\code\test 2\test 2\bin\Debug\net8.0\test 2.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\test 2.pdb
+E:\code\test 2\test 2\bin\Debug\net8.0\Azure.Core.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Azure.Identity.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Humanizer.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Build.Locator.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\Mono.TextTemplating.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.ClientModel.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.CodeDom.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Composition.Convention.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Composition.Hosting.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Composition.Runtime.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Composition.TypedParts.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Drawing.Common.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Formats.Asn1.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.IO.Pipelines.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Memory.Data.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Runtime.Caching.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Security.Permissions.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Text.Json.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\System.Windows.Extensions.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.csproj.AssemblyReference.cache
+E:\code\test 2\test 2\obj\Debug\net8.0\rpswa.dswa.cache.json
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.GeneratedMSBuildEditorConfig.editorconfig
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.AssemblyInfoInputs.cache
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.AssemblyInfo.cs
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.csproj.CoreCompileInputs.cache
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.MvcApplicationPartsAssemblyInfo.cache
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.RazorAssemblyInfo.cache
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.RazorAssemblyInfo.cs
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.sourcelink.json
+E:\code\test 2\test 2\obj\Debug\net8.0\rjimswa.dswa.cache.json
+E:\code\test 2\test 2\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+E:\code\test 2\test 2\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+E:\code\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Account\Login.cshtml.rz.scp.css
+E:\code\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Account\Register.cshtml.rz.scp.css
+E:\code\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Appointment\Create.cshtml.rz.scp.css
+E:\code\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Appointment\Details.cshtml.rz.scp.css
+E:\code\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Booking\Create.cshtml.rz.scp.css
+E:\code\test 2\test 2\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+E:\code\test 2\test 2\obj\Debug\net8.0\scopedcss\bundle\test 2.styles.css
+E:\code\test 2\test 2\obj\Debug\net8.0\scopedcss\projectbundle\test 2.bundle.scp.css
+E:\code\test 2\test 2\obj\Debug\net8.0\staticwebassets.build.json
+E:\code\test 2\test 2\obj\Debug\net8.0\staticwebassets.build.json.cache
+E:\code\test 2\test 2\obj\Debug\net8.0\staticwebassets.development.json
+E:\code\test 2\test 2\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\code\test 2\test 2\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.csproj.Up2Date
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.dll
+E:\code\test 2\test 2\obj\Debug\net8.0\refint\test 2.dll
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.pdb
+E:\code\test 2\test 2\obj\Debug\net8.0\test 2.genruntimeconfig.cache
+E:\code\test 2\test 2\obj\Debug\net8.0\ref\test 2.dll
+E:\code\test 2\test 2\bin\Debug\net8.0\wwwroot\layout1\img\logo2-removebg-preview.png
+E:\test 2\obj\Debug\net8.0\test 2.dll
+E:\test 2\obj\Debug\net8.0\refint\test 2.dll
+E:\test 2\obj\Debug\net8.0\test 2.pdb
+E:\test 2\bin\Debug\net8.0\wwwroot\layout1\img\logo2-removebg-preview.png
+E:\test 2\bin\Debug\net8.0\appsettings.Development.json
+E:\test 2\bin\Debug\net8.0\appsettings.json
+E:\test 2\bin\Debug\net8.0\test 2.staticwebassets.runtime.json
+E:\test 2\bin\Debug\net8.0\test 2.staticwebassets.endpoints.json
+E:\test 2\bin\Debug\net8.0\test 2.exe
+E:\test 2\bin\Debug\net8.0\test 2.deps.json
+E:\test 2\bin\Debug\net8.0\test 2.runtimeconfig.json
+E:\test 2\bin\Debug\net8.0\test 2.dll
+E:\test 2\bin\Debug\net8.0\test 2.pdb
+E:\test 2\bin\Debug\net8.0\Azure.Core.dll
+E:\test 2\bin\Debug\net8.0\Azure.Identity.dll
+E:\test 2\bin\Debug\net8.0\Humanizer.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Build.Locator.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+E:\test 2\bin\Debug\net8.0\Mono.TextTemplating.dll
+E:\test 2\bin\Debug\net8.0\System.ClientModel.dll
+E:\test 2\bin\Debug\net8.0\System.CodeDom.dll
+E:\test 2\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+E:\test 2\bin\Debug\net8.0\System.Composition.Convention.dll
+E:\test 2\bin\Debug\net8.0\System.Composition.Hosting.dll
+E:\test 2\bin\Debug\net8.0\System.Composition.Runtime.dll
+E:\test 2\bin\Debug\net8.0\System.Composition.TypedParts.dll
+E:\test 2\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+E:\test 2\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+E:\test 2\bin\Debug\net8.0\System.Drawing.Common.dll
+E:\test 2\bin\Debug\net8.0\System.Formats.Asn1.dll
+E:\test 2\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\test 2\bin\Debug\net8.0\System.IO.Pipelines.dll
+E:\test 2\bin\Debug\net8.0\System.Memory.Data.dll
+E:\test 2\bin\Debug\net8.0\System.Runtime.Caching.dll
+E:\test 2\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+E:\test 2\bin\Debug\net8.0\System.Security.Permissions.dll
+E:\test 2\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+E:\test 2\bin\Debug\net8.0\System.Text.Json.dll
+E:\test 2\bin\Debug\net8.0\System.Windows.Extensions.dll
+E:\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+E:\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+E:\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:\test 2\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\test 2\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\test 2\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+E:\test 2\obj\Debug\net8.0\test 2.csproj.AssemblyReference.cache
+E:\test 2\obj\Debug\net8.0\test 2.GeneratedMSBuildEditorConfig.editorconfig
+E:\test 2\obj\Debug\net8.0\test 2.AssemblyInfoInputs.cache
+E:\test 2\obj\Debug\net8.0\test 2.AssemblyInfo.cs
+E:\test 2\obj\Debug\net8.0\test 2.csproj.CoreCompileInputs.cache
+E:\test 2\obj\Debug\net8.0\test 2.MvcApplicationPartsAssemblyInfo.cache
+E:\test 2\obj\Debug\net8.0\test 2.RazorAssemblyInfo.cache
+E:\test 2\obj\Debug\net8.0\test 2.RazorAssemblyInfo.cs
+E:\test 2\obj\Debug\net8.0\scopedcss\Views\Account\Login.cshtml.rz.scp.css
+E:\test 2\obj\Debug\net8.0\scopedcss\Views\Account\Register.cshtml.rz.scp.css
+E:\test 2\obj\Debug\net8.0\scopedcss\Views\Appointment\Create.cshtml.rz.scp.css
+E:\test 2\obj\Debug\net8.0\scopedcss\Views\Appointment\Details.cshtml.rz.scp.css
+E:\test 2\obj\Debug\net8.0\scopedcss\Views\Booking\Create.cshtml.rz.scp.css
+E:\test 2\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+E:\test 2\obj\Debug\net8.0\scopedcss\bundle\test 2.styles.css
+E:\test 2\obj\Debug\net8.0\scopedcss\projectbundle\test 2.bundle.scp.css
+E:\test 2\obj\Debug\net8.0\staticwebassets.build.json
+E:\test 2\obj\Debug\net8.0\staticwebassets.build.json.cache
+E:\test 2\obj\Debug\net8.0\staticwebassets.development.json
+E:\test 2\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\test 2\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+E:\test 2\obj\Debug\net8.0\test 2.csproj.Up2Date
+E:\test 2\obj\Debug\net8.0\test 2.genruntimeconfig.cache
+E:\test 2\obj\Debug\net8.0\ref\test 2.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+E:\test 2\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+E:\test 2\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+E:\test 2\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+E:\test 2\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\wwwroot\layout1\img\logo2-removebg-preview.png
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\appsettings.Development.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\appsettings.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\test 2.staticwebassets.runtime.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\test 2.staticwebassets.endpoints.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\test 2.exe
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\test 2.deps.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\test 2.runtimeconfig.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\test 2.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\test 2.pdb
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Azure.Core.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Azure.Identity.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Humanizer.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Build.Locator.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\Mono.TextTemplating.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.ClientModel.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.CodeDom.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Composition.Convention.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Composition.Hosting.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Composition.Runtime.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Composition.TypedParts.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Drawing.Common.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Formats.Asn1.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.IO.Pipelines.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Memory.Data.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Runtime.Caching.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Security.Permissions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Text.Json.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\System.Windows.Extensions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.csproj.AssemblyReference.cache
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.GeneratedMSBuildEditorConfig.editorconfig
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.AssemblyInfoInputs.cache
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.AssemblyInfo.cs
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.csproj.CoreCompileInputs.cache
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.MvcApplicationPartsAssemblyInfo.cache
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.RazorAssemblyInfo.cache
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.RazorAssemblyInfo.cs
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\scopedcss\Views\Account\Login.cshtml.rz.scp.css
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\scopedcss\Views\Account\Register.cshtml.rz.scp.css
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\scopedcss\Views\Appointment\Create.cshtml.rz.scp.css
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\scopedcss\Views\Appointment\Details.cshtml.rz.scp.css
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\scopedcss\Views\Booking\Create.cshtml.rz.scp.css
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\scopedcss\bundle\test 2.styles.css
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\scopedcss\projectbundle\test 2.bundle.scp.css
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets.build.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets.development.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets\msbuild.test 2.Microsoft.AspNetCore.StaticWebAssets.props
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets\msbuild.test 2.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets\msbuild.build.test 2.props
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.test 2.props
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.test 2.props
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets.pack.json
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.csproj.Up2Date
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\refint\test 2.dll
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.pdb
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\test 2.genruntimeconfig.cache
+D:\AA\CNTT\Tai Lieu\Final_chappter5\2306.1\test 2\obj\Debug\net8.0\ref\test 2.dll

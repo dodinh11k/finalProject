@@ -1,0 +1,729 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\test 2.bundle.scp.css",
+      "PackagePath": "staticwebassets\\test 2.xb1kf2tbk2.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\css\\Login.css",
+      "PackagePath": "staticwebassets\\css\\Login.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\css\\register.css",
+      "PackagePath": "staticwebassets\\css\\register.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\1.png",
+      "PackagePath": "staticwebassets\\images\\1.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\2.png",
+      "PackagePath": "staticwebassets\\images\\2.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\3.png",
+      "PackagePath": "staticwebassets\\images\\3.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\4.png",
+      "PackagePath": "staticwebassets\\images\\4.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\BaoDuong.png",
+      "PackagePath": "staticwebassets\\images\\BaoDuong.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\BaoDuongDieuHoa.png",
+      "PackagePath": "staticwebassets\\images\\BaoDuongDieuHoa.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\BaoDuongTaiNha.png",
+      "PackagePath": "staticwebassets\\images\\BaoDuongTaiNha.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\CanChinhGocLai.png",
+      "PackagePath": "staticwebassets\\images\\CanChinhGocLai.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\ChiNhanhMoi.png",
+      "PackagePath": "staticwebassets\\images\\ChiNhanhMoi.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\KhuyenMai1.png",
+      "PackagePath": "staticwebassets\\images\\KhuyenMai1.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\KiemTraDien.png",
+      "PackagePath": "staticwebassets\\images\\KiemTraDien.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\RuaXe.png",
+      "PackagePath": "staticwebassets\\images\\RuaXe.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\SonDamXe.png",
+      "PackagePath": "staticwebassets\\images\\SonDamXe.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\ThayBugi.png",
+      "PackagePath": "staticwebassets\\images\\ThayBugi.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\ThayLop.png",
+      "PackagePath": "staticwebassets\\images\\ThayLop.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\ThayNhot.png",
+      "PackagePath": "staticwebassets\\images\\ThayNhot.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\images\\ThayPhanh.png",
+      "PackagePath": "staticwebassets\\images\\ThayPhanh.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\layout1\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\css\\elegant-icons.css",
+      "PackagePath": "staticwebassets\\layout1\\css\\elegant-icons.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\css\\font-awesome.min.css",
+      "PackagePath": "staticwebassets\\layout1\\css\\font-awesome.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\css\\jquery-ui.min.css",
+      "PackagePath": "staticwebassets\\layout1\\css\\jquery-ui.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\css\\nice-select.css",
+      "PackagePath": "staticwebassets\\layout1\\css\\nice-select.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\css\\owl.carousel.min.css",
+      "PackagePath": "staticwebassets\\layout1\\css\\owl.carousel.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\css\\slicknav.min.css",
+      "PackagePath": "staticwebassets\\layout1\\css\\slicknav.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\css\\style.css",
+      "PackagePath": "staticwebassets\\layout1\\css\\style.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\ElegantIcons.eot",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\ElegantIcons.eot"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\ElegantIcons.svg",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\ElegantIcons.svg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\ElegantIcons.ttf",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\ElegantIcons.ttf"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\ElegantIcons.woff",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\ElegantIcons.woff"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\FontAwesome.otf",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\FontAwesome.otf"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\fontawesome-webfont.eot",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\fontawesome-webfont.eot"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\fontawesome-webfont.svg",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\fontawesome-webfont.svg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\fontawesome-webfont.ttf",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\fontawesome-webfont.ttf"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\fontawesome-webfont.woff",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\fontawesome-webfont.woff"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\fonts\\fontawesome-webfont.woff2",
+      "PackagePath": "staticwebassets\\layout1\\fonts\\fontawesome-webfont.woff2"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\banner\\banner-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\banner\\banner-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\banner\\banner-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\banner\\banner-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\blog-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\blog-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\blog-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\blog-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\blog-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\blog-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\blog-4.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\blog-4.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\blog-5.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\blog-5.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\blog-6.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\blog-6.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\details\\details-author.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\details\\details-author.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\details\\details-hero.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\details\\details-hero.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\details\\details-pic.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\details\\details-pic.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\sidebar\\sr-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\sidebar\\sr-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\sidebar\\sr-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\sidebar\\sr-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\blog\\sidebar\\sr-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\blog\\sidebar\\sr-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\breadcrumb.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\breadcrumb.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\cart\\cart-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\cart\\cart-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\cart\\cart-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\cart\\cart-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\cart\\cart-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\cart\\cart-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\categories\\cat-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\categories\\cat-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\categories\\cat-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\categories\\cat-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\categories\\cat-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\categories\\cat-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\categories\\cat-4.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\categories\\cat-4.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\categories\\cat-5.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\categories\\cat-5.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\featured\\feature-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\featured\\feature-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\featured\\feature-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\featured\\feature-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\featured\\feature-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\featured\\feature-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\featured\\feature-4.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\featured\\feature-4.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\featured\\feature-5.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\featured\\feature-5.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\featured\\feature-6.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\featured\\feature-6.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\featured\\feature-7.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\featured\\feature-7.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\featured\\feature-8.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\featured\\feature-8.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\hero\\banner.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\hero\\banner.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\language.png",
+      "PackagePath": "staticwebassets\\layout1\\img\\language.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\latest-product\\lp-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\latest-product\\lp-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\latest-product\\lp-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\latest-product\\lp-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\latest-product\\lp-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\latest-product\\lp-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\logo.png",
+      "PackagePath": "staticwebassets\\layout1\\img\\logo.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\logo2-removebg-preview.png",
+      "PackagePath": "staticwebassets\\layout1\\img\\logo2-removebg-preview.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\logo2.png",
+      "PackagePath": "staticwebassets\\layout1\\img\\logo2.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\logo3-removebg-preview.png",
+      "PackagePath": "staticwebassets\\layout1\\img\\logo3-removebg-preview.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\payment-item.png",
+      "PackagePath": "staticwebassets\\layout1\\img\\payment-item.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\Screenshot 2025-05-14 084156.png",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\Screenshot 2025-05-14 084156.png"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\product-details-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\product-details-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\product-details-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\product-details-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\product-details-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\product-details-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\product-details-4.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\product-details-4.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\product-details-5.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\product-details-5.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\thumb-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\thumb-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\thumb-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\thumb-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\thumb-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\thumb-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\details\\thumb-4.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\details\\thumb-4.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\discount\\pd-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\discount\\pd-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\discount\\pd-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\discount\\pd-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\discount\\pd-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\discount\\pd-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\discount\\pd-4.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\discount\\pd-4.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\discount\\pd-5.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\discount\\pd-5.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\discount\\pd-6.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\discount\\pd-6.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-1.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-1.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-10.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-10.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-11.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-11.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-12.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-12.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-2.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-2.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-3.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-3.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-4.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-4.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-5.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-5.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-6.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-6.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-7.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-7.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-8.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-8.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\img\\product\\product-9.jpg",
+      "PackagePath": "staticwebassets\\layout1\\img\\product\\product-9.jpg"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\layout1\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\js\\jquery-3.3.1.min.js",
+      "PackagePath": "staticwebassets\\layout1\\js\\jquery-3.3.1.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\js\\jquery-ui.min.js",
+      "PackagePath": "staticwebassets\\layout1\\js\\jquery-ui.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\js\\jquery.nice-select.min.js",
+      "PackagePath": "staticwebassets\\layout1\\js\\jquery.nice-select.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\js\\jquery.slicknav.js",
+      "PackagePath": "staticwebassets\\layout1\\js\\jquery.slicknav.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\js\\main.js",
+      "PackagePath": "staticwebassets\\layout1\\js\\main.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\js\\mixitup.min.js",
+      "PackagePath": "staticwebassets\\layout1\\js\\mixitup.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\layout1\\js\\owl.carousel.min.js",
+      "PackagePath": "staticwebassets\\layout1\\js\\owl.carousel.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "D:\\AA\\CNTT\\Tai Lieu\\Final_chappter5\\2306.1\\test 2\\wwwroot\\videos\\hero.mp4",
+      "PackagePath": "staticwebassets\\videos\\hero.mp4"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.test 2.props",
+      "PackagePath": "build\\test 2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.test 2.props",
+      "PackagePath": "buildMultiTargeting\\test 2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.test 2.props",
+      "PackagePath": "buildTransitive\\test 2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.test 2.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.test 2.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

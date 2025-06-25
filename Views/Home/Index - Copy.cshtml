@@ -1,0 +1,23 @@
+﻿@model IEnumerable<test_2.Models.ServiceViewModel>
+
+<h2>Danh sách dịch vụ</h2>
+
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên dịch vụ</th>
+            <th>Garage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.ServiceId</td>
+                <td>@service.ServiceName</td>
+                <td>@service.GarageName</td>
+            </tr>
+        }
+    </tbody>
+</table>
