@@ -1,0 +1,86 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName");
+
+    ViewData["username"] = username;
+    ViewData["fullname"] = fullname;
+
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var isAuthPage = (currentController == "AccountLogin" && currentAction == "Login")
+        || (currentController == "AccountRegister" && currentAction == "Register");
+
+    var bodyPaddingTop = isAuthPage ? "0" : "140px";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"] - Đặt lịch bảo dưỡng ô tô</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Trang đặt lịch bảo dưỡng ô tô" />
+    <meta name="keywords" content="Bảo dưỡng ô tô, đặt lịch, garage, dịch vụ ô tô" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet" />
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
+
+
+    <link rel="stylesheet" href="~/layout1/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/nice-select.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/jquery-ui.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body style="margin: 0; padding: 0; overflow-x: hidden;">
+    <!-- Loader -->
+    <div id="preloder"><div class="loader"></div></div>
+
+    <!-- Mobile menu -->
+    @await Html.PartialAsync("_MobileMenu", new { username, fullname })
+
+    <!-- Header -->
+    @if (!isAuthPage)
+    {
+        @await Html.PartialAsync("_Header")
+    }
+
+    <!-- Main content -->
+    <main class="w-100 position-relative" style="padding-top: @bodyPaddingTop;">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    @if (!isAuthPage)
+    {
+        @await Html.PartialAsync("_Footer")
+    }
+
+    <!-- JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/layout1/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery-ui.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery.slicknav.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/main.js" asp-append-version="true"></script>
+
+    @await Html.PartialAsync("_Scripts")
+    @RenderSection("Scripts", required: false)
+
+
+
+    
+
+</body>
+</html>

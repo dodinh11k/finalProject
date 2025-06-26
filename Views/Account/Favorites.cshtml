@@ -1,0 +1,57 @@
+﻿@model IEnumerable<test_2.Models.FavoriteProduct>
+
+
+@{
+    ViewData["Title"] = "Sản phẩm yêu thích";
+}
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["success"]
+    </div>
+}
+@if (TempData["info"] != null)
+{
+    <div class="alert alert-info text-center">
+        @TempData["info"]
+    </div>
+}
+<h2 class="text-center my-4">Sản phẩm yêu thích</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center">
+        Bạn chưa có sản phẩm nào trong danh sách yêu thích.
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var favorite in Model)
+        {
+            var product = favorite.Product;
+            if (product != null)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border border-light">
+                        <img src="~/@product.ImageUrl" class="card-img-top" alt="@product.ProductName"
+                             style="height: 200px; object-fit: contain;" />
+
+                        <div class="card-body">
+                            <h5 class="card-title">@product.ProductName</h5>
+                            <p class="card-text text-muted small">@product.Description</p>
+                            <p class="card-text text-primary fw-bold">@product.Price.ToString("N0") ₫</p>
+
+                            <form asp-controller="Favorites" asp-action="RemoveFavorite" method="post">
+                                <input type="hidden" name="productId" value="@product.ProductId" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fa fa-heart-broken"></i> Xóa khỏi yêu thích
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
