@@ -1,9 +1,21 @@
 ﻿@model IEnumerable<test_2.Models.FavoriteProduct>
 
+
 @{
     ViewData["Title"] = "Sản phẩm yêu thích";
 }
-
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["success"]
+    </div>
+}
+@if (TempData["info"] != null)
+{
+    <div class="alert alert-info text-center">
+        @TempData["info"]
+    </div>
+}
 <h2 class="text-center my-4">Sản phẩm yêu thích</h2>
 
 @if (!Model.Any())
