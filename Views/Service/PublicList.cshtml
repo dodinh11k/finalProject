@@ -1,0 +1,106 @@
+﻿@model IEnumerable<test_2.Models.Service>
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Danh sách dịch vụ";
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role")
+               ?? User?.FindFirst("Role")?.Value;
+}
+
+<style>
+    .services-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .service-card {
+        width: 280px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+        transition: transform 0.3s;
+        position: relative;
+    }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+    .service-card-body {
+        padding: 15px;
+    }
+
+    .service-card-title {
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: #2c3e50;
+    }
+
+    .no-services {
+        padding: 20px;
+        font-size: 18px;
+        color: #888;
+    }
+
+    .add-service-btn {
+        margin: 20px;
+    }
+</style>
+
+<h2 class="ms-4">@ViewData["Title"]</h2>
+
+@if (role == "Admin")
+{
+    <div class="add-service-btn">
+        <a class="btn btn-success" asp-controller="Service" asp-action="Create">
+            ➕ Thêm dịch vụ
+        </a>
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <p class="no-services">Không có dịch vụ nào.</p>
+}
+else
+{
+    <div class="services-container">
+        @foreach (var service in Model)
+        {
+            <div class="service-card">
+                <a asp-controller="Service" asp-action="Details" asp-route-id="@service.ServiceId">
+                    <img src="@(
+                         !string.IsNullOrWhiteSpace(service.image_url)
+                         ? Url.Content("~/" + service.image_url.Trim())
+                         : Url.Content("~/images/RuaXe.png")
+                                                                )" alt="@service.ServiceName" />
+            </a>
+            <div class="service-card-body">
+                <div class="service-card-title">@service.ServiceName</div>
+                <div style="margin-top: 10px; font-size: 14px; color: #bbb;">
+                    Mã dịch vụ: @service.ServiceId
+                </div>
+
+            @if (role == "Admin")
+                    {
+                        <div class="mt-2">
+                            <a class="btn btn-sm btn-primary" asp-controller="Service" asp-action="Edit" asp-route-id="@service.ServiceId">Sửa</a>
+                            <a class="btn btn-sm btn-danger" asp-controller="Service" asp-action="Delete" asp-route-id="@service.ServiceId">Xoá</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}

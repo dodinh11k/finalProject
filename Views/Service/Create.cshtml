@@ -1,0 +1,30 @@
+﻿@model test_2.Models.Service
+
+@{
+    ViewData["Title"] = "Thêm dịch vụ";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-controller="Service" asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="ServiceName" class="form-label"></label>
+        <input asp-for="ServiceName" class="form-control" />
+        <span asp-validation-for="ServiceName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="image_url" class="form-label">Đường dẫn hình ảnh</label>
+        <input asp-for="image_url" class="form-control" />
+        <span asp-validation-for="image_url" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a asp-controller="Service" asp-action="AdminList" class="btn btn-secondary">Hủy</a>
+</form>

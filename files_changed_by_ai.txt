@@ -1,0 +1,32 @@
+Các file đã sửa hoặc thêm mới bởi AI trong quá trình hỗ trợ:
+
+---
+
+# ĐÃ SỬA:
+- Controllers/AdminController .cs
+- Views/Admin/CreateUser.cshtml
+- Views/Admin/EditUser.cshtml
+- Views/Admin/EditOrder.cshtml
+- Views/Admin/EditService.cshtml
+- Views/Admin/Users.cshtml
+- Views/Admin/Services.cshtml
+- Views/Admin/Orders.cshtml
+- Views/Admin/Dashboard.cshtml
+- Views/Shared/_Header.cshtml
+- Views/Appointment/Create.cshtml
+- Views/Admin/CreateProduct.cshtml
+- Views/Admin/EditProduct.cshtml
+- Views/Admin/Products.cshtml
+- Views/Cart/Index.cshtml
+- wwwroot/layout1/js/main.js
+
+# ĐÃ THÊM MỚI:
+- Controllers/CartController.cs
+- Views/Cart/Index.cshtml
+- Views/Admin/CreateProduct.cshtml
+- Views/Admin/EditProduct.cshtml
+- Views/Admin/Products.cshtml
+
+---
+
+Bạn chỉ cần commit các file trên để đồng bộ toàn bộ tính năng và fix đã thực hiện. 

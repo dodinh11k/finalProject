@@ -1,0 +1,52 @@
+﻿@model test_2.Models.AppointmentDetailsViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết lịch hẹn";
+    var appointment = Model.Appointment;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <p><strong>Họ tên:</strong> @(appointment.User?.FullName ?? "Không có")</p>
+    <p><strong>Số điện thoại:</strong> @(appointment.User?.Phone ?? "Không có")</p>
+    <p><strong>Garage:</strong> @(appointment.Garage?.Address ?? "Không rõ")</p>
+
+    <p>
+        <strong>Thời gian hẹn:</strong>
+        @((appointment.AppointmentTime.HasValue)
+            ? appointment.AppointmentTime.Value.ToString("dd/MM/yyyy HH:mm")
+            : "Không xác định")
+    </p>
+
+    <p><strong>Trạng thái:</strong> @appointment.Status</p>
+    <p><strong>Ghi chú:</strong> @(string.IsNullOrWhiteSpace(appointment.Notes) ? "(Không có ghi chú)" : appointment.Notes)</p>
+</div>
+
+<hr />
+<h4>Dịch vụ theo xe</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên xe</th>
+            <th>Biển số</th>
+            <th>Dịch vụ</th>
+            <th>Số lượng</th>
+            <th>Ghi chú</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detail in Model.VehicleDetails)
+        {
+            <tr>
+                <td>@($"{detail.Vehicle?.Make ?? "Không rõ"} {detail.Vehicle?.Model ?? ""}")</td>
+                <td>@(detail.Vehicle?.LicensePlate ?? "Không rõ")</td>
+                <td>@(detail.Service?.ServiceName ?? "Không rõ")</td>
+                <td>@detail.Quantity</td>
+                <td>@(string.IsNullOrWhiteSpace(detail.Note) ? "(Không có)" : detail.Note)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-secondary">→ Đặt lịch mới</a>

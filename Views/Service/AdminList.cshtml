@@ -1,0 +1,48 @@
+﻿@model IEnumerable<test_2.Models.Service>
+
+@{
+    ViewData["Title"] = "Quản lý dịch vụ";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<a class="btn btn-primary mb-3"
+   asp-controller="Service"
+   asp-action="Create"
+   asp-route-area=""
+   asp-route-id=""
+   asp-route-returnUrl="@Url.Action("AdminList", "Service")">
+    ➕ Thêm dịch vụ
+</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Tên dịch vụ</th>
+            <th>Giá</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.ServiceId</td>
+                <td>@service.ServiceName</td>
+                <td>@service.Price.("N0") đ</td>
+                <td>
+                    <a asp-controller="Service"
+                       asp-action="Edit"
+                       asp-route-id="@service.ServiceId"
+                       class="btn btn-sm btn-warning">Sửa</a>
+
+                    <a asp-controller="Service"
+                       asp-action="Delete"
+                       asp-route-id="@service.ServiceId"
+                       class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

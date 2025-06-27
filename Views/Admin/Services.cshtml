@@ -1,0 +1,25 @@
+@model IEnumerable<test_2.Models.Service>
+@{
+    ViewBag.Title = "Quản lý Dịch vụ";
+}
+<h2>Quản lý Dịch vụ</h2>
+<a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary mb-3 mt-4">Quay về trang chính Admin</a>
+<a href="@Url.Action("CreateService")" class="btn btn-success">Thêm Dịch vụ</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th><th>Tên dịch vụ</th><th>Mô tả</th><th>Giá</th><th>Hình ảnh</th><th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var s in Model) {
+        <tr>
+            <td>@s.ServiceId</td><td>@s.ServiceName</td><td>@s.Description</td><td>@s.Price</td><td>@s.image_url</td>
+            <td>
+                <a href="@Url.Action("EditService", new { id = s.ServiceId })" class="btn btn-primary btn-sm">Sửa</a>
+                <a href="@Url.Action("DeleteService", new { id = s.ServiceId })" class="btn btn-danger btn-sm" onclick="return confirm('Xóa dịch vụ này?');">Xóa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table> 

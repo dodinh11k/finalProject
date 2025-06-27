@@ -1,0 +1,34 @@
+﻿@model AppointmentHistoryViewModel
+
+<h2>Lịch sử đặt lịch của bạn</h2>
+
+@if (!Model.Appointments.Any())
+{
+    <p>Không có lịch hẹn nào.</p>
+}
+else
+{
+    foreach (var appt in Model.Appointments)
+    {
+        <div class="card mb-3 p-3">
+            <h5>Ngày hẹn: @(appt.AppointmentTime.HasValue ? appt.AppointmentTime.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa đặt")</h5>
+
+            <p><strong>Garage:</strong> @appt.Garage?.Address</p>
+            <p><strong>Kỹ thuật viên:</strong> @appt.Technician?.FullName</p>
+            <p><strong>Ghi chú:</strong> @appt.Notes</p>
+            <p><strong>Trạng thái:</strong> @appt.Status</p>
+
+            <h6>Dịch vụ và xe:</h6>
+            <ul>
+                @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+                {
+                    <li>
+                        <strong>Xe:</strong> @detail.Vehicle?.Make @detail.Vehicle?.Model (@detail.Vehicle?.LicensePlate)<br />
+                        <strong>Dịch vụ:</strong> @detail.Service?.ServiceName<br />
+                        <strong>Số lượng:</strong> @detail.Quantity
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+}
