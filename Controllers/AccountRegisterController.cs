@@ -47,7 +47,7 @@ namespace test_2.Controllers
                 Phone = model.Phone,
                 Address = model.Address,
                 IsActive = true,
-                Role = "Customer"
+                Role = "User"
             };
 
             _context.Users.Add(user);
