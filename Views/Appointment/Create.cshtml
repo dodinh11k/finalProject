@@ -20,8 +20,8 @@
 
 <!-- Hiển thị thông tin người dùng -->
 <div class="mb-3">
-    <p><strong>Họ tên:</strong> @fullname</p>
-    <p><strong>Số điện thoại:</strong> @phone</p>
+    <p><strong>Họ tên:</strong> @(string.IsNullOrEmpty(fullname) ? "Không có" : fullname)</p>
+    <p><strong>Số điện thoại:</strong> @(string.IsNullOrEmpty(phone) ? "Không có" : phone)</p>
 </div>
 
 <form asp-action="Create" method="post">
@@ -63,7 +63,7 @@
 
     <div class="form-group">
         <label asp-for="AppointmentTime">Thời gian hẹn</label>
-        <input asp-for="AppointmentTime" type="datetime-local" class="form-control" />
+        <input asp-for="AppointmentTime" type="datetime-local" class="form-control" id="appointmentTime" />
         <span asp-validation-for="AppointmentTime" class="text-danger"></span>
     </div>
 
@@ -77,5 +77,15 @@
 </form>
 
 @section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("appointmentTime");
+            if (input && !input.value) {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                input.value = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+            }
+        });
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }

@@ -20,7 +20,11 @@ public class AppointmentController : Controller
     [HttpGet("Create")]
     public async Task<IActionResult> Create()
     {
-        var model = new AppointmentViewModel();
+        var model = new AppointmentViewModel
+        {
+            AppointmentTime = DateTime.Now // thời gian mặc định (có thể sửa trên view)
+        };
+
         await LoadDropdowns(model);
         return View("~/Views/Appointment/Create.cshtml", model);
     }
@@ -35,25 +39,31 @@ public class AppointmentController : Controller
             return View("~/Views/Appointment/Create.cshtml", model);
         }
 
-        // ✅ Lấy UserId từ Session
+        // Kiểm tra AppointmentTime có hợp lệ và ở tương lai
+        if (model.AppointmentTime <= DateTime.Now)
+        {
+            ModelState.AddModelError("AppointmentTime", "Thời gian hẹn phải nằm trong tương lai.");
+            await LoadDropdowns(model);
+            return View("~/Views/Appointment/Create.cshtml", model);
+        }
+
         var userIdStr = HttpContext.Session.GetString("UserId");
-        if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
+        if (!int.TryParse(userIdStr, out int userId))
         {
             TempData["Error"] = "Bạn cần đăng nhập để đặt lịch.";
             return RedirectToAction("Login", "AccountLogin");
         }
 
-        // ✅ Lấy thông tin người dùng
         var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
         if (user == null)
         {
-            TempData["Error"] = "Không tìm thấy người dùng.";
+            TempData["Error"] = "Không tìm thấy tài khoản.";
             return RedirectToAction("Login", "AccountLogin");
         }
 
         try
         {
-            // 🚗 Thêm xe mới
+            // Thêm xe
             var vehicle = new Vehicle
             {
                 UserId = user.UserId,
@@ -66,7 +76,7 @@ public class AppointmentController : Controller
             _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();
 
-            // 👷‍♂️ Tìm kỹ thuật viên có ít lịch "Pending" nhất
+            // Gán kỹ thuật viên ít đơn nhất
             var technician = await _context.Users
                 .Where(u => u.Role == "Technician")
                 .OrderBy(u => _context.Appointments.Count(a => a.TechnicianId == u.UserId && a.Status == "Pending"))
@@ -79,7 +89,7 @@ public class AppointmentController : Controller
                 return View("~/Views/Appointment/Create.cshtml", model);
             }
 
-            // 🗓️ Tạo lịch hẹn
+            // Tạo lịch hẹn
             var appointment = new Appointment
             {
                 UserId = user.UserId,
@@ -93,7 +103,7 @@ public class AppointmentController : Controller
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 
-            // 🔧 Thêm chi tiết dịch vụ
+            // Tạo chi tiết dịch vụ
             var detail = new AppointmentVehicleDetail
             {
                 AppointmentId = appointment.AppointmentId,
@@ -105,11 +115,11 @@ public class AppointmentController : Controller
             _context.AppointmentVehicleDetails.Add(detail);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", new { id = appointment.AppointmentId });
+            return RedirectToAction("Details", "Appointment", new { id = appointment.AppointmentId });
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError("", "Đã xảy ra lỗi: " + ex.Message);
+            ModelState.AddModelError("", "Lỗi hệ thống: " + ex.Message);
             await LoadDropdowns(model);
             return View("~/Views/Appointment/Create.cshtml", model);
         }
@@ -163,7 +173,7 @@ public class AppointmentController : Controller
     {
         var userIdStr = HttpContext.Session.GetString("UserId");
 
-        if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
+        if (!int.TryParse(userIdStr, out int userId))
         {
             HttpContext.Session.SetString("ReturnUrl", Url.Action("History", "Appointment"));
             return RedirectToAction("Login", "AccountLogin");
