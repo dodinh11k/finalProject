@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using test_2.Models;
@@ -50,13 +51,13 @@ namespace test_2.Controllers
             if (user == null) return NotFound();
             return View(user);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(User user)
         {
             if (!ModelState.IsValid)
             {
-                // Gỡ ModelState["IsActive"] để tránh giữ giá trị cũ gây sai lệch khi render lại view
                 ModelState.Remove("IsActive");
                 return View(user);
             }
@@ -64,12 +65,11 @@ namespace test_2.Controllers
             var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.UserId == user.UserId);
             if (userInDb == null) return NotFound();
 
-            // Cập nhật các trường
             userInDb.Username = user.Username;
 
             if (!string.IsNullOrWhiteSpace(user.PasswordHash))
             {
-                userInDb.PasswordHash = user.PasswordHash; // Cập nhật mật khẩu nếu có nhập
+                userInDb.PasswordHash = user.PasswordHash;
             }
 
             userInDb.FullName = user.FullName;
@@ -86,13 +86,9 @@ namespace test_2.Controllers
             }
             catch (DbUpdateException ex)
             {
-                // Gỡ ModelState["IsActive"] để Razor render lại chính xác checkbox
                 ModelState.Remove("IsActive");
                 ModelState.AddModelError("", "Lỗi khi cập nhật: " + ex.Message);
-
-                // Cập nhật lại IsActive để đảm bảo checkbox phản ánh đúng dữ liệu mới
                 user.IsActive = userInDb.IsActive;
-
                 return View(user);
             }
         }
@@ -103,7 +99,9 @@ namespace test_2.Controllers
             var services = await _context.Services.ToListAsync();
             return View(services);
         }
+
         public IActionResult CreateService() => View();
+
         [HttpPost]
         public async Task<IActionResult> CreateService(Service service)
         {
@@ -115,12 +113,14 @@ namespace test_2.Controllers
             }
             return View(service);
         }
+
         public async Task<IActionResult> EditService(int id)
         {
             var service = await _context.Services.FindAsync(id);
             if (service == null) return NotFound();
             return View(service);
         }
+
         [HttpPost]
         public async Task<IActionResult> EditService(Service service)
         {
@@ -132,6 +132,7 @@ namespace test_2.Controllers
             }
             return View(service);
         }
+
         public async Task<IActionResult> DeleteService(int id)
         {
             var service = await _context.Services.FindAsync(id);
@@ -142,22 +143,42 @@ namespace test_2.Controllers
         }
 
         // --- APPOINTMENT (ORDER) MANAGEMENT ---
-        public async Task<IActionResult> Orders()
+        public async Task<IActionResult> Orders(string customerName, string phone, DateTime? date, string vehicleKeyword)
         {
-            var orders = await _context.Appointments
+            var query = _context.Appointments
                 .Include(a => a.User)
-                
                 .Include(a => a.Garage)
                 .Include(a => a.Technician)
-                .ToListAsync();
+                .Include(a => a.AppointmentVehicleDetails).ThenInclude(d => d.Vehicle)
+                .Include(a => a.AppointmentVehicleDetails).ThenInclude(d => d.Service)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(customerName))
+                query = query.Where(a => a.User.FullName.Contains(customerName));
+
+            if (!string.IsNullOrEmpty(phone))
+                query = query.Where(a => a.User.Phone.Contains(phone));
+
+            if (date.HasValue)
+                query = query.Where(a => a.AppointmentTime.HasValue && a.AppointmentTime.Value.Date == date.Value.Date);
+
+            if (!string.IsNullOrEmpty(vehicleKeyword))
+                query = query.Where(a => a.AppointmentVehicleDetails.Any(d =>
+                    d.Vehicle.Make.Contains(vehicleKeyword) ||
+                    d.Vehicle.Model.Contains(vehicleKeyword) ||
+                    d.Vehicle.LicensePlate.Contains(vehicleKeyword)));
+
+            var orders = await query.OrderByDescending(a => a.AppointmentTime).ToListAsync();
             return View(orders);
         }
+
         public async Task<IActionResult> EditOrder(int id)
         {
             var order = await _context.Appointments.FindAsync(id);
             if (order == null) return NotFound();
             return View(order);
         }
+
         [HttpPost]
         public async Task<IActionResult> EditOrder(Appointment order)
         {
@@ -165,16 +186,33 @@ namespace test_2.Controllers
             {
                 _context.Update(order);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Lịch hẹn đã được cập nhật thành công.";
                 return RedirectToAction("Orders");
             }
             return View(order);
         }
+
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            var order = await _context.Appointments.FindAsync(id);
-            if (order == null) return NotFound();
-            _context.Appointments.Remove(order);
+            var appointment = await _context.Appointments
+                .Include(a => a.AppointmentVehicleDetails)
+                .FirstOrDefaultAsync(a => a.AppointmentId == id);
+
+            if (appointment == null) return NotFound();
+
+            var repairStatuses = await _context.RepairStatuses.Where(r => r.AppointmentId == id).ToListAsync();
+            _context.RepairStatuses.RemoveRange(repairStatuses);
+
+            var technicalReports = await _context.TechnicalReports.Where(t => t.AppointmentId == id).ToListAsync();
+            _context.TechnicalReports.RemoveRange(technicalReports);
+
+            var appointmentDetails = await _context.AppointmentVehicleDetails.Where(d => d.AppointmentId == id).ToListAsync();
+            _context.AppointmentVehicleDetails.RemoveRange(appointmentDetails);
+
+            _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Đã xóa lịch hẹn và toàn bộ dữ liệu liên quan.";
             return RedirectToAction("Orders");
         }
 
@@ -189,6 +227,7 @@ namespace test_2.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProduct(Product product)
@@ -209,6 +248,7 @@ namespace test_2.Controllers
             if (product == null) return NotFound();
             return View(product);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProduct(Product product)
@@ -248,7 +288,6 @@ namespace test_2.Controllers
         {
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
-                // Implementation of login logic
                 return View();
             }
             return View();
