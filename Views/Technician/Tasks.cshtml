@@ -1,0 +1,212 @@
+﻿@model AppointmentHistoryViewModel
+@{
+    var myAppointments = ViewBag.MyAppointments as List<test_2.Models.Appointment>;
+    string GetStatusBadge(string status) => status switch
+    {
+        "Pending" => "bg-secondary",
+        "WaitingForAccept" => "bg-warning text-dark",
+        "In_Progress" => "bg-info text-dark",
+        "Completed" => "bg-success",
+        "Cancelled" => "bg-danger",
+        _ => "bg-secondary"
+    };
+}
+
+@{
+    ViewData["Title"] = "Lịch hẹn của bạn";
+}
+
+<div class="container py-4" style="margin-top: 80px;">
+    <ul class="nav nav-tabs mb-4" id="taskTabs">
+        <li class="nav-item">
+            <button id="btnAll" class="nav-link active" onclick="showTab('all')">
+                <i class="fas fa-list"></i> Tất cả lịch hẹn
+            </button>
+        </li>
+        <li class="nav-item">
+            <button id="btnMine" class="nav-link" onclick="showTab('mine')">
+                <i class="fas fa-clipboard-check"></i> Các lịch bạn đã nhận
+            </button>
+        </li>
+    </ul>
+
+    <div id="tabAll">
+        <h4 class="mb-3"><i class="fas fa-calendar-alt text-primary"></i> Tất cả lịch hẹn</h4>
+        @if (!Model.Appointments.Any())
+        {
+            <div class="alert alert-info"><i class="fas fa-info-circle"></i> Hiện tại không có lịch hẹn nào.</div>
+        }
+        else
+        {
+            <div class="row g-4">
+            @foreach (var appt in Model.Appointments)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge @GetStatusBadge(appt.Status) px-3 py-2"><i class="fas fa-tag"></i> @appt.Status</span>
+                                <span class="text-muted small">
+                                    <i class="far fa-clock"></i> @(appt.AppointmentTime?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa xác định")
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <i class="fas fa-user text-info"></i> <b>@appt.User?.FullName</b><br />
+                                <i class="fas fa-phone-alt text-success"></i> @appt.User?.Phone
+                            </div>
+                            <div class="mb-2">
+                                <i class="fas fa-warehouse text-warning"></i> <b>@appt.Garage?.Address</b>
+                            </div>
+                            <div class="mb-2">
+                                <i class="fas fa-sticky-note text-secondary"></i> <span>@(string.IsNullOrWhiteSpace(appt.Notes) ? "(Không có)" : appt.Notes)</span>
+                            </div>
+                            @if (appt.Status == "In_Progress" && appt.Technician != null)
+                            {
+                                <div class="mb-2 text-info"><i class="fas fa-tools"></i> Đang sửa chữa bởi: <b>@appt.Technician.FullName</b></div>
+                            }
+                            else if (appt.Status == "Completed" && appt.Technician != null)
+                            {
+                                <div class="mb-2 text-success"><i class="fas fa-check-circle"></i> Đã hoàn thành bởi: <b>@appt.Technician.FullName</b></div>
+                            }
+                            else if (appt.Status == "Cancelled")
+                            {
+                                <div class="mb-2 text-danger"><i class="fas fa-times-circle"></i> Lịch này đã bị hủy.</div>
+                            }
+                            <div class="mb-2">
+                                <b>Dịch vụ & xe:</b>
+                                <ul class="mb-0" style="border:1px solid #e0e0e0; padding: 6px 12px; background: #f9f9f9;">
+                                    @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+                                    {
+                                        <li style="margin-bottom: 4px;">
+                                            <span style="font-weight:600;">Xe:</span> @detail.Vehicle?.Make @detail.Vehicle?.Model (@detail.Vehicle?.LicensePlate)<br />
+                                            <span style="font-weight:600;">Dịch vụ:</span> @detail.Service?.ServiceName, <span style="font-weight:600;">SL:</span> @detail.Quantity
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            @if (appt.Status == "Pending" || appt.Status == "WaitingForAccept")
+                            {
+                                <form asp-action="UpdateStatus" asp-controller="Technician" method="post" class="mt-2">
+                                    <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                    <input type="hidden" name="Status" value="In_Progress" />
+                                    <button type="submit" class="btn btn-success btn-sm w-100">
+                                        <i class="fas fa-hand-pointer"></i> Nhận việc
+                                    </button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+        }
+    </div>
+
+    <div id="tabMine" style="display:none;">
+        <h4 class="mb-3"><i class="fas fa-clipboard-check text-success"></i> Các lịch bạn đã nhận</h4>
+        @if (myAppointments != null && myAppointments.Any())
+        {
+            <div class="row g-4">
+            @foreach (var appt in myAppointments)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow h-100 border-success border-2">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge @GetStatusBadge(appt.Status) px-3 py-2"><i class="fas fa-tag"></i> @appt.Status</span>
+                                <span class="text-muted small">
+                                    <i class="far fa-clock"></i> @(appt.AppointmentTime?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa xác định")
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <i class="fas fa-user text-info"></i> <b>@appt.User?.FullName</b>
+                            </div>
+                            <div class="mb-2">
+                                <i class="fas fa-warehouse text-warning"></i> <b>@appt.Garage?.Address</b>
+                            </div>
+                            <div class="mb-2">
+                                <i class="fas fa-sticky-note text-secondary"></i> <span>@(string.IsNullOrWhiteSpace(appt.Notes) ? "(Không có)" : appt.Notes)</span>
+                            </div>
+                            <div class="mb-2">
+                                <i class="fas fa-car text-primary"></i> <b>Dịch vụ & xe:</b>
+                                <ul class="mb-0">
+                                    @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+                                    {
+                                        <li>
+                                            <span class="text-dark"><i class="fas fa-car-side"></i> <b>@detail.Vehicle?.Make @detail.Vehicle?.Model</b> (@detail.Vehicle?.LicensePlate)</span><br />
+                                            <span class="text-muted"><i class="fas fa-cogs"></i> Dịch vụ: @detail.Service?.ServiceName, <i class="fas fa-sort-numeric-up"></i> SL: @detail.Quantity</span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <form asp-action="UpdateStatus" asp-controller="Technician" method="post" class="mt-2 d-inline">
+                                <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-auto">
+                                        <select name="Status" class="form-select form-select-sm">
+                                            <option value="In_Progress" selected="@(appt.Status == "In_Progress")">In Progress</option>
+                                            <option value="Completed" selected="@(appt.Status == "Completed")">Completed</option>
+                                            <option value="Cancelled" selected="@(appt.Status == "Cancelled")">Cancelled</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-save"></i> Cập nhật
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form asp-action="Unassign" asp-controller="Technician" method="post" class="d-inline ms-2">
+                                <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chắn muốn bỏ nhận lịch này?');">
+                                    <i class="fas fa-times"></i> Hủy nhận lịch
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning"><i class="fas fa-exclamation-circle"></i> Bạn chưa nhận lịch nào.</div>
+        }
+    </div>
+</div>
+
+<script>
+function showTab(tab) {
+    document.getElementById('tabAll').style.display = (tab === 'all') ? 'block' : 'none';
+    document.getElementById('tabMine').style.display = (tab === 'mine') ? 'block' : 'none';
+    document.getElementById('btnAll').classList.toggle('active', tab === 'all');
+    document.getElementById('btnMine').classList.toggle('active', tab === 'mine');
+}
+
+// Tự động chuyển tab nếu có query string tab=mine
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('tab') === 'mine') {
+        showTab('mine');
+    } else {
+        showTab('all');
+    }
+};
+</script>
+
+<style>
+.card {
+    border-radius: 1rem;
+    transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 0 16px 2px #b3e5fc;
+}
+.badge {
+    font-size: 1rem;
+    font-weight: 500;
+}
+ul {
+    padding-left: 1.2rem;
+}
+</style>

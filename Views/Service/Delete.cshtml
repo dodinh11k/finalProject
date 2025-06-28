@@ -1,0 +1,16 @@
+﻿@model test_2.Models.Service
+@{
+    ViewData["Title"] = "Xóa dịch vụ";
+}
+
+<h2>Xác nhận xóa dịch vụ</h2>
+
+<div class="alert alert-danger">
+    Bạn có chắc chắn muốn xóa dịch vụ "<strong>@Model.ServiceName</strong>" không?
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="ServiceId" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="AdminList" class="btn btn-secondary">Hủy</a>
+</form>

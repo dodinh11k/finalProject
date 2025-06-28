@@ -1,0 +1,32 @@
+@model test_2.Models.Service
+@{
+    ViewBag.Title = "Sửa Dịch vụ";
+}
+<div class="d-flex justify-content-center align-items-center mt-7" style="min-height:80vh; margin-top: 100px !important;">
+    <div class="card shadow p-4" style="max-width: 500px; width: 100%; border-radius: 16px;">
+        <h2 class="text-center mb-4" style="font-weight:bold;">Sửa Dịch vụ</h2>
+        <form asp-action="EditService" method="post">
+            <input type="hidden" asp-for="ServiceId" />
+            <div class="mb-3">
+                <label class="form-label">Tên dịch vụ</label>
+                <input asp-for="ServiceName" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mô tả</label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Giá</label>
+                <input asp-for="Price" class="form-control" type="number" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Hình ảnh (URL)</label>
+                <input asp-for="image_url" class="form-control" />
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success px-4">Lưu</button>
+                <a href="@Url.Action("Services")" class="btn btn-secondary px-4">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div> 

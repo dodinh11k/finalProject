@@ -1,0 +1,91 @@
+﻿@model test_2.Models.AppointmentViewModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username") ?? "";
+    var userId = HttpContextAccessor.HttpContext.Session.GetString("UserId") ?? "";
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "";
+    var phone = HttpContextAccessor.HttpContext.Session.GetString("Phone") ?? "";
+    var role = HttpContextAccessor.HttpContext.Session.GetString("Role") ?? "";
+
+    if (string.IsNullOrEmpty(username))
+    {
+        HttpContextAccessor.HttpContext.Response.Redirect("/Account/Login");
+    }
+
+    ViewData["Title"] = "Đặt lịch hẹn";
+}
+
+<h2>Đặt lịch hẹn</h2>
+
+<!-- Hiển thị thông tin người dùng -->
+<div class="mb-3">
+    <p><strong>Họ tên:</strong> @(string.IsNullOrEmpty(fullname) ? "Không có" : fullname)</p>
+    <p><strong>Số điện thoại:</strong> @(string.IsNullOrEmpty(phone) ? "Không có" : phone)</p>
+</div>
+
+<form asp-action="Create" method="post">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label asp-for="VehicleMake">Hãng xe</label>
+        <input asp-for="VehicleMake" class="form-control" />
+        <span asp-validation-for="VehicleMake" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VehicleModel">Dòng xe</label>
+        <input asp-for="VehicleModel" class="form-control" />
+        <span asp-validation-for="VehicleModel" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LicensePlate">Biển số</label>
+        <input asp-for="LicensePlate" class="form-control" />
+        <span asp-validation-for="LicensePlate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ServiceId">Dịch vụ</label>
+        <select asp-for="ServiceId" asp-items="Model.ServiceList" class="form-control">
+            <option value="">-- Chọn dịch vụ --</option>
+        </select>
+        <span asp-validation-for="ServiceId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GarageId">Garage</label>
+        <select asp-for="GarageId" asp-items="Model.GarageList" class="form-control">
+            <option value="">-- Chọn garage --</option>
+        </select>
+        <span asp-validation-for="GarageId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AppointmentTime">Thời gian hẹn</label>
+        <input asp-for="AppointmentTime" type="datetime-local" class="form-control" id="appointmentTime" />
+        <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Notes">Ghi chú</label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+        <span asp-validation-for="Notes" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Đặt lịch</button>
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("appointmentTime");
+            if (input && !input.value) {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                input.value = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+            }
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

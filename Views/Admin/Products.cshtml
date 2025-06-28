@@ -1,0 +1,40 @@
+@model IEnumerable<test_2.Models.Product>
+@{
+    ViewBag.Title = "Quản lý Sản phẩm";
+}
+<h2>Quản lý Sản phẩm</h2>
+<a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary mb-3 mt-4">Quay về trang chính Admin</a>
+<a href="@Url.Action("CreateProduct")" class="btn btn-success mb-3">Thêm Sản phẩm</a>
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Tên sản phẩm</th>
+            <th>Mô tả</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Ảnh</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var p in Model) {
+        <tr>
+            <td>@p.ProductId</td>
+            <td>@p.ProductName</td>
+            <td>@p.Description</td>
+            <td>@p.Price.ToString("N0") đ</td>
+            <td>@p.StockQuantity</td>
+            <td>
+                @if (!string.IsNullOrEmpty(p.ImageUrl)) {
+                    <img src="@Url.Content("~/" + p.ImageUrl)" alt="Ảnh" style="height:50px;object-fit:cover;" />
+                }
+            </td>
+            <td>
+                <a href="@Url.Action("EditProduct", new { id = p.ProductId })" class="btn btn-primary btn-sm">Sửa</a>
+                <a href="@Url.Action("DeleteProduct", new { id = p.ProductId })" class="btn btn-danger btn-sm" onclick="return confirm('Xóa sản phẩm này?');">Xóa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table> 
