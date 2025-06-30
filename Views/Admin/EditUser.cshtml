@@ -51,13 +51,12 @@
                     <option value="Admin">Admin</option>
                     <option value="Staff">Staff</option>
                     <option value="Technician">Technician</option>
-                    <option value="Customer">Customer</option>
+                    <option value="User">User</option>
                 </select>
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
 
             <div class="form-check mb-3">
-                <input type="hidden" asp-for="IsActive" value="false" />
                 <input asp-for="IsActive" class="form-check-input" id="isActiveCheck" />
                 <label class="form-check-label" for="isActiveCheck">Active</label>
                 <span asp-validation-for="IsActive" class="text-danger"></span>

@@ -74,7 +74,6 @@ namespace test_2.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.Remove("IsActive");
                 return View(user);
             }
 
@@ -102,7 +101,6 @@ namespace test_2.Controllers
             }
             catch (DbUpdateException ex)
             {
-                ModelState.Remove("IsActive");
                 ModelState.AddModelError("", "Lỗi khi cập nhật: " + ex.Message);
                 user.IsActive = userInDb.IsActive;
                 return View(user);

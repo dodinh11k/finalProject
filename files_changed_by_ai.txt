@@ -30,3 +30,18 @@ Các file đã sửa hoặc thêm mới bởi AI trong quá trình hỗ trợ:
 ---
 
 Bạn chỉ cần commit các file trên để đồng bộ toàn bộ tính năng và fix đã thực hiện. 
+
+Files changed by AI for Email Notification Feature:
+
+1. Services/IEmailService.cs - Created interface for email service
+2. Services/EmailService.cs - Created implementation using MailKit
+3. Services/EmailTestService.cs - Created test service for email functionality
+4. Controllers/EmailTestController.cs - Created test controller
+5. Views/EmailTest/Test.cshtml - Created test view
+6. Controllers/AppointmentController.cs - Updated to send email on successful appointment booking
+7. Program.cs - Added email service registrations
+8. appsettings.json - Added email configuration
+9. EMAIL_SETUP.md - Created comprehensive setup guide
+10. files_changed_by_ai.txt - Updated this file
+
+Email notification feature is now fully implemented and will send confirmation emails when users successfully book appointments. 

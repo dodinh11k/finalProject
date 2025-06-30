@@ -5,16 +5,19 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using test_2.Models;
+using test_2.Services;
 using System.Collections.Generic;
 
 [Route("Appointment")]
 public class AppointmentController : Controller
 {
     private readonly MyGarageFinalContext _context;
+    private readonly IEmailService _emailService;
 
-    public AppointmentController(MyGarageFinalContext context)
+    public AppointmentController(MyGarageFinalContext context, IEmailService emailService)
     {
         _context = context;
+        _emailService = emailService;
     }
 
     [HttpGet("Create")]
@@ -117,6 +120,34 @@ public class AppointmentController : Controller
             };
             _context.AppointmentVehicleDetails.Add(detail);
             await _context.SaveChangesAsync();
+
+            // Lấy thông tin cần thiết cho email
+            var service = await _context.Services.FirstOrDefaultAsync(s => s.ServiceId == model.ServiceId);
+            var garage = await _context.Garages.FirstOrDefaultAsync(g => g.GarageId == model.GarageId);
+            var technicianInfo = await _context.Users.FirstOrDefaultAsync(u => u.UserId == appointment.TechnicianId);
+
+            // Gửi email thông báo đặt lịch thành công
+            if (!string.IsNullOrEmpty(user.Email))
+            {
+                try
+                {
+                    await _emailService.SendAppointmentConfirmationEmailAsync(
+                        user.Email,
+                        user.FullName ?? user.Username,
+                        appointment.AppointmentId.ToString(),
+                        appointment.AppointmentTime ?? DateTime.Now,
+                        service?.ServiceName ?? "Không xác định",
+                        garage?.Address ?? "Không xác định",
+                        technicianInfo?.FullName ?? technicianInfo?.Username ?? "Không xác định"
+                    );
+                }
+                catch (Exception emailEx)
+                {
+                    // Log lỗi email nhưng không ảnh hưởng đến việc tạo appointment
+                    // Có thể log vào file hoặc database
+                    Console.WriteLine($"Lỗi gửi email: {emailEx.Message}");
+                }
+            }
 
             return RedirectToAction("Details", "Appointment", new { id = appointment.AppointmentId });
         }

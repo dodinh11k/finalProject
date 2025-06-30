@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Cho phép sử dụng HttpContext
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<EmailTestService>();
 // Kết nối DB
 var connectionString = builder.Configuration.GetConnectionString("MyGarageFinalConnection");
 builder.Services.AddDbContext<MyGarageFinalContext>(options =>
