@@ -148,7 +148,7 @@ namespace test_2.Controllers
                     Username = email,
                     Email = email,
                     FullName = name ?? "Người dùng Google",
-                    Role = "Customer",
+                    Role = "User",
                     IsActive = true,
                     PasswordHash = "",
                     CreatedAt = DateTime.Now
@@ -162,13 +162,13 @@ namespace test_2.Controllers
             HttpContext.Session.SetString("UserId", user.UserId.ToString());
             HttpContext.Session.SetString("Username", user.Username);
             HttpContext.Session.SetString("FullName", user.FullName ?? "");
-            HttpContext.Session.SetString("Role", user.Role ?? "Customer");
+            HttpContext.Session.SetString("Role", user.Role ?? "User");
             HttpContext.Session.SetString("Phone", user.Phone ?? "");
 
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role ?? "Customer")
+                new Claim(ClaimTypes.Role, user.Role ?? "User")
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

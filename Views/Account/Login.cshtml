@@ -13,7 +13,7 @@
                        value="@(ViewBag.RememberedUsername ?? "")" />
             </div>
             <div class="input-group">
-                <input asp-for="Password" type="password" placeholder="Mật khẩu" required />
+                <input asp-for="Password" class="form-control" type="password" placeholder="Mật khẩu" required />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <!-- ✅ Checkbox Remember Me -->
