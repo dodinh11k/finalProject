@@ -1,4 +1,4 @@
-﻿@model test_2.Models.LoginViewModel
+﻿    @model test_2.Models.LoginViewModel
 @{
     ViewData["Title"] = "Đăng nhập";
 }
@@ -9,11 +9,11 @@
         <h2>Đăng nhập</h2>
         <form asp-controller="AccountLogin" asp-action="Login" method="post" class="login-form">
             <div class="input-group">
-                <input asp-for="Username" class="form-control" placeholder="Tên đăng nhập"
+                <input asp-for="Username" class="form-control"  placeholder="Tên đăng nhập"
                        value="@(ViewBag.RememberedUsername ?? "")" />
             </div>
             <div class="input-group">
-                <input asp-for="Password" type="password" placeholder="Mật khẩu" required />
+                <input asp-for="Password" class="form-control" type="password" placeholder="Mật khẩu" required />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <!-- ✅ Checkbox Remember Me -->
@@ -23,10 +23,10 @@
                     Ghi nhớ đăng nhập
                 </label>
             </div>
-            <button type="submit">Đăng nhập</button>
+            <button  type="submit">Đăng nhập</button>
             <a asp-action="LoginByGoogle" asp-controller="Account"
                class="btn btn-outline-danger d-flex align-items-center gap-2 justify-content-center w-100"
-               style="height: 45px;">
+               style="height: 45px;" >
                 <img src="https://developers.google.com/identity/images/g-logo.png"
                      alt="Google Logo"
                      style="width: 20px; height: 20px;">
