@@ -2,13 +2,16 @@
 @{
     ViewData["Title"] = "Thông tin cá nhân";
 }
-
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success">@TempData["success"]</div>
+}
 <div class="container mt-5">
     <h2 class="text-center mb-4">Thông tin cá nhân</h2>
 
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form asp-action="AccountUpdate" method="post">
+            <form asp-action="Profile" method="post">
                 <div class="form-group mb-3">
                     <label for="Username">Tên đăng nhập</label>
                     <input type="text" class="form-control" id="Username" value="@Model.Username" readonly />
