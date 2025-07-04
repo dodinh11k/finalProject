@@ -32,33 +32,29 @@ namespace test_2.Controllers
             return View("~/Views/Account/Profile.cshtml", user);
         }
 
-        // [POST] /Account/UpdateProfile
-        [HttpPost("UpdateProfile")]
-        public IActionResult UpdateProfile(string FullName, string Email, string Phone, string Address)
-        {
-            var username = HttpContext.Session.GetString("Username");
+   // [POST] /Account/Profile
+ [HttpPost("Profile")]
+ public IActionResult Profile(string FullName, string Email, string Phone, string Address)
+ {
+     var username = HttpContext.Session.GetString("Username");
+     if (string.IsNullOrEmpty(username))
+         return RedirectToAction("Login", "AccountLogin");
 
-            if (string.IsNullOrEmpty(username))
-                return RedirectToAction("Login", "AccountLogin");
+     var user = _context.Users.FirstOrDefault(u => u.Username == username);
+     if (user == null)
+         return RedirectToAction("Login", "AccountLogin");
 
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+     user.FullName = FullName;
+     user.Email = Email;
+     user.Phone = Phone;
+     user.Address = Address;
 
-            if (user != null)
-            {
-                user.FullName = FullName;
-                user.Email = Email;
-                user.Phone = Phone;
-                user.Address = Address;
+     _context.SaveChanges();
+     HttpContext.Session.SetString("FullName", user.FullName ?? "");
 
-                _context.SaveChanges();
-
-                // Cập nhật lại session tên nếu cần
-                HttpContext.Session.SetString("FullName", user.FullName ?? "");
-            }
-
-            TempData["success"] = "Cập nhật thông tin thành công!";
-            return RedirectToAction("Profile"); // Action name = Profile
-        }
+     TempData["success"] = "Cập nhật thông tin thành công!";
+     return View("~/Views/Account/Profile.cshtml", user);
+ }
         [HttpGet("ChangePassword")]
         public IActionResult ChangePassword()
         {
