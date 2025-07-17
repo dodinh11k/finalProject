@@ -1,0 +1,53 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username") ?? "";
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "";
+    var role = HttpContextAccessor.HttpContext.Session.GetString("Role") ?? "";
+}
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+        <div>
+            <a class="navbar-brand brand-logo" href="/Admin/Dashboard" style="text-decoration:none;">
+                <div style="display:flex; flex-direction:column; align-items:center;">
+                    <span style="font-size:36px; font-weight:bold; color:#D6B15B; letter-spacing:2px; line-height:1;">MY</span>
+                    <span style="font-size:20px; font-weight:500; color:#D6B15B; letter-spacing:8px; margin-top:-4px;">GARAGE</span>
+                </div>
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="/Admin/Dashboard" style="text-decoration:none;">
+                <span style="font-size:24px; font-weight:bold; color:#D6B15B; letter-spacing:2px;">MY</span>
+            </a>
+        </div>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-top ms-auto">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown user-dropdown">
+                @if (string.IsNullOrEmpty(username))
+                {
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="mdi mdi-account-circle-outline"></i> Tài khoản
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/Account/Login"><i class="mdi mdi-login me-2"></i> Đăng nhập</a></li>
+                        <li><a class="dropdown-item" href="/Account/Register"><i class="mdi mdi-account-plus me-2"></i> Đăng ký</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="img-xs rounded-circle" src="/staradmin/images/faces/face8.jpg" alt="Profile image"> @fullname
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/Account/Profile"><i class="mdi mdi-account-outline me-2"></i> Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="/Account/ChangePassword"><i class="mdi mdi-lock-outline me-2"></i> Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="/Account/Logout"><i class="mdi mdi-logout me-2"></i> Đăng xuất</a></li>
+                    </ul>
+                }
+            </li>
+        </ul>
+    </div>
+</nav> 

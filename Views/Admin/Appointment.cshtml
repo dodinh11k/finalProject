@@ -1,0 +1,109 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model IEnumerable<test_2.Models.Appointment>
+
+@{
+    ViewBag.Title = "Quản lý Đơn đặt lịch";
+    var query = Context.Request.Query;
+}
+
+<h2>Quản lý Đơn đặt lịch (Order)</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary mb-3 mt-4">Quay về trang chính Admin</a>
+
+<form asp-action="Orders" method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-3">
+            <input name="customerName" class="form-control" placeholder="Tên khách hàng" value="@query["customerName"]" />
+        </div>
+        <div class="col-md-2">
+            <input name="phone" class="form-control" placeholder="SĐT" value="@query["phone"]" />
+        </div>
+        <div class="col-md-2">
+            <input type="date" name="date" class="form-control" value="@query["date"]" />
+        </div>
+        <div class="col-md-3">
+            <input name="vehicleKeyword" class="form-control" placeholder="Hãng, Model hoặc Biển số xe" value="@query["vehicleKeyword"]" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+        </div>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">Không có lịch hẹn nào khớp với tìm kiếm.</div>
+}
+else
+{
+    @foreach (var group in Model.GroupBy(x => x.User?.FullName ?? "Không rõ"))
+    {
+        <div class="bg-light p-2 mb-2 rounded border">
+            <h5>Khách hàng: @group.Key</h5>
+        </div>
+
+        <table class="table table-bordered mb-5">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>SĐT</th>
+                    <th>Garage</th>
+                    <th>Địa chỉ Garage</th>
+                    <th>Kỹ thuật viên</th>
+                    <th>Thời gian</th>
+                    <th>Trạng thái</th>
+                    <th>Ghi chú</th>
+                    <th>Dịch vụ & Xe</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var o in group)
+                {
+                    <tr>
+                        <td>@o.AppointmentId</td>
+                        <td>@o.User?.Phone</td>
+                        <td>@o.Garage?.Name</td>
+                        <td>@o.Garage?.Address</td>
+                        <td>@o.Technician?.FullName</td>
+                        <td>@(o.AppointmentTime?.ToString("dd/MM/yyyy HH:mm"))</td>
+                        <td>@o.Status</td>
+                        <td>@o.Notes</td>
+                        <td>
+                            @if (o.AppointmentVehicleDetails != null && o.AppointmentVehicleDetails.Any())
+                            {
+                                <ul>
+                                    @foreach (var detail in o.AppointmentVehicleDetails)
+                                    {
+                                        <li>
+                                            <strong>Xe:</strong> @detail.Vehicle?.Make @detail.Vehicle?.Model (@detail.Vehicle?.LicensePlate)<br />
+                                            <strong>Dịch vụ:</strong> @detail.Service?.ServiceName<br />
+                                            <strong>Số lượng:</strong> @detail.Quantity<br />
+                                            @if (!string.IsNullOrWhiteSpace(detail.Note))
+                                            {
+                                                <strong>Ghi chú:</strong> @detail.Note
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditOrder", new { id = o.AppointmentId })" class="btn btn-primary btn-sm">Sửa</a>
+                            <a href="@Url.Action("DeleteOrder", new { id = o.AppointmentId })" class="btn btn-danger btn-sm"
+                               onclick="return confirm('Xác nhận xóa lịch hẹn này?');">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

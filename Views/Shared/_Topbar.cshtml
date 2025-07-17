@@ -1,0 +1,40 @@
+﻿@* @{ *@
+@*     var username = ViewData["username"] as string ?? ""; *@
+@*     var fullname = ViewData["fullname"] as string ?? ""; *@
+@* } *@
+@* <div class="header__top"> *@
+@*     <div class="container"> *@
+@*         <div class="row"> *@
+@*             <div class="col-lg-6 col-md-6"> *@
+@*                 <div class="header__top__left"> *@
+@*                     <ul> *@
+@*                         <li><i class="fa fa-envelope"></i> support@mygarage.com</li> *@
+@*                         <li><i class="fa fa-phone"></i> 1900 1234</li> *@
+@*                     </ul> *@
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="col-lg-6 col-md-6"> *@
+@*                 <div class="header__top__right"> *@
+@*                     <div class="header__top__right__social"> *@
+@*                         <a href="#"><i class="fa fa-facebook"></i></a> *@
+@*                         <a href="#"><i class="fa fa-twitter"></i></a> *@
+@*                         <a href="#"><i class="fa fa-linkedin"></i></a> *@
+@*                         <a href="#"><i class="fa fa-pinterest-p"></i></a> *@
+@*                     </div> *@
+@*                     <div class="header__top__right__auth"> *@
+@*                         @if (string.IsNullOrEmpty(username)) *@
+@*                         { *@
+@*                             <a href="@Url.Action("Login", "AccountLogin")"><i class="fa fa-user"></i> Đăng nhập</a> *@
+@*                             <a href="@Url.Action("Register", "AccountRegister")"><i class="fa fa-user"></i> Đăng kí</a> *@
+@*                         } *@
+@*                         else *@
+@*                         { *@
+@*                             <span><i class="fa fa-user"></i> Xin chào, @fullname</span> *@
+@*                             <a href="@Url.Action("Logout", "AccountLogin")" style="margin-left:10px;">Đăng xuất</a> *@
+@*                         } *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@

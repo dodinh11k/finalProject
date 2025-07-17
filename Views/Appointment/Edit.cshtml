@@ -1,0 +1,161 @@
+﻿@model test_2.Models.AppointmentEditViewModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Sửa lịch hẹn";
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "";
+    var phone = HttpContextAccessor.HttpContext.Session.GetString("Phone") ?? "";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #152A16;
+    }
+
+    .appointment-container {
+        background-color: #fff;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        max-width: 700px;
+        margin: 50px auto;
+    }
+
+    h2 {
+        color: #152A16;
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+    }
+
+    label {
+        color: #152A16;
+        font-weight: 500;
+    }
+
+    .form-control, select, textarea {
+        background-color: #f4f4f4;
+        border: 1px solid #ccc;
+        color: #152A16;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #152A16;
+            box-shadow: 0 0 0 0.2rem rgba(21, 42, 22, 0.2);
+        }
+
+    .text-danger {
+        color: #d9534f !important;
+    }
+
+    .btn-custom {
+        background-color: #152A16;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 10px 25px;
+        transition: 0.3s ease;
+        border: none;
+    }
+
+        .btn-custom:hover {
+            background-color: #0F1F10;
+            color: #fff;
+        }
+
+    .user-info {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+        .user-info strong {
+            color: #152A16;
+            font-weight: 600;
+        }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="appointment-container">
+    <h2>Sửa lịch hẹn</h2>
+
+    <div class="user-info">
+        <p><strong>Họ tên:</strong> @fullname</p>
+        <p><strong>SĐT:</strong> @phone</p>
+    </div>
+
+    <form asp-action="Edit" method="post">
+        @Html.HiddenFor(m => m.AppointmentId)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label asp-for="VehicleMake"></label>
+            <input asp-for="VehicleMake" class="form-control" />
+            <span asp-validation-for="VehicleMake" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="VehicleModel"></label>
+            <input asp-for="VehicleModel" class="form-control" />
+            <span asp-validation-for="VehicleModel" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LicensePlate"></label>
+            <input asp-for="LicensePlate" class="form-control" />
+            <span asp-validation-for="LicensePlate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ServiceId"></label>
+            <select asp-for="ServiceId" asp-items="Model.ServiceList" class="form-control">
+                <option value="">-- Chọn dịch vụ --</option>
+            </select>
+            <span asp-validation-for="ServiceId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="GarageId"></label>
+            <select asp-for="GarageId" asp-items="Model.GarageList" class="form-control">
+                <option value="">-- Chọn garage --</option>
+            </select>
+            <span asp-validation-for="GarageId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="AppointmentTime"></label>
+            <input asp-for="AppointmentTime" type="datetime-local" class="form-control" id="appointmentTime" />
+            <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Notes"></label>
+            <textarea asp-for="Notes" class="form-control"></textarea>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-custom">Lưu thay đổi</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("appointmentTime");
+            if (input && !input.value) {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                input.value = now.toISOString().slice(0, 16);
+            }
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

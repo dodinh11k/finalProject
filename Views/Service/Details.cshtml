@@ -1,0 +1,104 @@
+﻿@model test_2.Models.Service
+
+@{
+    ViewData["Title"] = "Thông tin chi tiết dịch vụ";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #1B2E1A;
+    }
+
+    .service-details-container {
+        padding: 50px 20px;
+    }
+
+    .service-title {
+        color: #1B2E1A;
+        font-weight: 700;
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .service-image {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        max-height: 420px;
+        object-fit: cover;
+    }
+
+    dl dt {
+        font-weight: bold;
+        color: #1B2E1A;
+        font-size: 1.05rem;
+    }
+
+    dl dd {
+        color: #333;
+        margin-bottom: 16px;
+        font-size: 1.05rem;
+    }
+
+    .btn-back {
+        background-color: #1B2E1A;
+        color: #EBE7DE;
+        border: none;
+        font-weight: 600;
+        margin-top: 30px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        transition: background 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-back:hover {
+            background-color: #132012;
+            color: #fff;
+        }
+</style>
+
+<div class="container service-details-container">
+    <h2 class="service-title">@Model.ServiceName</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <img src="@(
+                 !string.IsNullOrWhiteSpace(Model.image_url)
+                 ? Url.Content("~/" + Model.image_url.Trim())
+                 : Url.Content("~/images/RuaXe.png")
+                        )"
+                 alt="@Model.ServiceName"
+                 class="service-image" />
+        </div>
+
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">Mã dịch vụ:</dt>
+                <dd class="col-sm-8">@Model.ServiceId</dd>
+
+                <dt class="col-sm-4">Tên dịch vụ:</dt>
+                <dd class="col-sm-8">@Model.ServiceName</dd>
+
+                <dt class="col-sm-4">Giá:</dt>
+                <dd class="col-sm-8">@($"{Model.Price:N0} VNĐ")</dd>
+
+                <dt class="col-sm-4">Mô tả:</dt>
+                <dd class="col-sm-8">@Model.Description</dd>
+            </dl>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn-back" asp-controller="Service" asp-action="AdminList">← Quay lại</a>
+            }
+            else
+            {
+                <a class="btn-back" asp-controller="Service" asp-action="PublicList">← Quay lại</a>
+            }
+        </div>
+    </div>
+</div>
