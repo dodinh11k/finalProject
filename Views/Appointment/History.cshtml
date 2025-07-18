@@ -115,19 +115,27 @@
         @foreach (var appt in Model.Appointments.OrderByDescending(a => a.AppointmentTime))
         {
             var statusClass = "status-" + (appt.Status?.Replace(" ", "") ?? "Pending");
-
-            var technician = Model.Details.FirstOrDefault(d => d.AppointmentId == appt.AppointmentId)?.Vehicle?.User;
+            var technicianNames = string.Join(", ",
+                Model.Details
+                    .Where(d => d.AppointmentId == appt.AppointmentId && d.Technician != null)
+                    .Select(d => d.Technician.FullName ?? d.Technician.Username)
+                    .Where(name => !string.IsNullOrEmpty(name))
+            );
+            if (string.IsNullOrEmpty(technicianNames))
+            {
+                technicianNames = "Chưa phân công";
+            }
 
             <div class="history-card mb-4">
                 <h5>
                     Ngày hẹn:
                     @(appt.AppointmentTime.HasValue
-                        ? appt.AppointmentTime.Value.ToString("dd/MM/yyyy HH:mm")
-                        : "Chưa đặt")
-                </h5>
+                                ? appt.AppointmentTime.Value.ToString("dd/MM/yyyy HH:mm")
+                                : "Chưa đặt")
+        </h5>
 
                 <p><strong>Garage:</strong> @(appt.Garage?.Address ?? "Không rõ")</p>
-                <p><strong>Kỹ thuật viên:</strong> @(technician?.FullName ?? technician?.Username ?? "Không rõ")</p>
+                <p><i class="fa fa-user text-success"></i> <strong>Kỹ thuật viên:</strong> @technicianNames</p>
                 <p><strong>Ghi chú:</strong> @(string.IsNullOrWhiteSpace(appt.Notes) ? "(Không có ghi chú)" : appt.Notes)</p>
                 <p>
                     <strong>Trạng thái:</strong>
@@ -136,7 +144,7 @@
 
                 <h6 class="mt-3">Dịch vụ & Xe:</h6>
                 <ul>
-                    @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+            @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
                     {
                         <li>
                             <strong>Xe:</strong> @($"{detail.Vehicle?.Make ?? "Không rõ"} {detail.Vehicle?.Model ?? ""}")

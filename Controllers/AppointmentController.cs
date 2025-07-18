@@ -325,6 +325,7 @@ public class AppointmentController : Controller
             .Where(d => appointmentIds.Contains(d.AppointmentId))
             .Include(d => d.Vehicle)
             .Include(d => d.Service)
+            .Include(d => d.Technician)
             .ToListAsync();
 
         var viewModel = new AppointmentHistoryViewModel

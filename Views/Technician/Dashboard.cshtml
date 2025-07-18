@@ -228,7 +228,7 @@
                                                 @if (appointment.AppointmentVehicleDetails != null && appointment.AppointmentVehicleDetails.Any())
                                                 {
                                                     var technicians = appointment.AppointmentVehicleDetails
-                                                    .Select(d => d.Vehicle?.Technician?.FullName)
+                                                    .Select(d => d.Technician?.FullName)
                                                     .Where(name => !string.IsNullOrEmpty(name))
                                                     .Distinct()
                                                     .ToList();
@@ -272,6 +272,99 @@
                             <i class="fa fa-calendar-times fa-3x mb-3"></i>
                             <h5>Chưa có lịch hẹn nào</h5>
                             <p>Hệ thống sẽ hiển thị các lịch hẹn gần đây tại đây</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Công việc chờ nhận -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow border-0">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="fa fa-hand-paper-o text-warning"></i> Công việc chờ nhận
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @{
+                        var availableAppointments = ViewData["AvailableAppointments"] as List<test_2.Models.Appointment>;
+                    }
+                    @if (availableAppointments != null && availableAppointments.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mã lịch hẹn</th>
+                                        <th>Khách hàng</th>
+                                        <th>Dịch vụ</th>
+                                        <th>Thời gian</th>
+                                        <th>Trạng thái</th>
+                                        <th>Nhận việc</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var appointment in availableAppointments)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="badge bg-secondary">#@appointment.AppointmentId</span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <strong>@appointment.User?.FullName</strong>
+                                                    <br>
+                                                    <small class="text-muted">@appointment.User?.Phone</small>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if (appointment.AppointmentVehicleDetails != null && appointment.AppointmentVehicleDetails.Any())
+                                                {
+                                                    <div>
+                                                        @foreach (var detail in appointment.AppointmentVehicleDetails.Take(2))
+                                                        {
+                                                            <span class="badge bg-light text-dark me-1">
+                                                                @detail.Service?.ServiceName
+                                                            </span>
+                                                        }
+                                                        @if (appointment.AppointmentVehicleDetails.Count > 2)
+                                                        {
+                                                            <span class="badge bg-light text-dark">+@(appointment.AppointmentVehicleDetails.Count - 2) more</span>
+                                                        }
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <strong>@(appointment.AppointmentTime?.ToString("dd/MM/yyyy") ?? "N/A")</strong>
+                                                    <br>
+                                                    <small class="text-muted">@(appointment.AppointmentTime?.ToString("HH:mm") ?? "N/A")</small>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-secondary">@appointment.Status</span>
+                                            </td>
+                                            <td>
+                                                <form asp-action="AcceptJob" asp-controller="Technician" method="post" style="display:inline;">
+                                                    <input type="hidden" name="AppointmentId" value="@appointment.AppointmentId" />
+                                                    <button type="submit" class="btn btn-sm btn-warning">
+                                                        <i class="fa fa-hand-pointer-o"></i> Nhận việc
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info text-center mb-0">
+                            Không có công việc chờ nhận nào.
                         </div>
                     }
                 </div>

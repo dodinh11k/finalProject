@@ -36,11 +36,25 @@ public class TechnicianController : Controller
         var completedCount = await _context.Appointments.CountAsync(a => a.Status == "Completed");
         var todayCount = await _context.Appointments.CountAsync(a => a.AppointmentTime >= today && a.AppointmentTime < tomorrow);
 
+        // Sửa: Chỉ lấy lịch hẹn mà technician này được phân công
         var recentAppointments = await _context.Appointments
             .Include(a => a.User)
             .Include(a => a.Garage)
-            .Include(a => a.AppointmentVehicleDetails)
-                .ThenInclude(avd => avd.Service)
+            .Include(a => a.AppointmentVehicleDetails).ThenInclude(avd => avd.Service)
+            .Include(a => a.AppointmentVehicleDetails).ThenInclude(avd => avd.Technician)
+            .Where(a => a.AppointmentVehicleDetails.Any(d => d.TechnicianId == technicianId))
+            .OrderByDescending(a => a.AppointmentTime)
+            .Take(5)
+            .ToListAsync();
+
+        // Lấy các lịch hẹn chưa có technician nhận
+        var availableAppointments = await _context.Appointments
+            .Include(a => a.User)
+            .Include(a => a.Garage)
+            .Include(a => a.AppointmentVehicleDetails).ThenInclude(avd => avd.Service)
+            .Where(a => a.AppointmentVehicleDetails.Any(d => d.TechnicianId == null))
+            .OrderByDescending(a => a.AppointmentTime)
+            .Take(10)
             .ToListAsync();
 
         ViewData["PendingCount"] = pendingCount;
@@ -48,6 +62,7 @@ public class TechnicianController : Controller
         ViewData["CompletedCount"] = completedCount;
         ViewData["TodayCount"] = todayCount;
         ViewData["RecentAppointments"] = recentAppointments.OrderByDescending(a => a.AppointmentTime).Take(5).ToList();
+        ViewData["AvailableAppointments"] = availableAppointments;
 
         return View("~/Views/Technician/Dashboard.cshtml");
     }
