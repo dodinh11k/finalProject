@@ -1,0 +1,55 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model test_2.Models.Appointment
+@{
+    ViewBag.Title = "Sửa Order";
+    var technicians = ViewBag.Technicians as List<test_2.Models.User>;
+    var detail = Model.AppointmentVehicleDetails?.FirstOrDefault();
+}
+<div class="d-flex justify-content-center align-items-center mt-7" style="min-height:80vh; margin-top: 100px !important;">
+    <div class="card shadow p-4" style="max-width: 500px; width: 100%; border-radius: 16px;">
+        <h2 class="text-center mb-4" style="font-weight:bold;">Sửa Order</h2>
+        <form asp-action="EditOrder" method="post">
+            <input type="hidden" name="AppointmentId" value="@Model.AppointmentId" />
+            <div class="mb-3">
+                <label class="form-label">Trạng thái</label>
+                <select name="Status" class="form-select">
+                    <option value="Pending" selected="@(Model.Status == "Pending")">Pending</option>
+                    <option value="WaitingForAccept" selected="@(Model.Status == "WaitingForAccept")">Waiting For Accept</option>
+                    <option value="In_Progress" selected="@(Model.Status == "In_Progress")">In Progress</option>
+                    <option value="Completed" selected="@(Model.Status == "Completed")">Completed</option>
+                    <option value="Cancelled" selected="@(Model.Status == "Cancelled")">Cancelled</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ghi chú</label>
+                <input name="Notes" class="form-control" value="@Model.Notes" />
+            </div>
+
+            @if (detail != null)
+            {
+                <div class="mb-3">
+                    <label class="form-label">Kỹ thuật viên phụ trách</label>
+                    <select name="TechnicianId" class="form-select">
+                        <option value="">-- Chưa gán --</option>
+                        @if (technicians != null)
+                        {
+                            foreach (var tech in technicians)
+                            {
+                                <option value="@tech.UserId" selected="@(detail.TechnicianId == tech.UserId)">
+                                    @tech.FullName (@tech.Username)
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+            }
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success px-4">Lưu</button>
+                <a href="@Url.Action("Orders")" class="btn btn-secondary px-4">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>

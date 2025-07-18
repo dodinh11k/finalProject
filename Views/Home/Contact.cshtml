@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Liên hệ";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #EBE7DE; /* Màu chữ be sáng */
+    }
+
+    .contact-card {
+        background-color: #EBE7DE; /* Xanh rêu đậm */
+        color: #152A16;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+        .contact-card h5 {
+            color: #EBE7DE;
+            font-weight: bold;
+        }
+
+        .contact-card p i {
+            color: #A8D5A2; /* Xanh nhạt nhẹ cho icon */
+            padding-right: 8px;
+        }
+
+    .form-control, .form-control:focus {
+        background-color: #2c2c2c;
+        color: #EBE7DE;
+        border: 1px solid #444;
+    }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+    .btn-primary {
+        background-color: #EBE7DE;
+        border-color: #EBE7DE;
+        color: #152A16;
+        font-weight: bold;
+    }
+
+        .btn-primary:hover {
+            background-color: #D6D2C9;
+            color: #152A16;
+        }
+
+    .text-primary {
+        color: #152A16 !important;
+    }
+</style>
+
+<div class="container py-5">
+    <h2 class="text-center text-primary mb-4">Liên hệ với chúng tôi</h2>
+
+    <div class="row g-5">
+        <!-- Thông tin liên hệ -->
+        <div class="col-md-6">
+            <div class="p-4 contact-card">
+                <h5 class="mb-3"><i class="fa fa-info-circle me-2"></i>Thông tin liên hệ</h5>
+                <p><i class="fa fa-map-marker me-2"></i><strong>Địa chỉ:</strong> 123 Nguyễn Văn Linh, Quận 7, TP. HCM</p>
+                <p><i class="fa fa-phone me-2"></i><strong>Hotline:</strong> 1900 9999</p>
+                <p><i class="fa fa-envelope me-2"></i><strong>Email:</strong> support@mygarage.vn</p>
+            </div>
+        </div>
+
+        <!-- Form liên hệ -->
+        <div class="col-md-6">
+            <div class="p-4 contact-card border border-secondary">
+                <h5 class="mb-3"><i class="fa fa-paper-plane me-2"></i>Gửi phản hồi</h5>
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên</label>
+                        <input type="text" class="form-control rounded-3" placeholder="Nhập họ tên của bạn">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control rounded-3" placeholder="Email liên hệ">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nội dung</label>
+                        <textarea class="form-control rounded-3" rows="4" placeholder="Viết nội dung bạn muốn phản hồi..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fa fa-send-o"></i> Gửi phản hồi
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome nếu chưa có -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />

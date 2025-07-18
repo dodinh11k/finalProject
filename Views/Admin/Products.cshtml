@@ -1,0 +1,132 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model IEnumerable<test_2.Models.Product>
+@{
+    ViewBag.Title = "Quản lý Sản phẩm";
+}
+
+<style>
+    body {
+        background-color: #1e1e1e;
+        color: #fff;
+    }
+
+    .table {
+        background-color: #2b2b2b;
+        color: #f1f1f1;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .table thead {
+            background-color: #343a40;
+            color: #ffc107;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+        .table img {
+            border-radius: 6px;
+            border: 1px solid #555;
+        }
+
+    h2 {
+        font-weight: bold;
+        margin-top: 30px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+</style>
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<div class="d-flex justify-content-between align-items-center my-4">
+    <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary">← Trang chính Admin</a>
+    <a href="@Url.Action("CreateProduct")" class="btn btn-success">➕ Thêm Sản phẩm</a>
+</div>
+
+@if (!Model.Any())
+{
+    <p class="text-warning">Chưa có sản phẩm nào.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Mô tả</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Ảnh</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.ProductId</td>
+                        <td>@p.ProductName</td>
+                        <td>@p.Description</td>
+                        <td>@p.Price.ToString("N0") đ</td>
+                        <td>@p.StockQuantity</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(p.ImageUrl))
+                            {
+                                <img src="@Url.Content("~/" + p.ImageUrl)" alt="Ảnh sản phẩm" style="height:60px; width: 60px; object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">Không có ảnh</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditProduct", new { id = p.ProductId })" class="btn btn-sm btn-primary">Sửa</a>
+                            <a href="@Url.Action("DeleteProduct", new { id = p.ProductId })" class="btn btn-sm btn-danger" onclick="return confirm('Xóa sản phẩm này?');">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

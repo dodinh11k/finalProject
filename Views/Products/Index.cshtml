@@ -1,0 +1,145 @@
+﻿@model IEnumerable<test_2.Models.Product>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #152A16;
+    }
+
+    .product-card {
+        background-color: #EBE7DE;
+        color: #152A16;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .product-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+    .product-title {
+        font-weight: bold;
+        color: #152A16;
+        font-size: 1.1rem;
+    }
+
+    .product-price {
+        color: #C6862B;
+        font-weight: bold;
+    }
+
+    .product-stock {
+        font-size: 0.9rem;
+        color: #777;
+    }
+
+    .btn-custom {
+        background-color: #152A16;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 12px;
+        transition: 0.3s;
+        font-size: 0.9rem;
+    }
+
+        .btn-custom:hover {
+            background-color: #0F1F10;
+        }
+
+    .btn-outline-heart {
+        background-color: transparent;
+        color: #C0392B;
+        border: 1px solid #C0392B;
+        transition: 0.3s;
+    }
+
+        .btn-outline-heart:hover {
+            background-color: #C0392B;
+            color: #fff;
+        }
+
+    .alert {
+        background-color: #fff8e1;
+        border: 1px solid #ddd;
+        color: #152A16;
+    }
+</style>
+
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["info"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData["info"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h2 class="mb-4 text-center" style="color: #152A16; font-weight: bold;">Danh sách sản phẩm</h2>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="product-card">
+                <img src="@Url.Content("~/" + product.ImageUrl)" class="card-img-top" alt="@product.ProductName" />
+                <div class="p-3 d-flex flex-column flex-grow-1 justify-content-between">
+                    <div>
+                        <div class="product-title">@product.ProductName</div>
+                        <p class="text-muted small">@product.Description</p>
+                        <p class="product-price">@product.Price.ToString("N0") đ</p>
+                        <p class="product-stock">Còn lại: @product.StockQuantity</p>
+                    </div>
+
+                    <div class="mt-3 d-grid gap-2">
+                        <form asp-controller="Order" asp-action="BuyNow" method="post">
+                            <input type="hidden" name="productId" value="@product.ProductId" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-custom w-100">
+                                <i class="fa fa-bolt"></i> Mua ngay
+                            </button>
+                        </form>
+
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productId" value="@product.ProductId" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-custom w-100">
+                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                            </button>
+                        </form>
+
+                        <form asp-controller="Favorites" asp-action="AddFavorite" method="post">
+                            <input type="hidden" name="productId" value="@product.ProductId" />
+                            <button type="submit" class="btn btn-outline-heart w-100">
+                                <i class="fa fa-heart"></i> Yêu thích
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />

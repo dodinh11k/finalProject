@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Test Email Service";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Test Email Service</h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["Success"]
+                        </div>
+                    }
+                    
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"]
+                        </div>
+                    }
+
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="email">Email để test:</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   placeholder="Nhập email để test" required>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Gửi Email Test</button>
+                        </div>
+                    </form>
+
+                    <div class="mt-4">
+                        <h5>Hướng dẫn:</h5>
+                        <ul>
+                            <li>Nhập email hợp lệ để test chức năng gửi email</li>
+                            <li>Email test sẽ chứa thông tin lịch hẹn mẫu</li>
+                            <li>Kiểm tra inbox và spam folder</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

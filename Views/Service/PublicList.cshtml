@@ -1,0 +1,144 @@
+﻿@model IEnumerable<test_2.Models.Service>
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Danh sách dịch vụ";
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role")
+               ?? User?.FindFirst("Role")?.Value;
+}
+
+<style>
+    body {
+        background-color: #EBE7DE; /* Nền đậm hơn */
+        color: #1B2E1A;            /* Chữ đậm hơn */
+    }
+
+    h2 {
+        color: #1B2E1A;
+        font-weight: bold;
+        margin: 40px 0 20px 0;
+        text-align: center;
+    }
+
+    .services-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 0 40px 60px;
+    }
+
+    .service-card {
+        width: 260px;
+        background-color: #EBE7DE;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .service-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .service-card-body {
+        padding: 15px;
+        color: #1B2E1A;
+    }
+
+    .service-card-title {
+        font-size: 1.15rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+    }
+
+    .service-id {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .service-actions {
+        margin-top: 12px;
+    }
+
+    .service-actions .btn {
+        margin-right: 6px;
+        font-size: 0.85rem;
+        padding: 4px 10px;
+    }
+
+    .no-services {
+        text-align: center;
+        padding: 50px;
+        font-size: 1.2rem;
+        color: #6c757d;
+    }
+
+    .btn-add {
+        background-color: #1B2E1A;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 6px;
+        margin-left: 40px;
+        margin-bottom: 20px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background 0.3s;
+    }
+
+    .btn-add:hover {
+        background-color: #132012;
+        color: #fff;
+    }
+</style>
+
+<h2>@ViewData["Title"]</h2>
+
+@if (role == "Admin")
+{
+    <div>
+        <a class="btn-add" asp-controller="Service" asp-action="Create">➕ Thêm dịch vụ</a>
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <p class="no-services">Không có dịch vụ nào.</p>
+}
+else
+{
+    <div class="services-container">
+        @foreach (var service in Model)
+        {
+            <div class="service-card">
+                <a asp-controller="Service" asp-action="Details" asp-route-id="@service.ServiceId">
+                    <img src="@(
+                         !string.IsNullOrWhiteSpace(service.image_url)
+                         ? Url.Content("~/" + service.image_url.Trim())
+                         : Url.Content("~/images/RuaXe.png")
+                                        )" alt="@service.ServiceName" />
+            </a>
+            <div class="service-card-body">
+                <div class="service-card-title">@service.ServiceName</div>
+                <div class="service-id">Mã: @service.ServiceId</div>
+
+            @if (role == "Admin")
+                    {
+                        <div class="service-actions mt-2">
+                            <a class="btn btn-sm btn-primary" asp-controller="Service" asp-action="Edit" asp-route-id="@service.ServiceId">Sửa</a>
+                            <a class="btn btn-sm btn-danger" asp-controller="Service" asp-action="Delete" asp-route-id="@service.ServiceId">Xóa</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}

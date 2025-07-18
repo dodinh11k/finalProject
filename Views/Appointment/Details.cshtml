@@ -1,0 +1,133 @@
+﻿@model test_2.Models.AppointmentDetailsViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết lịch hẹn";
+    var appointment = Model.Appointment;
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #152A16;
+    }
+
+    .appointment-details {
+        background-color: #fff;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        margin-top: 40px;
+    }
+
+        .appointment-details h2 {
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #152A16;
+        }
+
+    .info-item {
+        margin-bottom: 10px;
+        font-size: 1rem;
+    }
+
+        .info-item strong {
+            color: #152A16;
+            font-weight: 600;
+        }
+
+    .table th {
+        background-color: #152A16;
+        color: #fff;
+        text-align: center;
+    }
+
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .btn-custom {
+        background-color: #152A16;
+        color: #fff;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        border: none;
+    }
+
+        .btn-custom:hover {
+            background-color: #0F1F10;
+            color: #fff;
+        }
+
+    .btn-outline-custom {
+        background-color: transparent;
+        color: #152A16;
+        border: 2px solid #152A16;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: 0.3s ease;
+    }
+
+        .btn-outline-custom:hover {
+            background-color: #152A16;
+            color: #fff;
+        }
+</style>
+
+<div class="container appointment-details">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="mb-4">
+        <div class="info-item"><strong>Họ tên:</strong> @(appointment.User?.FullName ?? "Không có")</div>
+        <div class="info-item"><strong>Số điện thoại:</strong> @(appointment.User?.Phone ?? "Không có")</div>
+        <div class="info-item"><strong>Garage:</strong> @(appointment.Garage?.Address ?? "Không rõ")</div>
+        <div class="info-item">
+            <strong>Thời gian hẹn:</strong>
+            @((appointment.AppointmentTime.HasValue)
+                        ? appointment.AppointmentTime.Value.ToString("dd/MM/yyyy HH:mm")
+                        : "Không xác định")
+        </div>
+        <div class="info-item"><strong>Trạng thái:</strong> @appointment.Status</div>
+        <div class="info-item"><strong>Ghi chú:</strong> @(string.IsNullOrWhiteSpace(appointment.Notes) ? "(Không có ghi chú)" : appointment.Notes)</div>
+    </div>
+
+    <hr />
+    <h4 class="mb-3">Dịch vụ theo xe</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên xe</th>
+                <th>Biển số</th>
+                <th>Dịch vụ</th>
+                <th>Số lượng</th>
+                <th>Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detail in Model.VehicleDetails)
+            {
+                <tr>
+                    <td>@($"{detail.Vehicle?.Make ?? "Không rõ"} {detail.Vehicle?.Model ?? ""}")</td>
+                    <td>@(detail.Vehicle?.LicensePlate ?? "Không rõ")</td>
+                    <td>@(detail.Service?.ServiceName ?? "Không rõ")</td>
+                    <td>@detail.Quantity</td>
+                    <td>@(string.IsNullOrWhiteSpace(detail.Note) ? "(Không có)" : detail.Note)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-4 d-flex justify-content-between">
+        <a asp-action="History" class="btn-outline-custom">
+            <i class="fa fa-arrow-left"></i> Quay lại danh sách
+        </a>
+        <a asp-action="Create" class="btn-custom">
+            <i class="fa fa-plus"></i> Đặt lịch mới
+        </a>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />

@@ -1,0 +1,74 @@
+﻿body, html {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+    background: url('/images/3.png') no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: brightness(0.8);
+}
+
+.footer {
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+}
+
+.login-page {
+    display: flex;
+    justify-content: flex-end; /* đẩy khung sang bên phải */
+    align-items: center;
+    height: 100vh;
+    padding-left: 600px; /* điều chỉnh khoảng cách với mép phải */
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.15); /* Màu trắng trong suốt */
+    background-color: white; /* Hiệu ứng mờ nền */
+    -webkit-backdrop-filter: blur(10px); /* Hỗ trợ Safari */
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+
+    .form-container h2 {
+        margin-bottom: 24px;
+        font-size: 1.8rem;
+        color: #333;
+    }
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+    .input-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    background: #0072ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .login-form button:hover {
+        background: #005bb5;
+    }
