@@ -20,6 +20,12 @@ public class AppointmentController : Controller
         _emailService = emailService;
     }
 
+    [HttpGet("")]
+    public IActionResult Index()
+    {
+        return View("~/Views/Appointment/Index.cshtml");
+    }
+
     [HttpGet("Create")]
     public async Task<IActionResult> Create()
     {
@@ -168,6 +174,199 @@ public class AppointmentController : Controller
                 Value = g.GarageId.ToString(),
                 Text = g.Address
             }).ToListAsync();
+    }
+
+    // Action cho đặt lịch nhiều xe
+    [HttpGet("CreateMulti")]
+    public async Task<IActionResult> CreateMulti()
+    {
+        var model = new MultiVehicleAppointmentViewModel
+        {
+            AppointmentTime = DateTime.Now,
+            Vehicles = new List<VehicleAppointmentItem> { new VehicleAppointmentItem() } // Bắt đầu với 1 xe
+        };
+
+        await LoadDropdownsForMulti(model);
+        return View("~/Views/Appointment/CreateMulti.cshtml", model);
+    }
+
+    [HttpPost("CreateMulti")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateMulti(MultiVehicleAppointmentViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            await LoadDropdownsForMulti(model);
+            return View("~/Views/Appointment/CreateMulti.cshtml", model);
+        }
+
+        if (model.AppointmentTime <= DateTime.Now)
+        {
+            ModelState.AddModelError("AppointmentTime", "Thời gian hẹn phải nằm trong tương lai.");
+            await LoadDropdownsForMulti(model);
+            return View("~/Views/Appointment/CreateMulti.cshtml", model);
+        }
+
+        var userIdStr = HttpContext.Session.GetString("UserId");
+        if (!int.TryParse(userIdStr, out int userId))
+        {
+            TempData["Error"] = "Bạn cần đăng nhập để đặt lịch.";
+            return RedirectToAction("Login", "AccountLogin");
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        if (user == null)
+        {
+            TempData["Error"] = "Không tìm thấy tài khoản.";
+            return RedirectToAction("Login", "AccountLogin");
+        }
+
+        try
+        {
+            // Tạo appointment chính
+            var appointment = new Appointment
+            {
+                UserId = user.UserId,
+                GarageId = model.GarageId,
+                AppointmentTime = model.AppointmentTime,
+                Notes = model.Notes,
+                Status = "Pending",
+                CreatedAt = DateTime.UtcNow
+            };
+            _context.Appointments.Add(appointment);
+            await _context.SaveChangesAsync();
+
+            var allServiceNames = new List<string>();
+
+            // Xử lý từng xe
+            foreach (var vehicleItem in model.Vehicles)
+            {
+                Vehicle vehicle;
+
+                if (vehicleItem.SelectedVehicleId.HasValue)
+                {
+                    // Sử dụng xe có sẵn
+                    vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.VehicleId == vehicleItem.SelectedVehicleId.Value);
+                    if (vehicle == null)
+                    {
+                        throw new Exception($"Không tìm thấy xe với ID: {vehicleItem.SelectedVehicleId.Value}");
+                    }
+                }
+                else
+                {
+                    // Tạo xe mới
+                    vehicle = new Vehicle
+                    {
+                        UserId = user.UserId,
+                        Make = vehicleItem.VehicleMake ?? "Không rõ",
+                        Model = vehicleItem.VehicleModel ?? "Không rõ",
+                        LicensePlate = vehicleItem.LicensePlate ?? "Chưa rõ",
+                        Year = DateTime.Now.Year,
+                        Notes = "Xe được thêm từ đặt lịch nhiều xe"
+                    };
+                    _context.Vehicles.Add(vehicle);
+                    await _context.SaveChangesAsync();
+                }
+
+                // Thêm các dịch vụ cho xe này
+                if (vehicleItem.ServiceIds != null && vehicleItem.ServiceIds.Count > 0)
+                {
+                    foreach (var serviceId in vehicleItem.ServiceIds)
+                    {
+                        var detail = new AppointmentVehicleDetail
+                        {
+                            AppointmentId = appointment.AppointmentId,
+                            VehicleId = vehicle.VehicleId,
+                            ServiceId = serviceId,
+                            Quantity = 1,
+                            Note = vehicleItem.VehicleNotes ?? "Đặt lịch tự động"
+                        };
+                        _context.AppointmentVehicleDetails.Add(detail);
+                    }
+                    await _context.SaveChangesAsync();
+
+                    // Lấy tên dịch vụ cho email
+                    var serviceNames = await _context.Services
+                        .Where(s => vehicleItem.ServiceIds.Contains(s.ServiceId))
+                        .Select(s => s.ServiceName)
+                        .ToListAsync();
+                    allServiceNames.AddRange(serviceNames);
+                }
+            }
+
+            // Gửi email xác nhận
+            var garage = await _context.Garages.FirstOrDefaultAsync(g => g.GarageId == model.GarageId);
+            var technicianName = "Chưa phân công";
+
+            if (!string.IsNullOrEmpty(user.Email))
+            {
+                try
+                {
+                    await _emailService.SendAppointmentConfirmationEmailAsync(
+                        user.Email,
+                        user.FullName ?? user.Username,
+                        appointment.AppointmentId.ToString(),
+                        appointment.AppointmentTime ?? DateTime.Now,
+                        string.Join(", ", allServiceNames.Distinct()),
+                        garage?.Address ?? "Không xác định",
+                        technicianName
+                    );
+                }
+                catch (Exception emailEx)
+                {
+                    Console.WriteLine($"Lỗi gửi email: {emailEx.Message}");
+                }
+            }
+
+            TempData["SuccessMessage"] = $"Đã đặt lịch thành công cho {model.Vehicles.Count} xe!";
+            return RedirectToAction("Details", "Appointment", new { id = appointment.AppointmentId });
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", "Lỗi hệ thống: " + ex.ToString());
+            await LoadDropdownsForMulti(model);
+            return View("~/Views/Appointment/CreateMulti.cshtml", model);
+        }
+    }
+
+    private async Task LoadDropdownsForMulti(MultiVehicleAppointmentViewModel model)
+    {
+        model.ServiceList = await _context.Services
+            .Select(s => new SelectListItem
+            {
+                Value = s.ServiceId.ToString(),
+                Text = s.ServiceName
+            }).ToListAsync();
+
+        model.GarageList = await _context.Garages
+            .Select(g => new SelectListItem
+            {
+                Value = g.GarageId.ToString(),
+                Text = g.Address
+            }).ToListAsync();
+
+        // Lấy danh sách xe của user hiện tại
+        var userIdStr = HttpContext.Session.GetString("UserId");
+        if (int.TryParse(userIdStr, out int userId))
+        {
+            model.VehicleList = await _context.Vehicles
+                .Where(v => v.UserId == userId)
+                .Select(v => new SelectListItem
+                {
+                    Value = v.VehicleId.ToString(),
+                    Text = $"{v.Make} {v.Model} - {v.LicensePlate}"
+                }).ToListAsync();
+        }
+
+        // Load danh sách hãng xe
+        model.VehicleMakeList = VehicleData.GetVehicleMakeList();
+    }
+
+    [HttpGet("GetVehicleModels")]
+    public IActionResult GetVehicleModels(string make)
+    {
+        var models = VehicleData.GetVehicleModelList(make);
+        return Json(models);
     }
 
     [HttpGet("Edit")]
@@ -335,5 +534,63 @@ public class AppointmentController : Controller
         };
 
         return View("~/Views/Appointment/History.cshtml", viewModel);
+    }
+
+    [HttpGet("Review/{id}")]
+    public async Task<IActionResult> Review(int id)
+    {
+        var userIdStr = HttpContext.Session.GetString("UserId");
+        if (!int.TryParse(userIdStr, out int userId))
+            return RedirectToAction("Login", "AccountLogin");
+
+        var appointment = await _context.Appointments
+            .Include(a => a.Garage)
+            .FirstOrDefaultAsync(a => a.AppointmentId == id && a.UserId == userId);
+
+        if (appointment == null || appointment.Status != "Completed")
+            return NotFound();
+
+        // Có thể truyền thêm model đánh giá nếu muốn
+        return View("~/Views/Appointment/Review.cshtml", appointment);
+    }
+
+    [HttpPost("Review/{id}")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Review(int id, int Rating, string Content)
+    {
+        var userIdStr = HttpContext.Session.GetString("UserId");
+        if (!int.TryParse(userIdStr, out int userId))
+            return RedirectToAction("Login", "AccountLogin");
+
+        var appointment = await _context.Appointments
+            .Include(a => a.Garage)
+            .FirstOrDefaultAsync(a => a.AppointmentId == id && a.UserId == userId);
+
+        if (appointment == null || appointment.Status != "Completed")
+            return NotFound();
+
+        // Kiểm tra đã có review chưa (theo user, garage, appointment)
+        var review = await _context.Reviews.FirstOrDefaultAsync(r => r.UserId == userId && r.GarageId == appointment.GarageId);
+        if (review == null)
+        {
+            review = new Review
+            {
+                UserId = userId,
+                GarageId = appointment.GarageId,
+                Rating = Rating,
+                Comment = Content,
+                CreatedAt = DateTime.Now
+            };
+            _context.Reviews.Add(review);
+        }
+        else
+        {
+            review.Rating = Rating;
+            review.Comment = Content;
+            review.CreatedAt = DateTime.Now;
+        }
+        await _context.SaveChangesAsync();
+        TempData["Success"] = "Cảm ơn bạn đã đánh giá!";
+        return RedirectToAction("History");
     }
 }

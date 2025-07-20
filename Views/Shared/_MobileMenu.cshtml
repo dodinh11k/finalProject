@@ -12,7 +12,9 @@
         <ul>
             <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
             <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Services" ? "active" : "")"><a href="@Url.Action("Index", "Services")">Dịch vụ</a></li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Appointments" ? "active" : "")"><a href="@Url.Action("Create", "Appointments")">Đặt lịch</a></li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Appointment" ? "active" : "")">
+                <a href="@Url.Action("Index", "Appointment")">Đặt lịch</a>
+            </li>
             <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Garages" ? "active" : "")"><a href="@Url.Action("Index", "Garages")">Garage</a></li>
 
             @if (string.IsNullOrEmpty(username))

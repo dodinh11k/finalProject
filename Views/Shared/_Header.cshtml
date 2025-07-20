@@ -77,8 +77,36 @@
         </a>
 
         <!-- Menu phải -->
-        <a href="@Url.Action("Create", "Appointment")" class="text-white text-uppercase" style="font-size: 1rem;">Đặt lịch</a>
+        <div class="dropdown d-inline-block">
+            <a href="#" class="text-white text-uppercase dropdown-toggle" style="font-size: 1rem; text-decoration: none;" 
+               data-bs-toggle="dropdown" aria-expanded="false">
+                Đặt lịch
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="@Url.Action("Index", "Appointment")">Chọn loại đặt lịch</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="@Url.Action("Create", "Appointment")">Đặt lịch 1 xe</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("CreateMulti", "Appointment")">Đặt lịch nhiều xe</a></li>
+            </ul>
+        </div>
         <a href="@Url.Action("Index", "Garages")" class="text-white text-uppercase" style="font-size: 1rem;">Garage</a>
         <a href="@Url.Action("Contact", "Home")" class="text-white text-uppercase" style="font-size: 1rem;">Liên hệ</a>
     </div>
 </header>
+
+<style>
+    /* Fix chỉ cho dropdown menu chính (ĐẶT LỊCH) */
+    .header .dropdown-menu {
+        color: #212529 !important;
+        background: #fff !important;
+    }
+    .header .dropdown-menu .dropdown-item {
+        color: #212529 !important;
+        background: #fff !important;
+    }
+    .header .dropdown-menu .dropdown-item:hover,
+    .header .dropdown-menu .dropdown-item:focus {
+        background: #f8f9fa !important;
+        color: #152A16 !important;
+    }
+</style>

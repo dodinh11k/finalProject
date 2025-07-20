@@ -25,6 +25,125 @@
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-top ms-auto">
         <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown position-relative" style="z-index:1050;">
+                <a class="nav-link position-relative" href="#" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-bell"></i>
+                    @if (ViewBag.AdminNotificationCount > 0)
+                    {
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.8em;">@ViewBag.AdminNotificationCount</span>
+                    }
+                </a>
+                <ul class="dropdown-menu shadow" aria-labelledby="notificationDropdown" data-bs-display="static" style="min-width:340px; border-radius:16px; padding:0; position:absolute; top:100%; left:-380px; margin-top:8px; z-index:2000;">
+                    <li class="px-3 pt-3 pb-2 border-bottom d-flex justify-content-between align-items-center">
+                        <span style="font-weight:600;">You have @ViewBag.AdminNotificationCount new notifications</span>
+                        <a href="/Admin/Notifications" class="btn btn-sm btn-outline-primary">View all</a>
+                    </li>
+                    @if (ViewBag.AdminNotifications != null && ((List<test_2.Models.Notification>)ViewBag.AdminNotifications).Count > 0)
+                    {
+                        foreach (var n in (List<test_2.Models.Notification>)ViewBag.AdminNotifications)
+                        {
+                            var icon = "fa-info-circle text-primary";
+                            if (n.Title != null && n.Title.Contains("lỗi", StringComparison.OrdinalIgnoreCase)) icon = "fa-exclamation-triangle text-danger";
+                            else if (n.Title != null && n.Title.Contains("sản phẩm hết hàng", StringComparison.OrdinalIgnoreCase)) icon = "fa-box-open text-danger";
+                            else if (n.Title != null && n.Title.Contains("sản phẩm", StringComparison.OrdinalIgnoreCase)) icon = "fa-box text-warning";
+                            else if (n.Title != null && n.Title.Contains("lịch hẹn", StringComparison.OrdinalIgnoreCase)) icon = "fa-calendar-alt text-info";
+                            else if (n.Title != null && n.Title.Contains("user", StringComparison.OrdinalIgnoreCase)) icon = "fa-user-plus text-success";
+                            string timeAgo = "";
+                            if (n.CreatedAt != null)
+                            {
+                                var ts = DateTime.Now - n.CreatedAt.Value;
+                                if (ts.TotalMinutes < 1) timeAgo = "Just now";
+                                else if (ts.TotalMinutes < 60) timeAgo = $"{(int)ts.TotalMinutes} minutes ago";
+                                else if (ts.TotalHours < 24) timeAgo = $"{(int)ts.TotalHours} hours ago";
+                                else timeAgo = $"{(int)ts.TotalDays} days ago";
+                            }
+                            string link = null;
+                            // Nếu là sản phẩm hết hàng hoặc sắp hết hàng
+                            if (n.Title != null && n.Title.ToLower().Contains("sản phẩm"))
+                            {
+                                // Tìm ProductId từ message nếu có dạng "Sản phẩm {Tên} ..."
+                                var products = ViewBag.AllProducts as List<test_2.Models.Product>;
+                                if (products != null)
+                                {
+                                    var prod = products.FirstOrDefault(p => n.Message != null && n.Message.Contains(p.ProductName));
+                                    if (prod != null)
+                                        link = $"/Admin/EditProduct/{prod.ProductId}";
+                                }
+                            }
+                            // Nếu là lịch hẹn chưa có kỹ thuật viên
+                            else if (n.Title != null && n.Title.ToLower().Contains("lịch hẹn"))
+                            {
+                                // Tìm mã lịch hẹn từ message: "Lịch hẹn #{id} ..."
+                                int idx1 = n.Message?.IndexOf("#") ?? -1;
+                                int idx2 = n.Message?.IndexOf(" ", idx1 + 1) ?? -1;
+                                if (idx1 >= 0 && idx2 > idx1)
+                                {
+                                    var idStr = n.Message.Substring(idx1 + 1, idx2 - idx1 - 1);
+                                    if (int.TryParse(idStr, out int apptId))
+                                        link = $"/Admin/EditOrder/{apptId}";
+                                }
+                            }
+                            <li class="d-flex align-items-start px-3 py-2 border-bottom" style="gap:12px;">
+                                <span style="font-size:1.3em;"><i class="fa @icon"></i></span>
+                                <div style="flex:1;">
+                                    @if (!string.IsNullOrEmpty(link)) {
+                                        <a href="@link" style="text-decoration:none;color:inherit;">
+                                            <div style="font-weight:600;">@n.Title</div>
+                                            <div style="font-size:0.97em; color:#555;">@n.Message</div>
+                                            <div style="font-size:0.85em; color:#888;">@timeAgo</div>
+                                        </a>
+                                    } else {
+                                        <div style="font-weight:600;">@n.Title</div>
+                                        <div style="font-size:0.97em; color:#555;">@n.Message</div>
+                                        <div style="font-size:0.85em; color:#888;">@timeAgo</div>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="px-3 py-3 text-center text-muted">No new notifications</li>
+                    }
+                </ul>
+            </li>
+            <!-- Gmail feedback icon -->
+            <li class="nav-item dropdown position-relative" style="z-index:1050;">
+                <a class="nav-link position-relative" href="#" id="feedbackDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope" style="font-size:1.25em;"></i>
+                </a>
+                <ul class="dropdown-menu shadow" aria-labelledby="feedbackDropdown" data-bs-display="static" style="min-width:340px; border-radius:16px; padding:0; position:absolute; top:100%; left:-320px; margin-top:8px; z-index:2000;">
+                    <li class="px-3 pt-3 pb-2 border-bottom d-flex justify-content-between align-items-center">
+                        <span style="font-weight:600;">User Feedback</span>
+                        <a href="/Admin/Feedbacks" class="btn btn-sm btn-outline-primary">View all</a>
+                    </li>
+                    <!-- Dữ liệu mẫu phản hồi user -->
+                    <li class="d-flex align-items-start px-3 py-2 border-bottom" style="gap:12px;">
+                        <span style="font-size:1.3em;"><i class="fa fa-user-circle text-info"></i></span>
+                        <div style="flex:1;">
+                            <div style="font-weight:600;">Nguyễn Văn A</div>
+                            <div style="font-size:0.97em; color:#555;">Dịch vụ rất tốt, tôi hài lòng!</div>
+                            <div style="font-size:0.85em; color:#888;">2 hours ago</div>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start px-3 py-2 border-bottom" style="gap:12px;">
+                        <span style="font-size:1.3em;"><i class="fa fa-user-circle text-info"></i></span>
+                        <div style="flex:1;">
+                            <div style="font-weight:600;">Trần Thị B</div>
+                            <div style="font-size:0.97em; color:#555;">Tôi góp ý về thời gian chờ hơi lâu.</div>
+                            <div style="font-size:0.85em; color:#888;">5 hours ago</div>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start px-3 py-2 border-bottom" style="gap:12px;">
+                        <span style="font-size:1.3em;"><i class="fa fa-user-circle text-info"></i></span>
+                        <div style="flex:1;">
+                            <div style="font-weight:600;">Lê Văn C</div>
+                            <div style="font-size:0.97em; color:#555;">Nhân viên thân thiện, sẽ quay lại!</div>
+                            <div style="font-size:0.85em; color:#888;">1 day ago</div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
             <li class="nav-item dropdown user-dropdown">
                 @if (string.IsNullOrEmpty(username))
                 {

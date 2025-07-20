@@ -27,6 +27,38 @@
                 <input name="Notes" class="form-control" value="@Model.Notes" />
             </div>
 
+            @if (Model.AppointmentVehicleDetails != null && Model.AppointmentVehicleDetails.Any())
+            {
+                <div class="mb-4">
+                    <label class="form-label">Dịch vụ & Xe</label>
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Dịch vụ</th>
+                                    <th>Xe</th>
+                                    <th>Biển số</th>
+                                    <th>Số lượng</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var d in Model.AppointmentVehicleDetails)
+                                {
+                                    <tr>
+                                        <td>@d.Service?.ServiceName</td>
+                                        <td>@d.Vehicle?.Make @d.Vehicle?.Model</td>
+                                        <td>@d.Vehicle?.LicensePlate</td>
+                                        <td>@d.Quantity</td>
+                                        <td>@d.Note</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+
             @if (detail != null)
             {
                 <div class="mb-3">

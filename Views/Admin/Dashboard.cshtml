@@ -20,6 +20,7 @@
                 <div style="position:absolute;top:20px;right:20px;font-size:2rem;opacity:0.2;"><i class="fa fa-bookmark"></i></div>
                 <div class="mb-2" style="font-size:1.2rem;">Đơn hàng tháng</div>
                 <div class="fw-bold mb-2" style="font-size:2.2rem;">@ViewBag.WeeklyOrders</div>
+                <div style="font-size:1rem;">Đã hoàn thành: <span class="fw-bold">@ViewBag.CompletedOrders</span></div>
                 <div class="stat-bg-circle"></div>
             </div>
         </div>
@@ -33,16 +34,54 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-10">
-            <div class="card shadow border-0 p-4 mt-4">
+    <div class="row justify-content-center align-items-stretch mb-5">
+        <div class="col-12 col-lg-8 mb-4 mb-lg-0">
+            <div class="card shadow border-0 p-4 h-100">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold mb-0">THỐNG KÊ ĐƠN HÀNG</h5>
-                    <div>
-                        <span style="display:inline-block;width:16px;height:16px;background:#a084e8;border-radius:50%;margin-right:6px;"></span> Đơn hàng
-                    </div>
-                </div>
+                    <h5 class="fw-bold mb-0">Thống kê</h5>
+                    <button class="btn btn-light btn-sm" style="border-radius:8px;">This month <i class="fa fa-chevron-down ms-1"></i></button>
+                </div>                           
                 <canvas id="ordersBarChart" height="120"></canvas>
+              
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card shadow border-0 p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Todo List</h5>
+                    <button class="btn btn-primary btn-sm rounded-circle"><i class="fa fa-plus"></i></button>
+                </div>
+                <ul class="list-unstyled">
+                    <li class="mb-4 d-flex align-items-start gap-3">
+                        <input type="checkbox" class="form-check-input mt-1" checked disabled>
+                        <div style="flex:1;">
+                            <div>Lorem Ipsum is simply dummy text of the printing</div>
+                            <div class="text-muted" style="font-size:0.95em;">24 June 2020 <span class="badge bg-warning text-dark ms-2">Due tomorrow</span></div>
+                        </div>
+                        <i class="fa fa-flag text-muted"></i>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start gap-3">
+                        <input type="checkbox" class="form-check-input mt-1" checked disabled>
+                        <div style="flex:1;">
+                            <div>Lorem Ipsum is simply dummy text of the printing</div>
+                            <div class="text-muted" style="font-size:0.95em;">23 June 2020 <span class="badge bg-info text-white ms-2">Done</span></div>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start gap-3">
+                        <input type="checkbox" class="form-check-input mt-1" checked disabled>
+                        <div style="flex:1;">
+                         
+                            <div class="text-muted" style="font-size:0.95em;">24 June 2020 <span class="badge bg-info text-white ms-2">Done</span></div>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start gap-3">
+                        <input type="checkbox" class="form-check-input mt-1" disabled>
+                        <div style="flex:1;">
+                           
+                            <div class="text-muted" style="font-size:0.95em;">24 June 2020 <span class="badge bg-danger text-white ms-2">Expired</span></div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

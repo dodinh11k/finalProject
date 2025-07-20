@@ -18,17 +18,32 @@ namespace test_2.Controllers
             _context = context;
         }
 
+        // Thêm hàm dùng chung để load noti
+        private async Task LoadAdminNotifications()
+        {
+            ViewBag.AllProducts = await _context.Products.ToListAsync();
+            var adminNotifications = await _context.Notifications
+                .Where(n => n.UserId == null && (n.IsRead == false || n.IsRead == null))
+                .OrderByDescending(n => n.CreatedAt)
+                .Take(10)
+                .ToListAsync();
+            ViewBag.AdminNotifications = adminNotifications;
+            ViewBag.AdminNotificationCount = adminNotifications.Count;
+        }
+
         // --- USER MANAGEMENT ---
         public async Task<IActionResult> Users(string role = null)
         {
+            await LoadAdminNotifications();
             var users = _context.Users.AsQueryable();
             if (!string.IsNullOrEmpty(role))
                 users = users.Where(u => u.Role == role);
             return View(await users.ToListAsync());
         }
 
-        public IActionResult CreateUser()
+        public async Task<IActionResult> CreateUser()
         {
+            await LoadAdminNotifications();
             return View(new User { IsActive = true, Username = "", PasswordHash = "" });
         }
 
@@ -36,6 +51,7 @@ namespace test_2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUser(User user)
         {
+            await LoadAdminNotifications();
             if (ModelState.IsValid)
             {
                 _context.Users.Add(user);
@@ -47,12 +63,14 @@ namespace test_2.Controllers
 
         public async Task<IActionResult> EditUser(int id)
         {
+            await LoadAdminNotifications();
             var user = await _context.Users.FindAsync(id);
             if (user == null) return NotFound();
             return View(user);
         }
         public async Task<IActionResult> DeleteUser(int id)
         {
+            await LoadAdminNotifications();
             var user = await _context.Users.FindAsync(id);
             if (user == null) return NotFound();
 
@@ -71,6 +89,7 @@ namespace test_2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(User user)
         {
+            await LoadAdminNotifications();
             if (!ModelState.IsValid)
             {
                 return View(user);
@@ -109,15 +128,17 @@ namespace test_2.Controllers
         // --- SERVICE MANAGEMENT ---
         public async Task<IActionResult> Services()
         {
+            await LoadAdminNotifications();
             var services = await _context.Services.ToListAsync();
             return View(services);
         }
 
-        public IActionResult CreateService() => View();
+        public async Task<IActionResult> CreateService() { await LoadAdminNotifications(); return View(); }
 
         [HttpPost]
         public async Task<IActionResult> CreateService(Service service)
         {
+            await LoadAdminNotifications();
             if (ModelState.IsValid)
             {
                 _context.Services.Add(service);
@@ -129,6 +150,7 @@ namespace test_2.Controllers
 
         public async Task<IActionResult> EditService(int id)
         {
+            await LoadAdminNotifications();
             var service = await _context.Services.FindAsync(id);
             if (service == null) return NotFound();
             return View(service);
@@ -137,6 +159,7 @@ namespace test_2.Controllers
         [HttpPost]
         public async Task<IActionResult> EditService(Service service)
         {
+            await LoadAdminNotifications();
             if (ModelState.IsValid)
             {
                 _context.Update(service);
@@ -148,6 +171,7 @@ namespace test_2.Controllers
 
         public async Task<IActionResult> DeleteService(int id)
         {
+            await LoadAdminNotifications();
             var service = await _context.Services.FindAsync(id);
             if (service == null) return NotFound();
             _context.Services.Remove(service);
@@ -158,6 +182,7 @@ namespace test_2.Controllers
         // --- APPOINTMENT (ORDER) MANAGEMENT ---
         public async Task<IActionResult> Orders(string customerName, string phone, DateTime? date, string vehicleKeyword)
         {
+            await LoadAdminNotifications();
             var query = _context.Appointments
                 .Include(a => a.User)
                 .Include(a => a.Garage)
@@ -186,8 +211,14 @@ namespace test_2.Controllers
 
         public async Task<IActionResult> EditOrder(int id)
         {
+            await LoadAdminNotifications();
             var order = await _context.Appointments
-                .Include(a => a.AppointmentVehicleDetails).ThenInclude(d => d.Technician)
+                .Include(a => a.AppointmentVehicleDetails)
+                    .ThenInclude(d => d.Vehicle)
+                .Include(a => a.AppointmentVehicleDetails)
+                    .ThenInclude(d => d.Service)
+                .Include(a => a.AppointmentVehicleDetails)
+                    .ThenInclude(d => d.Technician)
                 .FirstOrDefaultAsync(a => a.AppointmentId == id);
 
             if (order == null) return NotFound();
@@ -200,6 +231,7 @@ namespace test_2.Controllers
         [HttpPost]
         public async Task<IActionResult> EditOrder(int id, int? technicianId, string status, string notes)
         {
+            await LoadAdminNotifications();
             var order = await _context.Appointments
                 .Include(a => a.AppointmentVehicleDetails)
                 .FirstOrDefaultAsync(a => a.AppointmentId == id);
@@ -220,6 +252,7 @@ namespace test_2.Controllers
 
         public async Task<IActionResult> DeleteOrder(int id)
         {
+            await LoadAdminNotifications();
             var appointment = await _context.Appointments
                 .Include(a => a.AppointmentVehicleDetails)
                 .FirstOrDefaultAsync(a => a.AppointmentId == id);
@@ -245,12 +278,14 @@ namespace test_2.Controllers
         // --- PRODUCT MANAGEMENT ---
         public async Task<IActionResult> Products()
         {
+            await LoadAdminNotifications();
             var products = await _context.Products.ToListAsync();
             return View(products);
         }
 
-        public IActionResult CreateProduct()
+        public async Task<IActionResult> CreateProduct()
         {
+            await LoadAdminNotifications();
             return View();
         }
 
@@ -258,6 +293,7 @@ namespace test_2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProduct(Product product)
         {
+            await LoadAdminNotifications();
             if (ModelState.IsValid)
             {
                 product.CreatedAt = DateTime.Now;
@@ -270,6 +306,7 @@ namespace test_2.Controllers
 
         public async Task<IActionResult> EditProduct(int id)
         {
+            await LoadAdminNotifications();
             var product = await _context.Products.FindAsync(id);
             if (product == null) return NotFound();
             return View(product);
@@ -279,6 +316,7 @@ namespace test_2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProduct(Product product)
         {
+            await LoadAdminNotifications();
             if (ModelState.IsValid)
             {
                 var productInDb = await _context.Products.FindAsync(product.ProductId);
@@ -296,6 +334,7 @@ namespace test_2.Controllers
 
         public async Task<IActionResult> DeleteProduct(int id)
         {
+            await LoadAdminNotifications();
             var product = await _context.Products.FindAsync(id);
             if (product == null) return NotFound();
             _context.Products.Remove(product);
@@ -306,6 +345,71 @@ namespace test_2.Controllers
         // --- DASHBOARD ---
         public async Task<IActionResult> Dashboard()
         {
+            await LoadAdminNotifications();
+            var now = DateTime.Now;
+            var soon = now.AddHours(1);
+            // Lịch hẹn sắp đến hạn hoặc quá hạn chưa có technician nhận
+            var pendingAppointments = await _context.Appointments
+                .Where(a => a.AppointmentTime <= soon && a.Status != "Completed" && a.Status != "Canceled")
+                .Where(a => a.AppointmentVehicleDetails.All(d => d.TechnicianId == null))
+                .ToListAsync();
+            foreach (var appt in pendingAppointments)
+            {
+                if (!_context.Notifications.Any(n => n.Title.Contains("Lịch hẹn") && n.Message.Contains($"#{appt.AppointmentId}")))
+                {
+                    _context.Notifications.Add(new Notification
+                    {
+                        UserId = null, // null = admin chung
+                        Title = "Lịch hẹn chưa có kỹ thuật viên nhận việc",
+                        Message = $"Lịch hẹn #{appt.AppointmentId} lúc {appt.AppointmentTime:dd/MM/yyyy HH:mm} chưa có kỹ thuật viên nhận.",
+                        IsRead = false,
+                        CreatedAt = DateTime.Now
+                    });
+                }
+            }
+            // Sản phẩm sắp hết hàng (chỉ tạo nếu tồn kho > 0 và < threshold)
+            int threshold = 5;
+            var lowStockProducts = await _context.Products.Where(p => p.StockQuantity > 0 && p.StockQuantity < threshold).ToListAsync();
+            foreach (var p in lowStockProducts)
+            {
+                if (!_context.Notifications.Any(n => n.Title.Contains("Sản phẩm sắp hết hàng") && n.Message.Contains(p.ProductName)))
+                {
+                    _context.Notifications.Add(new Notification
+                    {
+                        UserId = null,
+                        Title = "Sản phẩm sắp hết hàng",
+                        Message = $"Sản phẩm {p.ProductName} chỉ còn {p.StockQuantity} trong kho.",
+                        IsRead = false,
+                        CreatedAt = DateTime.Now
+                    });
+                }
+            }
+            // Sản phẩm hết hàng
+            var outOfStockProducts = await _context.Products.Where(p => p.StockQuantity == 0).ToListAsync();
+            foreach (var p in outOfStockProducts)
+            {
+                if (!_context.Notifications.Any(n => n.Title.Contains("Sản phẩm hết hàng") && n.Message.Contains(p.ProductName)))
+                {
+                    _context.Notifications.Add(new Notification
+                    {
+                        UserId = null,
+                        Title = "Sản phẩm hết hàng",
+                        Message = $"Sản phẩm {p.ProductName} đã hết hàng trong kho!",
+                        IsRead = false,
+                        CreatedAt = DateTime.Now
+                    });
+                }
+            }
+            await _context.SaveChangesAsync();
+            // Lấy thông báo chưa đọc cho admin
+            var adminNotifications = await _context.Notifications
+                .Where(n => n.UserId == null && (n.IsRead == false || n.IsRead == null))
+                .OrderByDescending(n => n.CreatedAt)
+                .Take(10)
+                .ToListAsync();
+            ViewBag.AdminNotifications = adminNotifications;
+            ViewBag.AdminNotificationCount = adminNotifications.Count;
+
             var today = DateTime.Today;
             var startOfMonth = new DateTime(today.Year, today.Month, 1);
             var startOfNextMonth = startOfMonth.AddMonths(1);
@@ -316,6 +420,11 @@ namespace test_2.Controllers
                   && oi.Order.Status == "Completed")
                 .SumAsync(oi => (int?)oi.Quantity) ?? 0;
 
+            // Số đơn đã hoàn thành trong tháng
+            var completedOrders = await _context.Appointments
+                .Where(a => a.AppointmentTime >= startOfMonth && a.AppointmentTime < startOfNextMonth && a.Status == "Completed")
+                .CountAsync();
+
             var monthlyOrders = await _context.Appointments
                 .Where(a => a.AppointmentTime >= startOfMonth && a.AppointmentTime < startOfNextMonth)
                 .CountAsync();
@@ -324,6 +433,7 @@ namespace test_2.Controllers
 
             ViewBag.WeeklySales = weeklySales;
             ViewBag.WeeklyOrders = monthlyOrders;
+            ViewBag.CompletedOrders = completedOrders;
             ViewBag.VisitorsOnline = visitorsOnline;
 
             var year = DateTime.Today.Year;
@@ -345,12 +455,13 @@ namespace test_2.Controllers
                     u.UserId,
                     u.FullName,
                     AvatarUrl = defaultAvatar,
-                    TotalCompleted = _context.AppointmentVehicleDetails
-                        .Count(a => a.TechnicianId == u.UserId && a.Appointment.Status == "Completed"),
-                    LastCompletedAt = _context.AppointmentVehicleDetails
-                        .Where(a => a.TechnicianId == u.UserId && a.Appointment.Status == "Completed")
-                        .OrderByDescending(a => a.Appointment.AppointmentTime)
-                        .Select(a => a.Appointment.AppointmentTime)
+                    TotalCompleted = _context.Appointments
+                        .Where(a => a.Status == "Completed" && a.AppointmentVehicleDetails.Any(d => d.TechnicianId == u.UserId))
+                        .Count(),
+                    LastCompletedAt = _context.Appointments
+                        .Where(a => a.Status == "Completed" && a.AppointmentVehicleDetails.Any(d => d.TechnicianId == u.UserId))
+                        .OrderByDescending(a => a.AppointmentTime)
+                        .Select(a => a.AppointmentTime)
                         .FirstOrDefault()
                 })
                 .OrderByDescending(t => t.TotalCompleted)

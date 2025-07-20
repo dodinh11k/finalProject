@@ -95,38 +95,87 @@
     </div>
 
     <hr />
-    <h4 class="mb-3">Dịch vụ theo xe</h4>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Tên xe</th>
-                <th>Biển số</th>
-                <th>Dịch vụ</th>
-                <th>Số lượng</th>
-                <th>Ghi chú</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var detail in Model.VehicleDetails)
+    <h4 class="mb-3">Thông tin xe và dịch vụ</h4>
+    
+    @{
+        var vehicleGroups = Model.VehicleDetails.GroupBy(d => d.VehicleId).ToList();
+    }
+    
+    @foreach (var vehicleGroup in vehicleGroups)
+    {
+        var firstDetail = vehicleGroup.First();
+        var vehicle = firstDetail.Vehicle;
+        var services = vehicleGroup.Select(d => d.Service?.ServiceName).Where(s => !string.IsNullOrEmpty(s)).ToList();
+        
+        <div class="vehicle-info-card mb-4" style="border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; background-color: #f8f9fa;">
+            <h5 style="color: #152A16; margin-bottom: 15px;">
+                <i class="fa fa-car"></i> 
+                Xe @(vehicleGroups.IndexOf(vehicleGroup) + 1): @($"{vehicle?.Make ?? "Không rõ"} {vehicle?.Model ?? ""}")
+            </h5>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-item"><strong>Biển số:</strong> @(vehicle?.LicensePlate ?? "Không rõ")</div>
+                    <div class="info-item"><strong>Năm sản xuất:</strong> @(vehicle?.Year?.ToString() ?? "Không rõ")</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-item"><strong>Số dịch vụ:</strong> @services.Count</div>
+                    <div class="info-item"><strong>Dịch vụ:</strong> @string.Join(", ", services)</div>
+                </div>
+            </div>
+            
+            @if (vehicleGroup.Any(d => !string.IsNullOrWhiteSpace(d.Note)))
             {
-                <tr>
-                    <td>@($"{detail.Vehicle?.Make ?? "Không rõ"} {detail.Vehicle?.Model ?? ""}")</td>
-                    <td>@(detail.Vehicle?.LicensePlate ?? "Không rõ")</td>
-                    <td>@(detail.Service?.ServiceName ?? "Không rõ")</td>
-                    <td>@detail.Quantity</td>
-                    <td>@(string.IsNullOrWhiteSpace(detail.Note) ? "(Không có)" : detail.Note)</td>
-                </tr>
+                <div class="mt-2">
+                    <strong>Ghi chú:</strong> 
+                    @{
+                        var notes = vehicleGroup.Where(d => !string.IsNullOrWhiteSpace(d.Note)).Select(d => d.Note).Distinct();
+                    }
+                    @string.Join("; ", notes)
+                </div>
             }
-        </tbody>
-    </table>
+        </div>
+    }
+
+    <div class="mt-4">
+        <h5>Tổng quan dịch vụ</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Tên xe</th>
+                    <th>Biển số</th>
+                    <th>Dịch vụ</th>
+                    <th>Số lượng</th>
+                    <th>Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model.VehicleDetails)
+                {
+                    <tr>
+                        <td>@($"{detail.Vehicle?.Make ?? "Không rõ"} {detail.Vehicle?.Model ?? ""}")</td>
+                        <td>@(detail.Vehicle?.LicensePlate ?? "Không rõ")</td>
+                        <td>@(detail.Service?.ServiceName ?? "Không rõ")</td>
+                        <td>@detail.Quantity</td>
+                        <td>@(string.IsNullOrWhiteSpace(detail.Note) ? "(Không có)" : detail.Note)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
     <div class="mt-4 d-flex justify-content-between">
         <a asp-action="History" class="btn-outline-custom">
             <i class="fa fa-arrow-left"></i> Quay lại danh sách
         </a>
-        <a asp-action="Create" class="btn-custom">
-            <i class="fa fa-plus"></i> Đặt lịch mới
-        </a>
+        <div>
+            <a asp-action="Create" class="btn-custom me-2">
+                <i class="fa fa-plus"></i> Đặt lịch 1 xe
+            </a>
+            <a asp-action="CreateMulti" class="btn-custom" style="background-color: #28a745;">
+                <i class="fa fa-cars"></i> Đặt lịch nhiều xe
+            </a>
+        </div>
     </div>
 </div>
 
