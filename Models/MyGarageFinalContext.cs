@@ -48,6 +48,7 @@ public partial class MyGarageFinalContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Vehicle> Vehicles { get; set; }
+    public virtual DbSet<PaymentHistory> PaymentHistories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -404,6 +405,31 @@ public partial class MyGarageFinalContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Vehicles)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__Vehicles__UserID__2A4B4B5E");
+        });
+        modelBuilder.Entity<PaymentHistory>(entity =>
+        {
+            entity.HasKey(e => e.PaymentId).HasName("PK__PaymentHistory__PaymentID");
+
+            entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
+            entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.PaymentMethod).HasMaxLength(50).HasDefaultValue("PayOS");
+            entity.Property(e => e.TransactionId).HasMaxLength(100);
+            entity.Property(e => e.Status).HasMaxLength(50).HasDefaultValue("Pending");
+            entity.Property(e => e.PayOSOrderCode).HasMaxLength(100);
+            entity.Property(e => e.PayOSTransactionId).HasMaxLength(100);
+            entity.Property(e => e.Description).HasMaxLength(500);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())").HasColumnType("datetime");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(getdate())").HasColumnType("datetime");
+
+            entity.HasOne(d => d.Appointment).WithMany()
+                .HasForeignKey(d => d.AppointmentId)
+                .HasConstraintName("FK__PaymentHistory__AppointmentID");
+
+            entity.HasOne(d => d.User).WithMany()
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__PaymentHistory__UserID");
         });
 
         OnModelCreatingPartial(modelBuilder);

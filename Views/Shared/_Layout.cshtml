@@ -55,6 +55,14 @@
         @await Html.PartialAsync("_Header")
     }
 
+    @if (!isAuthPage && !(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && (ViewContext.RouteData.Values["action"] == null || ViewContext.RouteData.Values["action"].ToString() == "Index")))
+    {
+        <style>
+            body {
+                background: #fff !important;
+            }
+        </style>
+    }
 
     <!-- Main content -->
     <main class="w-100 position-relative" style="padding-top: @bodyPaddingTop;">

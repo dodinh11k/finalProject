@@ -12,6 +12,15 @@ public class TechnicianController : Controller
     private readonly MyGarageFinalContext _context;
     private readonly test_2.Services.IEmailService _emailService;
 
+    private void CheckTechnicianAccess()
+    {
+        var role = HttpContext.Session.GetString("Role");
+        if (string.IsNullOrEmpty(role) || role != "Technician")
+        {
+            Response.Redirect("/Account/Login");
+        }
+    }
+
     public TechnicianController(MyGarageFinalContext context, test_2.Services.IEmailService emailService)
     {
         _context = context;
@@ -21,6 +30,8 @@ public class TechnicianController : Controller
     [HttpGet("Dashboard")]
     public async Task<IActionResult> Dashboard()
     {
+        CheckTechnicianAccess();
+        
         var technicianIdStr = HttpContext.Session.GetString("UserId");
         int.TryParse(technicianIdStr, out int technicianId);
 

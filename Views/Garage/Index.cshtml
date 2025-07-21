@@ -1,4 +1,4 @@
-﻿@model IEnumerable<test_2.Models.Garage>
+﻿@model List<Garage>
 @{
     ViewData["Title"] = "Danh sách Garage";
 }
@@ -6,7 +6,6 @@
 <style>
     body {
         background-color: #EBE7DE;
-        color: #EBE7DE; /* Be sáng */
     }
 
     .garage-card {
@@ -56,37 +55,147 @@
         border: 1px solid #444;
         color: #EBE7DE;
     }
+
+.garage-map-infographic { position: relative; width: 600px; max-width: 100%; margin-left: 0; margin-bottom: 40px; margin-top: 100px; float: left; }
+.garage-marker { position: absolute; display: flex; align-items: center; min-width: 180px; z-index: 2; cursor: pointer; transition: transform 0.2s; }
+.garage-marker .icon { width: 44px; height: 44px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px #0002; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-right: 12px; border: 3px solid #ffc107; transition: all 0.2s; }
+.garage-marker .info { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 8px 14px; font-size: 14px; color: #222; min-width: 110px; transition: box-shadow 0.2s; }
+.garage-marker .info .city { font-weight: bold; font-size: 16px; margin-bottom: 2px; }
+.garage-marker:hover, .garage-marker.active { transform: scale(1.15); z-index: 10; }
+.garage-marker.active .icon { background: #ffc107; color: #fff; border-color: #222; }
+.garage-marker.active .info { box-shadow: 0 4px 16px #0003; border: 2px solid #ffc107; }
+
+.garage-details-box {
+    float: right;
+    margin-left: 280px;
+    margin-top: 260px;
+        min-width: 218px;
+        max-width: 293px;
+        max-height: 360px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #fffbe7 80%, #fff9c4 100%);
+    border: 2.5px solid #ffc107;
+    border-radius: 22px;
+    box-shadow: 0 8px 32px #ffc10733, 0 2px 8px #0001;
+    padding: 12px 14px 10px 14px;
+    font-size: 15px;
+    color: #222;
+    display: none;
+    transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+    animation: fadeInBox 0.4s;
+}
+.garage-details-box.active { display: block; }
+@@keyframes fadeInBox {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+.garage-details-box img {
+    width: 100%;
+    max-width: 260px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 16px #0002;
+    object-fit: cover;
+}
+.garage-details-box .city {
+    font-size: 20px;
+    font-weight: 700;
+    color: #d4a106;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.garage-details-box .city i {
+    font-size: 22px;
+}
+.garage-details-box .name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 6px;
+}
+.garage-details-box .desc {
+    font-size: 15px;
+    color: #444;
+    margin-top: 10px;
+    font-style: italic;
+}
 </style>
 
-<div class="container py-5">
-    <h2 class="text-center mb-4" style="color:#EBE7DE;">Danh sách Garage</h2>
-
-    @if (!Model.Any())
-    {
-        <div class="alert alert-warning text-center">Chưa có garage nào được đăng ký.</div>
-    }
-    else
-    {
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            @foreach (var garage in Model)
-            {
-                <div class="col">
-                    <div class="garage-card">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <i class="fa fa-building me-2"></i>@garage.Name
-                            </h5>
-                            <p class="card-text"><i class="fa fa-map-marker me-2 text-warning"></i>@garage.Address</p>
-                            <p class="card-text"><i class="fa fa-info-circle me-2 text-info"></i>@garage.Description</p>
-                            <a href="#" class="btn btn-outline-primary btn-sm mt-2">
-                                <i class="fa fa-eye"></i> Xem chi tiết
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            }
+<div style="display: flex; flex-direction: row;">
+    <div class="garage-map-infographic">
+        <img src="~/images/ban_do_vn_ultra_hd.png" alt="Bản đồ Việt Nam" style="width: 100%; height: auto; display: block;" />
+        @foreach (var garage in Model)
+        {
+            int left = 320, top = 90;
+            string city = garage.OperatingArea ?? "";
+            string icon = "🏢";
+            string imageUrl = "/images/garage_default.jpg";
+            if (city.Contains("Đà Nẵng")) { left = 311; top = 319; icon = "🛠️"; imageUrl = "/images/danang.png"; }
+            else if (city.Contains("Hồ Chí Minh")) { left = 264; top = 560; icon = "🛠️"; imageUrl = "/images/hochiminh.png"; }
+            else if (city.Contains("Hà Nội")) { left = 185; top = 75; icon = "🛠️"; imageUrl = "/images/hanoi.png"; }
+            else { left = 320; top = 90; icon = "🏢"; imageUrl = "/images/garage_default.jpg"; }
+        <div class="garage-marker" style="left:@(left)px; top:@(top)px; color:#222;" onclick="showGarageDetails(@garage.GarageId, this)">
+            <div class="icon" style="border-color:#ffc107;">@icon</div>
+            <div class="info">
+                <div class="city">@city</div>
+                @garage.Name<br>@garage.Address
+            </div>
+            <div class="garage-image-url" style="display:none;">@imageUrl</div>
         </div>
+        }
+    </div>
+    <div id="garage-details-box" class="garage-details-box"></div>
+</div>
+
+<script>
+const garageData = [
+    @foreach (var garage in Model)
+    {
+        int left = 320, top = 90;
+        string city = garage.OperatingArea ?? "";
+        string imageUrl = "/images/garage_default.jpg";
+        if (city.Contains("Đà Nẵng")) { left = 185; top = 75; imageUrl = "/images/danang.png"; }
+        else if (city.Contains("Hồ Chí Minh")) { left = 264; top = 560; imageUrl = "/images/hochiminh.png"; }
+        else if (city.Contains("Hà Nội")) { left = 311; top = 319; imageUrl = "/images/hanoi.png"; }
+        else { left = 320; top = 90; imageUrl = "/images/garage_default.jpg"; }
+        <text>
+        {
+            id: @garage.GarageId,
+            name: "@garage.Name",
+            address: "@garage.Address",
+            city: "@(garage.OperatingArea ?? "")",
+            description: "@(garage.Description ?? "")",
+            imageUrl: "@imageUrl"
+        },
+        </text>
     }
+];
+
+function showGarageDetails(id, el) {
+    document.querySelectorAll('.garage-marker').forEach(m => m.classList.remove('active'));
+    el.classList.add('active');
+    const box = document.getElementById('garage-details-box');
+    const g = garageData.find(x => x.id === id);
+    if (g) {
+        box.innerHTML = `<img src='${g.imageUrl}' alt='${g.name}'>
+            <div class='city'>📍 ${g.city}</div>
+            <div class='name'>${g.name}</div>
+            <div><b>Địa chỉ:</b> ${g.address}</div>
+            <div class='desc'>${g.description}</div>`;
+        box.classList.add('active');
+    }
+}
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.garage-marker')) {
+        document.querySelectorAll('.garage-marker').forEach(m => m.classList.remove('active'));
+        document.getElementById('garage-details-box').classList.remove('active');
+    }
+});
+</script>
+
+
 </div>
 
 <!-- FontAwesome nếu chưa có -->

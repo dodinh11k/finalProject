@@ -1,0 +1,148 @@
+@model test_2.Models.AppointmentHistoryViewModel
+@using test_2.Models
+@using System.Linq
+@using System.Collections.Generic
+@{
+    ViewData["Title"] = "Tất cả lịch hẹn";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fa fa-calendar"></i> Tất cả lịch hẹn</h2>
+                <div>
+                    <a asp-action="History" class="btn btn-outline-primary me-2">
+                        <i class="fa fa-check-circle"></i> Lịch hẹn đã xác nhận
+                    </a>
+                    <a asp-action="Create" class="btn btn-success">
+                        <i class="fa fa-plus"></i> Đặt lịch mới
+                    </a>
+                </div>
+            </div>
+
+            @if (!Model.Appointments.Any())
+            {
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i> Bạn chưa có lịch hẹn nào.
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var appointment in Model.Appointments)
+                    {
+                        var details = Model.Details.Where(d => d.AppointmentId == appointment.AppointmentId).ToList();
+                        var totalAmount = details.Sum(d => d.Service?.Price ?? 0);
+
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Lịch hẹn #@appointment.AppointmentId</h5>
+                                        <span class="badge @GetStatusBadgeClass(appointment.Status)">
+                                            @GetStatusText(appointment.Status)
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong><i class="fa fa-clock"></i> Thời gian:</strong> @appointment.AppointmentTime?.ToString("dd/MM/yyyy HH:mm")</p>
+                                    <p><strong><i class="fa fa-map-marker"></i> Địa điểm:</strong> @appointment.Garage?.Address</p>
+                                    
+                                    @if (details.Any())
+                                    {
+                                        <p><strong><i class="fa fa-cogs"></i> Dịch vụ:</strong></p>
+                                        <ul class="list-unstyled">
+                                            @foreach (var detail in details)
+                                            {
+                                                <li><i class="fa fa-check text-success"></i> @detail.Service?.ServiceName</li>
+                                            }
+                                        </ul>
+                                        <p><strong><i class="fa fa-money"></i> Tổng tiền:</strong> @totalAmount.ToString("N0") VNĐ</p>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(appointment.Notes))
+                                    {
+                                        <p><strong><i class="fa fa-sticky-note"></i> Ghi chú:</strong> @appointment.Notes</p>
+                                    }
+                                </div>
+                                <div class="card-footer">
+                                    <div class="d-flex justify-content-between">
+                                        <a asp-action="Details" asp-route-id="@appointment.AppointmentId" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-eye"></i> Chi tiết
+                                        </a>
+                                        
+                                        @if (appointment.Status == "Pending")
+                                        {
+                                            var payments = ViewBag.Payments as List<PaymentHistory>;
+                                            var payment = payments?.FirstOrDefault(p => p.AppointmentId == appointment.AppointmentId);
+                                            if (payment != null && payment.Status == "Success")
+                                            {
+                                                <span class="text-success"><i class="fa fa-check-circle"></i> Đã thanh toán</span>
+                                            }
+                                            else
+                                            {
+                                                <form method="post" action="/payment/create" style="display:inline;">
+                                                    <input type="hidden" name="amount" value="@totalAmount" />
+                                                    <input type="hidden" name="description" value="Thanh toán lịch hẹn #@appointment.AppointmentId - @appointment.User?.FullName" />
+                                                    <input type="hidden" name="appointmentId" value="@appointment.AppointmentId" />
+                                                    <button type="submit" class="btn btn-success btn-sm">
+                                                        <i class="fa fa-credit-card"></i> Thanh toán
+                                                    </button>
+                                                </form>
+                                            }
+                                        }
+                                        else if (appointment.Status == "Confirmed")
+                                        {
+                                            <span class="text-success"><i class="fa fa-check-circle"></i> Đã xác nhận</span>
+                                        }
+                                        else if (appointment.Status == "In Progress" || appointment.Status == "In_Progress")
+                                        {
+                                            <span class="text-info"><i class="fa fa-cogs"></i> Đang thực hiện</span>
+                                        }
+                                        else if (appointment.Status == "Completed")
+                                        {
+                                            <span class="text-info"><i class="fa fa-flag-checkered"></i> Hoàn thành</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@functions {
+    private string GetStatusBadgeClass(string? status)
+    {
+        return status switch
+        {
+            "Pending" => "bg-warning",
+            "Confirmed" => "bg-success",
+            "In Progress" => "bg-info",
+            "In_Progress" => "bg-info",
+            "Completed" => "bg-primary",
+            "Cancelled" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    private string GetStatusText(string? status)
+    {
+        return status switch
+        {
+            "Pending" => "Chờ xử lý",
+            "Confirmed" => "Đã xác nhận",
+            "In Progress" => "Đang thực hiện",
+            "In_Progress" => "Đang thực hiện",
+            "Completed" => "Hoàn thành",
+            "Cancelled" => "Đã hủy",
+            _ => "Không xác định"
+        };
+    }
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> 

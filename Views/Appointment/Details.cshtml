@@ -91,7 +91,22 @@
                         : "Không xác định")
         </div>
         <div class="info-item"><strong>Trạng thái:</strong> @appointment.Status</div>
+       
         <div class="info-item"><strong>Ghi chú:</strong> @(string.IsNullOrWhiteSpace(appointment.Notes) ? "(Không có ghi chú)" : appointment.Notes)</div>
+        <div class="info-item">
+            <strong>Tổng giá tiền:</strong>
+            @{
+                decimal totalAmount = 0;
+                foreach (var detail in Model.VehicleDetails)
+                {
+                    if (detail.Service?.Price.HasValue == true && detail.Quantity.HasValue)
+                    {
+                        totalAmount += detail.Service.Price.Value * detail.Quantity.Value;
+                    }
+                }
+            }
+            <span class="text-success fw-bold">@totalAmount.ToString("N0") VNĐ</span>
+        </div>
     </div>
 
     <hr />
@@ -175,6 +190,15 @@
             <a asp-action="CreateMulti" class="btn-custom" style="background-color: #28a745;">
                 <i class="fa fa-cars"></i> Đặt lịch nhiều xe
             </a>
+            <form method="post" action="/payment/create" style="display:inline;">
+                <input type="hidden" name="amount" value="@totalAmount" />
+                <input type="hidden" name="description" value="Thanh toán lịch hẹn #@Model.Appointment.AppointmentId - @Model.Appointment.User?.FullName" />
+                <input type="hidden" name="appointmentId" value="@Model.Appointment.AppointmentId" />
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="fa fa-credit-card"></i> Thanh toán ngay
+                </button>
+            </form>
+
         </div>
     </div>
 </div>

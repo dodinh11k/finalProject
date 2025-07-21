@@ -12,8 +12,8 @@ using test_2.Models;
 namespace test_2.Migrations
 {
     [DbContext(typeof(MyGarageFinalContext))]
-    [Migration("20250628162429_AddNotificationSystem")]
-    partial class AddNotificationSystem
+    [Migration("20250720205626_AddPaymentHistories")]
+    partial class AddPaymentHistories
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,22 +106,21 @@ namespace test_2.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("TechnicianId")
-                        .HasColumnType("int")
-                        .HasColumnName("TechnicianID");
-
                     b.Property<int?>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("UserID");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
 
                     b.HasKey("AppointmentId")
                         .HasName("PK__Appointm__8ECDFCA2FC58BAB1");
 
                     b.HasIndex("GarageId");
 
-                    b.HasIndex("TechnicianId");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Appointments");
                 });
@@ -157,16 +156,21 @@ namespace test_2.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ServiceID");
 
+                    b.Property<int?>("TechnicianId")
+                        .HasColumnType("int")
+                        .HasColumnName("TechnicianID");
+
                     b.Property<int?>("VehicleId")
                         .HasColumnType("int")
                         .HasColumnName("VehicleID");
 
-                    b.HasKey("AppointmentVehicleDetailId")
-                        .HasName("PK__Appointm__C23A2797927FBB80");
+                    b.HasKey("AppointmentVehicleDetailId");
 
                     b.HasIndex("AppointmentId");
 
                     b.HasIndex("ServiceId");
+
+                    b.HasIndex("TechnicianId");
 
                     b.HasIndex("VehicleId");
 
@@ -409,6 +413,74 @@ namespace test_2.Migrations
                     b.ToTable("OrderItems");
                 });
 
+            modelBuilder.Entity("test_2.Models.PaymentHistory", b =>
+                {
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("PaymentID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int?>("AppointmentId")
+                        .HasColumnType("int")
+                        .HasColumnName("AppointmentID");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("PayOSOrderCode")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PayOSTransactionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PaymentMethod")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("PayOS");
+
+                    b.Property<string>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("Pending");
+
+                    b.Property<string>("TransactionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("UserID");
+
+                    b.HasKey("PaymentId")
+                        .HasName("PK__PaymentHistory__PaymentID");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PaymentHistories");
+                });
+
             modelBuilder.Entity("test_2.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -572,6 +644,12 @@ namespace test_2.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("EstimatedCost")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("PerformedItems")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -583,6 +661,9 @@ namespace test_2.Migrations
                     b.Property<int?>("TechnicianId")
                         .HasColumnType("int")
                         .HasColumnName("TechnicianID");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VehicleStatus")
                         .HasMaxLength(255)
@@ -686,6 +767,9 @@ namespace test_2.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int?>("TechnicianUserId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("UserID");
@@ -695,6 +779,8 @@ namespace test_2.Migrations
 
                     b.HasKey("VehicleId")
                         .HasName("PK__Vehicles__476B54B2980519D1");
+
+                    b.HasIndex("TechnicianUserId");
 
                     b.HasIndex("UserId");
 
@@ -733,19 +819,16 @@ namespace test_2.Migrations
                         .HasForeignKey("GarageId")
                         .HasConstraintName("FK__Appointme__Garag__35BCFE0A");
 
-                    b.HasOne("test_2.Models.User", "Technician")
-                        .WithMany("AppointmentTechnicians")
-                        .HasForeignKey("TechnicianId")
-                        .HasConstraintName("FK__Appointme__Techn__36B12243");
-
                     b.HasOne("test_2.Models.User", "User")
                         .WithMany("AppointmentUsers")
                         .HasForeignKey("UserId")
                         .HasConstraintName("FK__Appointme__UserI__34C8D9D1");
 
-                    b.Navigation("Garage");
+                    b.HasOne("test_2.Models.User", null)
+                        .WithMany("AppointmentTechnicians")
+                        .HasForeignKey("UserId1");
 
-                    b.Navigation("Technician");
+                    b.Navigation("Garage");
 
                     b.Navigation("User");
                 });
@@ -757,21 +840,29 @@ namespace test_2.Migrations
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK__Appointme__Appoi__3A81B327");
+                        .HasConstraintName("FK_AppointmentVehicleDetails_Appointments");
 
                     b.HasOne("test_2.Models.Service", "Service")
                         .WithMany("AppointmentVehicleDetails")
                         .HasForeignKey("ServiceId")
-                        .HasConstraintName("FK__Appointme__Servi__3C69FB99");
+                        .HasConstraintName("FK_AppointmentVehicleDetails_Services");
+
+                    b.HasOne("test_2.Models.User", "Technician")
+                        .WithMany()
+                        .HasForeignKey("TechnicianId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_AppointmentVehicleDetails_Technician");
 
                     b.HasOne("test_2.Models.Vehicle", "Vehicle")
                         .WithMany("AppointmentVehicleDetails")
                         .HasForeignKey("VehicleId")
-                        .HasConstraintName("FK__Appointme__Vehic__3B75D760");
+                        .HasConstraintName("FK_AppointmentVehicleDetails_Vehicles");
 
                     b.Navigation("Appointment");
 
                     b.Navigation("Service");
+
+                    b.Navigation("Technician");
 
                     b.Navigation("Vehicle");
                 });
@@ -857,6 +948,23 @@ namespace test_2.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("test_2.Models.PaymentHistory", b =>
+                {
+                    b.HasOne("test_2.Models.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .HasConstraintName("FK__PaymentHistory__AppointmentID");
+
+                    b.HasOne("test_2.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK__PaymentHistory__UserID");
+
+                    b.Navigation("Appointment");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("test_2.Models.RepairStatus", b =>
                 {
                     b.HasOne("test_2.Models.Appointment", "Appointment")
@@ -903,10 +1011,16 @@ namespace test_2.Migrations
 
             modelBuilder.Entity("test_2.Models.Vehicle", b =>
                 {
+                    b.HasOne("test_2.Models.User", "Technician")
+                        .WithMany()
+                        .HasForeignKey("TechnicianUserId");
+
                     b.HasOne("test_2.Models.User", "User")
                         .WithMany("Vehicles")
                         .HasForeignKey("UserId")
                         .HasConstraintName("FK__Vehicles__UserID__2A4B4B5E");
+
+                    b.Navigation("Technician");
 
                     b.Navigation("User");
                 });

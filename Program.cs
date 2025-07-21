@@ -8,8 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Cho phép sử dụng HttpContext
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient(); // Add HttpClient for PaymentController
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>(); // Add PaymentService
+builder.Services.AddScoped<PayOSService>(); // Add PayOSService
 builder.Services.AddScoped<EmailTestService>();
 // Kết nối DB
 var connectionString = builder.Configuration.GetConnectionString("MyGarageFinalConnection");

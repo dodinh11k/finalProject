@@ -6,6 +6,78 @@
     var fullname = ViewData["fullname"] as string ?? "";
 }
 
+<style>
+    /* CSS cho dropdown giống admin dashboard */
+    .dropdown-menu.custom-dropdown {
+        position: absolute !important;
+        font-size: 0.9rem !important;
+        margin-top: 5px !important;
+        right: 0 !important;
+        left: auto !important;
+        top: 100% !important;
+        padding-top: 0 !important;
+        background: #fff !important;
+        border: 1px solid #dee2e6 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        min-width: 200px !important;
+    }
+    
+    .dropdown-menu.custom-dropdown .dropdown-item {
+        margin-bottom: 0 !important;
+        padding: 8px 20px !important;
+        cursor: pointer !important;
+        border-bottom: 1px solid #f8f9fa !important;
+        line-height: 1.2 !important;
+        color: #333 !important;
+        background: transparent !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .dropdown-menu.custom-dropdown .dropdown-item:hover,
+    .dropdown-menu.custom-dropdown .dropdown-item:focus {
+        background: #f8f9fa !important;
+        color: #333 !important;
+        transform: none !important;
+    }
+    
+    .dropdown-menu.custom-dropdown .dropdown-item i {
+        font-size: 16px !important;
+        margin-right: 10px !important;
+        width: 16px !important;
+        text-align: center !important;
+        color: #6c757d !important;
+    }
+    
+    /* Button dropdown giống admin */
+    .btn-outline-light.dropdown-toggle {
+        background: transparent !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        color: #333 !important;
+        font-weight: 500 !important;
+        padding: 8px 16px !important;
+        border-radius: 6px !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .btn-outline-light.dropdown-toggle:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        transform: none !important;
+    }
+    
+    /* Responsive */
+    @@media (max-width: 991px) {
+        .dropdown-menu.custom-dropdown {
+            left: 20px !important;
+            right: 20px !important;
+            top: 100% !important;
+            width: calc(100% - 40px) !important;
+            margin-top: 5px !important;
+        }
+    }
+</style>
+
 <div class="container-fluid d-flex justify-content-end align-items-center px-4" style="height: 40px;">
     <div class="d-flex align-items-center gap-3">
 
@@ -40,10 +112,10 @@
                     Xin chào, @fullname
                 </a>
                 <ul class="dropdown-menu custom-dropdown" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="/Account/Profile">Thông tin cá nhân</a></li>
-                    <li><a class="dropdown-item" href="/Account/Favorites">Sản phẩm ưu thích</a></li>
-                    <li><a class="dropdown-item" href="/Account/Cart">Giỏ Hàng</a></li>
-                    <li><a class="dropdown-item" href="/Account/Logout">Đăng xuất</a></li>
+                    <li><a class="dropdown-item" href="/Account/Profile"><i class="fa fa-user"></i>Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" href="/Technician/Tasks"><i class="fa fa-tasks"></i>Phân công công việc</a></li>
+                    <li><a class="dropdown-item" href="/Account/ChangePassword"><i class="fa fa-key"></i>Đổi mật khẩu</a></li>
+                    <li><a class="dropdown-item" href="/Account/Logout"><i class="fa fa-sign-out"></i>Đăng xuất</a></li>
                 </ul>
             </div>
         }

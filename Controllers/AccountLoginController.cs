@@ -29,6 +29,8 @@ namespace test_2.Controllers
             {
                 if (role == "Admin")
                     return RedirectToAction("Dashboard", "Admin");
+                else if (role == "Technician")
+                    return RedirectToAction("Dashboard", "Technician");
                 else
                     return RedirectToAction("Index", "Home");
             }
@@ -66,6 +68,8 @@ namespace test_2.Controllers
             HttpContext.Session.SetString("FullName", user.FullName ?? "");
             HttpContext.Session.SetString("Role", user.Role ?? "User");
             HttpContext.Session.SetString("Phone", user.Phone ?? "");
+            
+            Console.WriteLine($"✅ Session saved - UserId: {user.UserId}, Username: {user.Username}");
 
             if (RememberMe)
             {
@@ -87,6 +91,9 @@ namespace test_2.Controllers
 
             if (user.Role?.ToLower() == "admin")
                 return RedirectToAction("Dashboard", "Admin");
+            
+            if (user.Role?.ToLower() == "technician")
+                return RedirectToAction("Dashboard", "Technician");
 
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
@@ -164,6 +171,8 @@ namespace test_2.Controllers
             HttpContext.Session.SetString("FullName", user.FullName ?? "");
             HttpContext.Session.SetString("Role", user.Role ?? "User");
             HttpContext.Session.SetString("Phone", user.Phone ?? "");
+            
+            Console.WriteLine($"✅ Google Session saved - UserId: {user.UserId}, Username: {user.Username}");
 
             var claims = new[]
             {
@@ -178,6 +187,9 @@ namespace test_2.Controllers
 
             if (user.Role?.ToLower() == "admin")
                 return RedirectToAction("Dashboard", "Admin");
+            
+            if (user.Role?.ToLower() == "technician")
+                return RedirectToAction("Dashboard", "Technician");
 
             TempData["success"] = "Đăng nhập Google thành công!";
             return RedirectToAction("Index", "Home");

@@ -512,11 +512,34 @@ public class AppointmentController : Controller
             return RedirectToAction("Login", "AccountLogin");
         }
 
+        // ✅ Hiển thị những appointment đã được xác nhận và những appointment đã thanh toán (Pending nhưng có payment success)
         var appointments = await _context.Appointments
-            .Where(a => a.UserId == user.UserId)
+            .Where(a => a.UserId == user.UserId && 
+                       (a.Status == "Confirmed" || a.Status == "Completed" || a.Status == "In Progress" || a.Status == "In_Progress"))
             .Include(a => a.Garage)
             .OrderByDescending(a => a.AppointmentTime)
             .ToListAsync();
+
+        // ✅ Thêm những appointment có status "Pending" nhưng đã thanh toán thành công
+        var pendingAppointments = await _context.Appointments
+            .Where(a => a.UserId == user.UserId && a.Status == "Pending")
+            .Include(a => a.Garage)
+            .ToListAsync();
+
+        var pendingAppointmentIds = pendingAppointments.Select(a => a.AppointmentId).ToList();
+        var successfulPayments = await _context.PaymentHistories
+            .Where(p => pendingAppointmentIds.Contains(p.AppointmentId ?? 0) && p.Status == "Success")
+            .Select(p => p.AppointmentId)
+            .ToListAsync();
+
+        var paidPendingAppointments = pendingAppointments
+            .Where(a => successfulPayments.Contains(a.AppointmentId))
+            .OrderByDescending(a => a.AppointmentTime)
+            .ToList();
+
+        // ✅ Kết hợp tất cả appointments
+        appointments.AddRange(paidPendingAppointments);
+        appointments = appointments.OrderByDescending(a => a.AppointmentTime).ToList();
 
         var appointmentIds = appointments.Select(a => a.AppointmentId).ToList();
 
@@ -534,6 +557,55 @@ public class AppointmentController : Controller
         };
 
         return View("~/Views/Appointment/History.cshtml", viewModel);
+    }
+
+    [HttpGet("AllAppointments")]
+    public async Task<IActionResult> AllAppointments()
+    {
+        var userIdStr = HttpContext.Session.GetString("UserId");
+
+        if (!int.TryParse(userIdStr, out int userId))
+        {
+            HttpContext.Session.SetString("ReturnUrl", Url.Action("AllAppointments", "Appointment"));
+            return RedirectToAction("Login", "AccountLogin");
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "AccountLogin");
+        }
+
+        // ✅ Hiển thị tất cả appointments (bao gồm cả Pending)
+        var appointments = await _context.Appointments
+            .Where(a => a.UserId == user.UserId)
+            .Include(a => a.Garage)
+            .OrderByDescending(a => a.AppointmentTime)
+            .ToListAsync();
+
+        var appointmentIds = appointments.Select(a => a.AppointmentId).ToList();
+
+        var allDetails = await _context.AppointmentVehicleDetails
+            .Where(d => appointmentIds.Contains(d.AppointmentId))
+            .Include(d => d.Vehicle)
+            .Include(d => d.Service)
+            .Include(d => d.Technician)
+            .ToListAsync();
+
+        // ✅ Lấy thông tin payment để hiển thị trạng thái thanh toán
+        var payments = await _context.PaymentHistories
+            .Where(p => appointmentIds.Contains(p.AppointmentId ?? 0))
+            .ToListAsync();
+
+        var viewModel = new AppointmentHistoryViewModel
+        {
+            Appointments = appointments,
+            Details = allDetails
+        };
+
+        ViewBag.Payments = payments;
+
+        return View("~/Views/Appointment/AllAppointments.cshtml", viewModel);
     }
 
     [HttpGet("Review/{id}")]

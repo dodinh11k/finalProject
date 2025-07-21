@@ -5,8 +5,12 @@
     var userid = HttpContextAccessor.HttpContext.Session.GetString("UserID") ?? "";
     var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "";
     var role = HttpContextAccessor.HttpContext.Session.GetString("Role") ?? "";
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var isHomeIndex = (currentController == "Home" && (currentAction == null || currentAction == "Index"));
 }
 <link rel="stylesheet" href="~/css/_Header.cshtml.css" asp-append-version="true" />
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
 
 <header class="header position-absolute start-0 w-100 z-3" style="top: 0px !important; background: transparent;">
     <!-- Dòng trên cùng chứa thông tin đăng nhập nằm bên phải -->
@@ -23,12 +27,12 @@
                     <ul class="dropdown-menu custom-dropdown" aria-labelledby="guestDropdown">
                         <li>
                             <a class="dropdown-item" href="@Url.Action("Login", "AccountLogin")">
-                                <i class="fa fa-sign-in"></i> Đăng nhập
+                                 Đăng nhập
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="@Url.Action("Register", "AccountRegister")">
-                                <i class="fa fa-user-plus"></i> Đăng ký
+                                 Đăng ký
                             </a>
                         </li>
                     </ul>
@@ -50,6 +54,7 @@
                             <li><a class="dropdown-item" href="/Account/Favorites">Sản phẩm ưu thích</a></li>
                             <li><a class="dropdown-item" href="/Cart/Index">Giỏ hàng</a></li>
                             <li><a class="dropdown-item" href="/Appointment/History">Lịch sử đặt lịch</a></li>
+                            <li><a class="dropdown-item" href="/Appointment/AllAppointments">Tất cả lịch hẹn</a></li>
                         }
                         else if (role == "Technician")
                         {
@@ -65,48 +70,94 @@
     </div>
 
     <!-- Dòng menu chính giữa -->
-    <div class="container d-flex justify-content-center align-items-end pt-3 pb-4 flex-wrap" style="gap: 30px;">
+    <div class="container d-flex justify-content-center align-items-end pt-3 pb-4 flex-wrap" style="gap: 50px;">
         <!-- Menu trái -->
-        <a href="@Url.Action("Index", "Services")" class="text-white text-uppercase" style="font-size: 1rem;">Dịch vụ</a>
-        <a href="@Url.Action("Index", "Products")" class="text-white text-uppercase" style="font-size: 1rem;">Sản phẩm</a>
-        <a href="@Url.Action("Favorites", "Account")" class="text-white text-uppercase" style="font-size: 1rem;">Yêu thích</a>
+        <a href="@Url.Action("Index", "Services")" class="text-white text-uppercase">Dịch vụ</a>
+        <a href="@Url.Action("Index", "Products")" class="text-white text-uppercase">Sản phẩm</a>
+        <a href="@Url.Action("Favorites", "Account")" class="text-white text-uppercase">Yêu thích</a>
 
         <!-- Logo ở giữa -->
-        <a href="@Url.Action("Index", "Home")" style="transform: translateY(-10px);">
-            <img src="~/layout1/img/logo3-removebg-preview.png" alt="Logo" style="height: 90px;" />
+        <a href="@Url.Action("Index", "Home")">
+            @if (isHomeIndex)
+            {
+                <div style="margin-bottom: 20px; display: flex; flex-direction: column; align-items: center;">
+                    <img src="~/layout1/img/logo3-removebg-preview.png" alt="Logo" style="height: 90px;" />
+                </div>
+            }
+            else
+            {
+                <span style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 90px; width: 180px; margin-bottom: 10px;">
+                    <svg width="180" height="90" viewBox="0 0 220 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <text x="50%" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#C7A25A" letter-spacing="4">MY</text>
+                        <text x="50%" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="500" fill="#C7A25A" letter-spacing="10">GARAGE</text>
+                    </svg>
+                </span>
+            }
         </a>
 
         <!-- Menu phải -->
-        <div class="dropdown d-inline-block">
-            <a href="#" class="text-white text-uppercase dropdown-toggle" style="font-size: 1rem; text-decoration: none;" 
-               data-bs-toggle="dropdown" aria-expanded="false">
-                Đặt lịch
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="@Url.Action("Index", "Appointment")">Chọn loại đặt lịch</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="@Url.Action("Create", "Appointment")">Đặt lịch 1 xe</a></li>
-                <li><a class="dropdown-item" href="@Url.Action("CreateMulti", "Appointment")">Đặt lịch nhiều xe</a></li>
-            </ul>
-        </div>
-        <a href="@Url.Action("Index", "Garages")" class="text-white text-uppercase" style="font-size: 1rem;">Garage</a>
-        <a href="@Url.Action("Contact", "Home")" class="text-white text-uppercase" style="font-size: 1rem;">Liên hệ</a>
+        <a href="@Url.Action("CreateMulti", "Appointment")" class="text-white text-uppercase" style="text-decoration: none;">
+            Đặt lịch
+        </a>
+        <a href="@Url.Action("Index", "Garages")" class="text-white text-uppercase">Garage</a>
+        <a href="@Url.Action("Contact", "Home")" class="text-white text-uppercase">Liên hệ</a>
     </div>
 </header>
 
 <style>
-    /* Fix chỉ cho dropdown menu chính (ĐẶT LỊCH) */
-    .header .dropdown-menu {
-        color: #212529 !important;
-        background: #fff !important;
+    .header, .header * {
+        font-family: 'Roboto', Arial, sans-serif !important;
     }
-    .header .dropdown-menu .dropdown-item {
-        color: #212529 !important;
-        background: #fff !important;
+    
+    /* Hiệu ứng gạch chân cho các menu items */
+    .header .container a {
+        position: relative !important;
+        transition: all 0.3s ease !important;
     }
-    .header .dropdown-menu .dropdown-item:hover,
-    .header .dropdown-menu .dropdown-item:focus {
-        background: #f8f9fa !important;
-        color: #152A16 !important;
+    
+    .header .container a::after {
+        content: '' !important;
+        position: absolute !important;
+        width: 0 !important;
+        height: 2px !important;
+        bottom: -5px !important;
+        left: 50% !important;
+        background-color: #fff !important;
+        transition: all 0.3s ease !important;
+        transform: translateX(-50%) !important;
+    }
+    
+    .header .container a:hover::after {
+        width: 100% !important;
+    }
+    
+    /* Hiệu ứng cho trang không phải home */
+    .header a::after {
+        background-color: #fff !important;
     }
 </style>
+@if (!isHomeIndex)
+{
+    <style>
+        .header a,
+        .header .dropdown-toggle,
+        .header .dropdown-item {
+            color: #111 !important;
+        }
+        
+        .header .container a::after {
+            background-color: #111 !important;
+        }
+    </style>
+}
+@if (isHomeIndex)
+{
+    <style>
+        .header a,
+        .header .dropdown-toggle,
+        .header .dropdown-item {
+            font-size: 1.1rem !important;
+            font-weight: 400 !important;
+        }
+    </style>
+}

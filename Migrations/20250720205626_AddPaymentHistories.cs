@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace test_2.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddPaymentHistories : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -332,6 +332,39 @@ namespace test_2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentHistories",
+                columns: table => new
+                {
+                    PaymentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppointmentID = table.Column<int>(type: "int", nullable: true),
+                    UserID = table.Column<int>(type: "int", nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, defaultValue: "PayOS"),
+                    TransactionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, defaultValue: "Pending"),
+                    PayOSOrderCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    PayOSTransactionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__PaymentHistory__PaymentID", x => x.PaymentID);
+                    table.ForeignKey(
+                        name: "FK__PaymentHistory__AppointmentID",
+                        column: x => x.AppointmentID,
+                        principalTable: "Appointments",
+                        principalColumn: "AppointmentID");
+                    table.ForeignKey(
+                        name: "FK__PaymentHistory__UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "UserID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RepairStatus",
                 columns: table => new
                 {
@@ -541,6 +574,16 @@ namespace test_2.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentHistories_AppointmentID",
+                table: "PaymentHistories",
+                column: "AppointmentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentHistories_UserID",
+                table: "PaymentHistories",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RepairStatus_AppointmentID",
                 table: "RepairStatus",
                 column: "AppointmentID");
@@ -608,6 +651,9 @@ namespace test_2.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderItems");
+
+            migrationBuilder.DropTable(
+                name: "PaymentHistories");
 
             migrationBuilder.DropTable(
                 name: "RepairStatus");
