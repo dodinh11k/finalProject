@@ -4,82 +4,7 @@
     ViewData["Title"] = "Danh sách sản phẩm";
 }
 
-<style>
-    body {
-        background-color: #EBE7DE;
-        color: #152A16;
-    }
-
-    .product-card {
-        background-color: #EBE7DE;
-        color: #152A16;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .product-card .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
-
-    .product-title {
-        font-weight: bold;
-        color: #152A16;
-        font-size: 1.1rem;
-    }
-
-    .product-price {
-        color: #C6862B;
-        font-weight: bold;
-    }
-
-    .product-stock {
-        font-size: 0.9rem;
-        color: #777;
-    }
-
-    .btn-custom {
-        background-color: #152A16;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 8px 12px;
-        transition: 0.3s;
-        font-size: 0.9rem;
-    }
-
-        .btn-custom:hover {
-            background-color: #0F1F10;
-        }
-
-    .btn-outline-heart {
-        background-color: transparent;
-        color: #C0392B;
-        border: 1px solid #C0392B;
-        transition: 0.3s;
-    }
-
-        .btn-outline-heart:hover {
-            background-color: #C0392B;
-            color: #fff;
-        }
-
-    .alert {
-        background-color: #fff8e1;
-        border: 1px solid #ddd;
-        color: #152A16;
-    }
-</style>
+<h2 class="mb-4 text-center fw-bold" style="color: #152A16; margin-top: 60px;">Danh sách sản phẩm</h2>
 
 @if (TempData["success"] != null)
 {
@@ -96,50 +21,60 @@
     </div>
 }
 
-<h2 class="mb-4 text-center" style="color: #152A16; font-weight: bold; margin-top: 60px;">Danh sách sản phẩm</h2>
+<style>
+    .product-card-hover {
+        transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+        cursor: pointer;
+    }
 
-<div class="row">
-    @foreach (var product in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="product-card">
-                <img src="@Url.Content("~/" + product.ImageUrl)" class="card-img-top" alt="@product.ProductName" />
-                <div class="p-3 d-flex flex-column flex-grow-1 justify-content-between">
-                    <div>
-                        <div class="product-title">@product.ProductName</div>
-                        <p class="text-muted small">@product.Description</p>
-                        <p class="product-price">@product.Price.ToString("N0") đ</p>
-                        <p class="product-stock">Còn lại: @product.StockQuantity</p>
-                    </div>
+        .product-card-hover:hover {
+            transform: scale(1.08);
+            z-index: 2;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        }
+</style>
 
-                    <div class="mt-3 d-grid gap-2">
-                        <form asp-controller="Order" asp-action="BuyNow" method="post">
-                            <input type="hidden" name="productId" value="@product.ProductId" />
-                            <input type="hidden" name="quantity" value="1" />
-                            <button type="submit" class="btn btn-custom w-100">
-                                <i class="fa fa-bolt"></i> Mua ngay
-                            </button>
-                        </form>
-
-                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                            <input type="hidden" name="productId" value="@product.ProductId" />
-                            <input type="hidden" name="quantity" value="1" />
-                            <button type="submit" class="btn btn-custom w-100">
-                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                            </button>
-                        </form>
-
-                        <form asp-controller="Favorites" asp-action="AddFavorite" method="post">
-                            <input type="hidden" name="productId" value="@product.ProductId" />
-                            <button type="submit" class="btn btn-outline-heart w-100">
-                                <i class="fa fa-heart"></i> Yêu thích
-                            </button>
-                        </form>
+<div class="container">
+    <div class="row justify-content-center">
+        @foreach (var product in Model)
+        {
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
+                <div class="card shadow-sm w-100 h-100 border-0 product-card-hover" style="background: #EBE7DE; border-radius: 12px;" onclick="window.location.href='@Url.Action("Details", "Products", new { id = product.ProductId })'">
+                    <img src="@Url.Content("~/" + product.ImageUrl)" class="card-img-top" alt="@product.ProductName" style="height: 180px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;" />
+                    <div class="card-body d-flex flex-column justify-content-between p-3">
+                        <div>
+                            <h5 class="card-title fw-bold mb-1" style="color: #152A16;">@product.ProductName</h5>
+                            <p class="card-text text-muted small mb-1">@product.Description</p>
+                            <div class="mb-1" style="color: #C6862B; font-weight: bold; font-size: 1.1rem;">@product.Price.ToString("N0") đ</div>
+                            <div class="mb-2 text-secondary" style="font-size: 0.95rem;">Còn lại: @product.StockQuantity</div>
+                        </div>
+                        <div class="mt-2">
+                            <form asp-controller="Order" asp-action="BuyNow" method="post" class="mb-2">
+                                <input type="hidden" name="productId" value="@product.ProductId" />
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="btn btn-dark w-100 mb-1" style="background: #152A16; border-radius: 6px;">
+                                    <i class="fa fa-bolt"></i> Mua ngay
+                                </button>
+                            </form>
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mb-2">
+                                <input type="hidden" name="productId" value="@product.ProductId" />
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="btn btn-dark w-100 mb-1" style="background: #152A16; border-radius: 6px;">
+                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                </button>
+                            </form>
+                            <form asp-controller="Favorites" asp-action="AddFavorite" method="post">
+                                <input type="hidden" name="productId" value="@product.ProductId" />
+                                <button type="submit" class="btn btn-outline-danger w-100" style="border-radius: 6px;">
+                                    <i class="fa fa-heart"></i> Yêu thích
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />

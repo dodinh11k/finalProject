@@ -46,6 +46,23 @@ namespace test_2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PromoCode",
+                columns: table => new
+                {
+                    PromoCodeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DiscountPercent = table.Column<double>(type: "float", nullable: true),
+                    ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PromoCode", x => x.PromoCodeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Services",
                 columns: table => new
                 {
@@ -159,6 +176,9 @@ namespace test_2.Migrations
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
+                    PromoCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     UserId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -276,33 +296,6 @@ namespace test_2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    ReviewID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: true),
-                    GarageID = table.Column<int>(type: "int", nullable: true),
-                    Rating = table.Column<int>(type: "int", nullable: true),
-                    Comment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__Reviews__74BC79AE618E1F19", x => x.ReviewID);
-                    table.ForeignKey(
-                        name: "FK__Reviews__GarageI__45F365D3",
-                        column: x => x.GarageID,
-                        principalTable: "Garages",
-                        principalColumn: "GarageID");
-                    table.ForeignKey(
-                        name: "FK__Reviews__UserID__44FF419A",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "UserID");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Vehicles",
                 columns: table => new
                 {
@@ -383,6 +376,40 @@ namespace test_2.Migrations
                         column: x => x.AppointmentID,
                         principalTable: "Appointments",
                         principalColumn: "AppointmentID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    ReviewID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(type: "int", nullable: true),
+                    GarageID = table.Column<int>(type: "int", nullable: true),
+                    Rating = table.Column<int>(type: "int", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
+                    AppointmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Reviews__74BC79AE618E1F19", x => x.ReviewID);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Appointments_AppointmentId",
+                        column: x => x.AppointmentId,
+                        principalTable: "Appointments",
+                        principalColumn: "AppointmentID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK__Reviews__GarageI__45F365D3",
+                        column: x => x.GarageID,
+                        principalTable: "Garages",
+                        principalColumn: "GarageID");
+                    table.ForeignKey(
+                        name: "FK__Reviews__UserID__44FF419A",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -589,6 +616,11 @@ namespace test_2.Migrations
                 column: "AppointmentID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reviews_AppointmentId",
+                table: "Reviews",
+                column: "AppointmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reviews_GarageID",
                 table: "Reviews",
                 column: "GarageID");
@@ -654,6 +686,9 @@ namespace test_2.Migrations
 
             migrationBuilder.DropTable(
                 name: "PaymentHistories");
+
+            migrationBuilder.DropTable(
+                name: "PromoCode");
 
             migrationBuilder.DropTable(
                 name: "RepairStatus");

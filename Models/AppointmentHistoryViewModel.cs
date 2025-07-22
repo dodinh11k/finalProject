@@ -4,4 +4,5 @@ public class AppointmentHistoryViewModel
 {
     public List<Appointment> Appointments { get; set; }
     public List<AppointmentVehicleDetail> Details { get; set; }
+    public List<Review> Reviews { get; set; }
 }

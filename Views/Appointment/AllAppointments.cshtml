@@ -33,7 +33,9 @@
                     @foreach (var appointment in Model.Appointments)
                     {
                         var details = Model.Details.Where(d => d.AppointmentId == appointment.AppointmentId).ToList();
-                        var totalAmount = details.Sum(d => d.Service?.Price ?? 0);
+                        var totalServicePrice = details.Sum(d => d.Service?.Price ?? 0);
+                        var discountAmount = appointment.DiscountAmount ?? 0;
+                        var totalAmount = totalServicePrice - discountAmount;
 
                         <div class="col-md-6 col-lg-4 mb-4">
                             <div class="card h-100">
@@ -58,7 +60,18 @@
                                                 <li><i class="fa fa-check text-success"></i> @detail.Service?.ServiceName</li>
                                             }
                                         </ul>
-                                        <p><strong><i class="fa fa-money"></i> Tổng tiền:</strong> @totalAmount.ToString("N0") VNĐ</p>
+                                        <p><strong><i class="fa fa-money"></i> Tổng tiền:</strong> 
+                                            @if (discountAmount > 0)
+                                            {
+                                                <span class="text-decoration-line-through text-muted">@totalServicePrice.ToString("N0")</span>
+                                                <span class="text-success">@totalAmount.ToString("N0") VNĐ</span>
+                                                <small class="text-success">(-@discountAmount.ToString("N0") VNĐ)</small>
+                                            }
+                                            else
+                                            {
+                                                <span>@totalAmount.ToString("N0") VNĐ</span>
+                                            }
+                                        </p>
                                     }
 
                                     @if (!string.IsNullOrEmpty(appointment.Notes))
@@ -84,7 +97,7 @@
                                             {
                                                 <form method="post" action="/payment/create" style="display:inline;">
                                                     <input type="hidden" name="amount" value="@totalAmount" />
-                                                    <input type="hidden" name="description" value="Thanh toán lịch hẹn #@appointment.AppointmentId - @appointment.User?.FullName" />
+                                                    <input type="hidden" name="description" value="Thanh toán lịch hẹn #@appointment.AppointmentId - @appointment.User?.FullName@(discountAmount > 0 ? $" (Đã giảm {discountAmount:N0} VNĐ)" : "")" />
                                                     <input type="hidden" name="appointmentId" value="@appointment.AppointmentId" />
                                                     <button type="submit" class="btn btn-success btn-sm">
                                                         <i class="fa fa-credit-card"></i> Thanh toán

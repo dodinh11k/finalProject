@@ -16,6 +16,9 @@ public partial class Review
     public string? Comment { get; set; }
 
     public DateTime? CreatedAt { get; set; }
+    public int AppointmentId { get; set; }
+
+    public virtual Appointment? Appointment { get; set; }
 
     public virtual Garage? Garage { get; set; }
 

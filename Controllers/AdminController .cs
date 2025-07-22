@@ -473,6 +473,41 @@ namespace test_2.Controllers
             return View();
         }
 
+        // --- VOUCHER / EVENT MANAGEMENT ---
+        [HttpGet]
+        public async Task<IActionResult> Event()
+        {
+            var vouchers = await _context.PromoCodes.ToListAsync();
+            return View("Event", vouchers);
+        }
+
+        [HttpGet]
+        public IActionResult AddVoucher()
+        {
+            return View("AddVoucher", new PromoCode());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddVoucher(PromoCode model, string discountType)
+        {
+            if (discountType == "percent")
+            {
+                model.DiscountAmount = null;
+            }
+            else
+            {
+                model.DiscountPercent = null;
+            }
+            _context.PromoCodes.Add(model);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Event");
+        }
+
+
+
+
+
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel model, bool RememberMe = false)
         {

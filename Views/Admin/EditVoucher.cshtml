@@ -1,0 +1,54 @@
+@model test_2.Models.PromoCode
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Sửa voucher";
+    var isPercent = Model.DiscountPercent.HasValue;
+}
+<h2>Sửa voucher</h2>
+<form asp-action="EditVoucher" method="post">
+    <input type="hidden" asp-for="PromoCodeId" />
+    <div class="mb-3">
+        <label class="form-label">Mã voucher</label>
+        <input asp-for="Code" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Loại giảm giá</label>
+        <select id="discountType" name="discountType" class="form-select" onchange="toggleDiscountInput()">
+            @if (isPercent)
+            {
+                <option value="percent" selected>Phần trăm (%)</option>
+                <option value="amount">Cố định (VNĐ)</option>
+            }
+            else
+            {
+                <option value="percent">Phần trăm (%)</option>
+                <option value="amount" selected>Cố định (VNĐ)</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3" id="percentInput" style="display:@(isPercent ? "" : "none")">
+        <label class="form-label">Giảm (%)</label>
+        <input asp-for="DiscountPercent" class="form-control" type="number" min="1" max="100" />
+    </div>
+    <div class="mb-3" id="amountInput" style="display:@(!isPercent ? "" : "none")">
+        <label class="form-label">Giảm (VNĐ)</label>
+        <input asp-for="DiscountAmount" class="form-control" type="number" min="1000" step="1000" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ngày hết hạn</label>
+        <input asp-for="ExpiryDate" class="form-control" type="date" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Mô tả</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a href="@Url.Action("Event", "Admin")" class="btn btn-secondary">Quay lại</a>
+</form>
+<script>
+function toggleDiscountInput() {
+    var type = document.getElementById('discountType').value;
+    document.getElementById('percentInput').style.display = (type === 'percent') ? '' : 'none';
+    document.getElementById('amountInput').style.display = (type === 'amount') ? '' : 'none';
+}
+</script> 

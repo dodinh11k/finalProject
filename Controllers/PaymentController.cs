@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -126,6 +127,44 @@ namespace finalProject_1607.Controllers
             }
         }
 
+        [HttpGet("create")]
+        [AllowAnonymous]
+        public IActionResult Create(decimal amount, string description, int? appointmentId = null)
+        {
+            ViewBag.Amount = amount;
+            ViewBag.Description = description;
+            ViewBag.AppointmentId = appointmentId;
+            return View("~/Views/Payment/Test.cshtml");
+        }
+
+        [HttpGet("ConfirmExtraPayment")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmExtraPayment(decimal amount, string description, int appointmentId)
+        {
+            MultiVehicleAppointmentViewModel? model = null;
+            if (TempData["EditMultiModel"] != null)
+            {
+                try
+                {
+                    model = System.Text.Json.JsonSerializer.Deserialize<MultiVehicleAppointmentViewModel>(TempData["EditMultiModel"].ToString());
+                    if (model != null)
+                    {
+                        var userIdStr = HttpContext.Session.GetString("UserId");
+                        int? userId = null;
+                        if (int.TryParse(userIdStr, out int uid)) userId = uid;
+                        await DropdownHelper.LoadDropdownsForMulti(_context, model, userId);
+                    }
+                }
+                catch { }
+            }
+            ViewBag.Amount = amount;
+            ViewBag.Description = description;
+            ViewBag.AppointmentId = appointmentId;
+            ViewBag.OldTotal = TempData["EditMultiOldTotal"];
+            ViewBag.NewTotal = TempData["EditMultiNewTotal"];
+            ViewBag.Diff = TempData["EditMultiDiff"];
+            return View("~/Views/Payment/ConfirmExtraPayment.cshtml", model);
+        }
 
         private int? GetCurrentUserId()
         {

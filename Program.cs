@@ -14,6 +14,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>(); // Add PaymentService
 builder.Services.AddScoped<PayOSService>(); // Add PayOSService
 builder.Services.AddScoped<EmailTestService>();
+builder.Services.AddScoped<IVoucherService, VoucherService>(); // Add VoucherService
 // Kết nối DB
 var connectionString = builder.Configuration.GetConnectionString("MyGarageFinalConnection");
 builder.Services.AddDbContext<MyGarageFinalContext>(options =>

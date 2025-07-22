@@ -18,6 +18,8 @@ public partial class Product
     public string? ImageUrl { get; set; }
 
     public DateTime? CreatedAt { get; set; }
+    public int PurchaseCount { get; set; } = 0;
+
 
     public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 

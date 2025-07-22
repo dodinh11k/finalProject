@@ -37,6 +37,8 @@ public partial class MyGarageFinalContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<PromoCode> PromoCodes { get; set; }
+
     public virtual DbSet<RepairStatus> RepairStatuses { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
@@ -48,11 +50,12 @@ public partial class MyGarageFinalContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Vehicle> Vehicles { get; set; }
+
     public virtual DbSet<PaymentHistory> PaymentHistories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-=> optionsBuilder.UseSqlServer("Data Source=LAPTOP-QUAIVAT;Initial Catalog=MyGarageFinal;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+=> optionsBuilder.UseSqlServer("Data Source=LAPTOP-K74LGB4H\\SQL2019;Initial Catalog=MyGarageFinal15;User ID=sa;Password=vanlinh@1327;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AdminActivity>(entity =>
@@ -291,6 +294,18 @@ public partial class MyGarageFinalContext : DbContext
             entity.Property(e => e.ProductName).HasMaxLength(100);
         });
 
+        modelBuilder.Entity<PromoCode>(entity =>
+        {
+            entity.ToTable("PromoCode");
+            entity.HasKey(e => e.PromoCodeId);
+            entity.Property(e => e.PromoCodeId).HasColumnName("PromoCodeId");
+            entity.Property(e => e.Code).HasMaxLength(50);
+            entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.DiscountPercent);
+            entity.Property(e => e.ExpiryDate);
+            entity.Property(e => e.Description).HasMaxLength(255);
+        });
+
         modelBuilder.Entity<RepairStatus>(entity =>
         {
             entity.HasKey(e => e.StatusId).HasName("PK__RepairSt__C8EE204389B34B5D");
@@ -431,6 +446,7 @@ public partial class MyGarageFinalContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__PaymentHistory__UserID");
         });
+
 
         OnModelCreatingPartial(modelBuilder);
     }

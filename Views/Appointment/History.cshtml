@@ -221,7 +221,7 @@
                     <div class="vehicle-group-card">
                         <strong>Xe @(vehicleGroups.IndexOf(vehicleGroup) + 1):</strong>
                         @($"{vehicle?.Make ?? "Không rõ"} {vehicle?.Model ?? ""}")
-                        (@(vehicle?.LicensePlate ?? "Không rõ"))<br />
+                        (@(vehicle?.LicensePlate ?? "Không rõ"))<br />S
                         <strong>Dịch vụ:</strong> @string.Join(", ", services)<br />
                         <strong>Số dịch vụ:</strong> @services.Count
                     </div>
@@ -230,7 +230,14 @@
                 @if (appt.Status == "Pending")
                 {
                     <div class="action-buttons">
-                        <a asp-action="Edit" asp-route-id="@appt.AppointmentId" class="btn-edit">Sửa</a>
+                        @if (Model.Details.Count(d => d.AppointmentId == appt.AppointmentId) > 1)
+                        {
+                            <a asp-action="EditMulti" asp-route-id="@appt.AppointmentId" class="btn-edit">Sửa</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Edit" asp-route-id="@appt.AppointmentId" class="btn-edit">Sửa</a>
+                        }
                         <a asp-action="Cancel" asp-route-id="@appt.AppointmentId"
                            class="btn-cancel"
                            onclick="return confirm('Bạn có chắc chắn muốn huỷ lịch hẹn này?');">
@@ -238,27 +245,39 @@
                         </a>
                     </div>
                 }
-                else if (appt.Status == "Completed")
+                 @{
+    var reviewForCompletedStatus = Model.Reviews.FirstOrDefault(r => r.AppointmentId == appt.AppointmentId);
+}
+
+@if (appt.Status == "Completed")
+{
+    var reviewForCompletedStatusInner = Model.Reviews.FirstOrDefault(r => r.AppointmentId == appt.AppointmentId);
+
+    if (reviewForCompletedStatusInner != null)
+    {
+        <div class="review-box" style="background:#f8f9fa; border:1px solid #e9ecef; border-radius:8px; padding:14px 18px; margin-top:12px;">
+            <div style="font-weight:600; color:#152A16; margin-bottom:4px;">Đánh giá của bạn:</div>
+            <div style="color:#ffc107; font-size:1.2rem; margin-bottom:2px;">
+                @for (int i = 1; i <= (reviewForCompletedStatusInner.Rating ?? 0); i++)
                 {
-                    if (review != null)
-                    {
-                        <div class="review-box" style="background:#f8f9fa; border:1px solid #e9ecef; border-radius:8px; padding:14px 18px; margin-top:12px;">
-                            <div style="font-weight:600; color:#152A16; margin-bottom:4px;">Đánh giá của bạn:</div>
-                            <div style="color:#ffc107; font-size:1.2rem; margin-bottom:2px;">
-                                @for (int i = 1; i <= (review.Rating ?? 0); i++) { <span>&#9733;</span> }
-                                @for (int i = (review.Rating ?? 0) + 1; i <= 5; i++) { <span style="color:#e4e5e9">&#9733;</span> }
-                            </div>
-                            <div style="font-style:italic; color:#444; margin-bottom:2px;">@review.Comment</div>
-                            <div style="font-size:0.95rem; color:#888;">@review.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="action-buttons">
-                            <a asp-action="Review" asp-route-id="@appt.AppointmentId" class="btn-edit">Đánh giá</a>
-                        </div>
-                    }
+                    <span>&#9733;</span>
                 }
+                @for (int i = (reviewForCompletedStatusInner.Rating ?? 0) + 1; i <= 5; i++)
+                {
+                    <span style="color:#e4e5e9">&#9733;</span>
+                }
+            </div>
+            <div style="font-style:italic; color:#444; margin-bottom:2px;">@reviewForCompletedStatusInner.Comment</div>
+            <div style="font-size:0.95rem; color:#888;">@reviewForCompletedStatusInner.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</div>
+        </div>
+    }
+    else
+    {
+        <div class="action-buttons">
+            <a asp-action="Review" asp-route-id="@appt.AppointmentId" class="btn-edit">Đánh giá</a>
+        </div>
+    }
+}
             </div>
         }
     }

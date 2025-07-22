@@ -20,5 +20,18 @@ namespace test_2.Controllers
             var products = await _context.Products.ToListAsync();
             return View(products);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            // Đếm tổng lượt đánh giá cho sản phẩm này
+            var reviewCount = await _context.Reviews.CountAsync(r => r.GarageId == id);
+            ViewBag.ReviewCount = reviewCount;
+            return View(product);
+        }
     }
 }

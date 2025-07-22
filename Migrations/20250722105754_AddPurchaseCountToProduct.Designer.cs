@@ -12,8 +12,8 @@ using test_2.Models;
 namespace test_2.Migrations
 {
     [DbContext(typeof(MyGarageFinalContext))]
-    [Migration("20250720205626_AddPaymentHistories")]
-    partial class AddPaymentHistories
+    [Migration("20250722105754_AddPurchaseCountToProduct")]
+    partial class AddPurchaseCountToProduct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,6 +94,9 @@ namespace test_2.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
+                    b.Property<decimal?>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int?>("GarageId")
                         .HasColumnType("int")
                         .HasColumnName("GarageID");
@@ -102,9 +105,15 @@ namespace test_2.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("PromoCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int")
@@ -521,6 +530,38 @@ namespace test_2.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("test_2.Models.PromoCode", b =>
+                {
+                    b.Property<int>("PromoCodeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("PromoCodeId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PromoCodeId"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<decimal?>("DiscountAmount")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<double?>("DiscountPercent")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PromoCodeId");
+
+                    b.ToTable("PromoCode", (string)null);
+                });
+
             modelBuilder.Entity("test_2.Models.RepairStatus", b =>
                 {
                     b.Property<int>("StatusId")
@@ -564,6 +605,9 @@ namespace test_2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
 
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comment")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -586,6 +630,8 @@ namespace test_2.Migrations
 
                     b.HasKey("ReviewId")
                         .HasName("PK__Reviews__74BC79AE618E1F19");
+
+                    b.HasIndex("AppointmentId");
 
                     b.HasIndex("GarageId");
 
@@ -977,6 +1023,12 @@ namespace test_2.Migrations
 
             modelBuilder.Entity("test_2.Models.Review", b =>
                 {
+                    b.HasOne("test_2.Models.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("test_2.Models.Garage", "Garage")
                         .WithMany("Reviews")
                         .HasForeignKey("GarageId")
@@ -986,6 +1038,8 @@ namespace test_2.Migrations
                         .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .HasConstraintName("FK__Reviews__UserID__44FF419A");
+
+                    b.Navigation("Appointment");
 
                     b.Navigation("Garage");
 
