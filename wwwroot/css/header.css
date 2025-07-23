@@ -1,0 +1,40 @@
+﻿/* Nền tối cho dropdown */
+.custom-dropdown {
+    background-color: #343a40 !important;
+    border: none;
+    min-width: 180px;
+}
+
+    /* Màu chữ bình thường */
+    .custom-dropdown .dropdown-item {
+        color: #ffffff !important;
+        padding: 10px 15px;
+        font-size: 0.95rem;
+    }
+
+        /* Hover: đổi nền và màu chữ */
+        .custom-dropdown .dropdown-item:hover {
+            background-color: #495057 !important;
+            color: #ffc107 !important;
+        }
+
+/* Tùy chỉnh thêm nút dropdown nếu muốn */
+.dropdown-toggle::after {
+    margin-left: 0.4rem;
+}
+.custom-dropdown {
+    background-color: #343a40 !important;
+    border: none;
+    min-width: 180px;
+}
+
+    .custom-dropdown .dropdown-item {
+        color: #ffffff !important;
+        padding: 10px 15px;
+        font-size: 0.95rem;
+    }
+
+        .custom-dropdown .dropdown-item:hover {
+            background-color: #495057 !important;
+            color: #ffc107 !important;
+        }

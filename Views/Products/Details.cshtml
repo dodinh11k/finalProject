@@ -1,0 +1,30 @@
+@model test_2.Models.Product
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+
+<div class="container mt-5">
+    <h2>@Model.ProductName</h2>
+    <div class="row">
+        <div class="col-md-5">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                var imgSrc = Model.ImageUrl.StartsWith("/") ? Model.ImageUrl : "/" + Model.ImageUrl;
+                <img src="@imgSrc" alt="@Model.ProductName" class="img-fluid rounded" />
+            }
+            else
+            {
+                <img src="/images/no-image.png" alt="No image" class="img-fluid rounded" />
+            }
+        </div>
+        <div class="col-md-7">
+            <h4>Giá: @Model.Price.ToString("N0") VNĐ</h4>
+            <p><strong>Mô tả:</strong> @Model.Description</p>
+            <p><strong>Số lượng còn lại:</strong> @Model.StockQuantity</p>
+            <p><strong>Lượt mua:</strong> @Model.PurchaseCount</p>
+            <p><strong>Lượt đánh giá:</strong> @ViewBag.ReviewCount</p>
+            <a href="@Url.Action("Index", "Products")" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+    </div>
+</div> 

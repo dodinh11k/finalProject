@@ -1,0 +1,117 @@
+﻿@model IEnumerable<test_2.Models.FavoriteProduct>
+
+@{
+    ViewData["Title"] = "Sản phẩm yêu thích";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #f1f1f1;
+    }
+
+    .favorite-card {
+        background-color: #EBE7DE;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        transition: transform 0.2s ease;
+        color: #152A16;
+    }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .favorite-card img {
+            height: 200px;
+            object-fit: contain;
+            background-color: #2c2c2c;
+        }
+
+        .favorite-card .card-body {
+            padding: 20px;
+        }
+
+        .favorite-card .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #152A16;
+        }
+
+        .favorite-card .card-text {
+            color: #152A16;
+        }
+
+        .favorite-card .btn-remove {
+            background-color: transparent;
+            border: 1px solid #dc3545;
+            color: #dc3545;
+        }
+
+            .favorite-card .btn-remove:hover {
+                background-color: #dc3545;
+                color: #fff;
+            }
+
+    .alert {
+        background-color: #2a2a2a;
+        color: #f1f1f1;
+        border: 1px solid #444;
+    }
+</style>
+
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success text-center mb-4">
+        @TempData["success"]
+    </div>
+}
+@if (TempData["info"] != null)
+{
+    <div class="alert alert-info text-center mb-4">
+        @TempData["info"]
+    </div>
+}
+
+<h2 class="text-center my-4">Sản phẩm yêu thích</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center">Bạn chưa có sản phẩm nào trong danh sách yêu thích.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var favorite in Model)
+        {
+            var product = favorite.Product;
+            if (product != null)
+            {
+                <div class="col">
+                    <div class="favorite-card h-100 d-flex flex-column">
+                        <img src="@Url.Content("~/" + product.ImageUrl)" class="card-img-top" alt="@product.ProductName" />
+
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title">@product.ProductName</h5>
+                                <p class="card-text">@product.Description</p>
+                                <p class="text-warning fw-bold">@product.Price.ToString("N0") ₫</p>
+                            </div>
+
+                            <form asp-controller="Favorites" asp-action="RemoveFavorite" method="post" class="mt-3">
+                                <input type="hidden" name="productId" value="@product.ProductId" />
+                                <button type="submit" class="btn btn-remove btn-sm w-100">
+                                    <i class="fa fa-heart-broken"></i> Xóa khỏi yêu thích
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+
+<!-- FontAwesome nếu chưa có -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />

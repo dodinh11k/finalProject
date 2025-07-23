@@ -1,0 +1,142 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model IEnumerable<test_2.Models.Service>
+@{
+    ViewBag.Title = "Quản lý Dịch vụ";
+}
+
+<style>
+    body {
+        background-color: #1c1c1c;
+        color: #f5f5f5;
+    }
+
+    .container-manage {
+        padding: 40px 20px;
+    }
+
+    h2 {
+        color: #ffc107;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 6px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .table {
+        background-color: #2b2b2b;
+        color: #fff;
+    }
+
+        .table th {
+            background-color: #343a40;
+            color: #ffc107;
+            border-color: #444;
+        }
+
+        .table td {
+            vertical-align: middle;
+            border-color: #444;
+        }
+
+    .image-preview {
+        max-width: 100px;
+        height: auto;
+        border-radius: 6px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+</style>
+
+<div class="container-manage">
+    <h2>@ViewBag.Title</h2>
+
+    <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary mb-3 mt-2">← Quay về Trang chính Admin</a>
+    <a href="@Url.Action("CreateService", "Admin")" class="btn btn-success mb-3 mt-2">➕ Thêm Dịch vụ</a>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên dịch vụ</th>
+                <th>Mô tả</th>
+                <th>Giá (VNĐ)</th>
+                <th>Hình ảnh</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.ServiceId</td>
+                    <td>@s.ServiceName</td>
+                    <td>@s.Description</td>
+                    <td>@($"{s.Price:N0}")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(s.image_url))
+                        {
+                            <img src="@Url.Content("~/" + s.image_url.Trim())" alt="Hình ảnh dịch vụ" class="image-preview" />
+                        }
+                        else
+                        {
+                            <span>Không có</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="@Url.Action("EditService", "Admin", new { id = s.ServiceId })" class="btn btn-primary btn-sm">✏️ Sửa</a>
+                            <a href="@Url.Action("DeleteService", "Admin", new { id = s.ServiceId })"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa dịch vụ này?');">🗑 Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
