@@ -1,0 +1,84 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username") ?? "";
+    var userid = HttpContextAccessor.HttpContext.Session.GetString("UserID") ?? "";
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "";
+    var role = HttpContextAccessor.HttpContext.Session.GetString("Role") ?? "";
+}
+<link rel="stylesheet" href="~/css/_Header.cshtml.css" asp-append-version="true" />
+
+<header class="header position-absolute start-0 w-100 z-3" style="top: 0px !important; background: transparent;">
+    <!-- Dòng trên cùng chứa thông tin đăng nhập nằm bên phải -->
+    <div class="container-fluid d-flex justify-content-end align-items-center px-4" style="height: 40px;">
+        <div class="d-flex align-items-center gap-3">
+            @if (string.IsNullOrEmpty(username))
+            {
+                <!-- Dropdown khi chưa đăng nhập -->
+                <div class="dropdown">
+                    <a class="btn btn-outline-light btn-sm dropdown-toggle" href="#" role="button" id="guestDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Tài khoản
+                    </a>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="guestDropdown">
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Login", "AccountLogin")">
+                                <i class="fa fa-sign-in"></i> Đăng nhập
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Register", "AccountRegister")">
+                                <i class="fa fa-user-plus"></i> Đăng ký
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <!-- Dropdown khi đã đăng nhập -->
+                <div class="dropdown">
+                    <a class="btn btn-outline-light btn-sm dropdown-toggle" href="#" role="button" id="userDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Xin chào, @fullname
+                    </a>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/Account/Profile">Thông tin cá nhân</a></li>
+
+                        @if (role == "User")
+                        {
+                            <li><a class="dropdown-item" href="/Account/Favorites">Sản phẩm ưu thích</a></li>
+                            <li><a class="dropdown-item" href="/Cart/Index">Giỏ hàng</a></li>
+                            <li><a class="dropdown-item" href="/Appointment/History">Lịch sử đặt lịch</a></li>
+                        }
+                        else if (role == "Technician")
+                        {
+                            <li><a class="dropdown-item" href="/Technician/Dashboard">Phân công công việc</a></li>
+                        }
+
+                        <li><a class="dropdown-item" href="/Account/ChangePassword">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="/Account/Logout">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Dòng menu chính giữa -->
+    <div class="container d-flex justify-content-center align-items-end pt-3 pb-4 flex-wrap" style="gap: 30px;">
+        <!-- Menu trái -->
+        <a href="@Url.Action("Index", "Services")" class="text-white text-uppercase" style="font-size: 1rem;">Dịch vụ</a>
+        <a href="@Url.Action("Index", "Products")" class="text-white text-uppercase" style="font-size: 1rem;">Sản phẩm</a>
+        <a href="@Url.Action("Favorites", "Account")" class="text-white text-uppercase" style="font-size: 1rem;">Yêu thích</a>
+
+        <!-- Logo ở giữa -->
+        <a href="@Url.Action("Index", "Home")" style="transform: translateY(-10px);">
+            <img src="~/layout1/img/logo3-removebg-preview.png" alt="Logo" style="height: 90px;" />
+        </a>
+
+        <!-- Menu phải -->
+        <a href="@Url.Action("Create", "Appointment")" class="text-white text-uppercase" style="font-size: 1rem;">Đặt lịch</a>
+        <a href="@Url.Action("Index", "Garages")" class="text-white text-uppercase" style="font-size: 1rem;">Garage</a>
+        <a href="@Url.Action("Contact", "Home")" class="text-white text-uppercase" style="font-size: 1rem;">Liên hệ</a>
+    </div>
+</header>

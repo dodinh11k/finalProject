@@ -1,0 +1,341 @@
+@{
+    ViewBag.Title = "Technician Dashboard";
+}
+@{
+    var username = ViewData["username"] as string ?? "";
+    var fullname = ViewData["fullname"] as string ?? "";
+}
+
+<div class="container-fluid d-flex justify-content-end align-items-center px-4" style="height: 40px;">
+    <div class="d-flex align-items-center gap-3">
+
+        @if (string.IsNullOrEmpty(username))
+        {
+            <!-- Dropdown khi chưa đăng nhập -->
+            <div class="dropdown">
+                <a class="btn btn-outline-light btn-sm dropdown-toggle" href="#" role="button" id="guestDropdown"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Tài khoản
+                </a>
+                <ul class="dropdown-menu custom-dropdown" aria-labelledby="guestDropdown">
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("Login", "AccountLogin")">
+                            <i class="fa fa-sign-in"></i> Đăng nhập
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("Register", "AccountRegister")">
+                            <i class="fa fa-user-plus"></i> Đăng ký
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <!-- Dropdown khi đã đăng nhập -->
+            <div class="dropdown">
+                <a class="btn btn-outline-light btn-sm dropdown-toggle" href="#" role="button" id="userDropdown"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Xin chào, @fullname
+                </a>
+                <ul class="dropdown-menu custom-dropdown" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="/Account/Profile">Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" href="/Account/Favorites">Sản phẩm ưu thích</a></li>
+                    <li><a class="dropdown-item" href="/Account/Cart">Giỏ Hàng</a></li>
+                    <li><a class="dropdown-item" href="/Account/Logout">Đăng xuất</a></li>
+                </ul>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 text-center">
+            <h2 class="fw-bold mb-3" style="font-size:2.2rem;">Chào mừng đến trang quản lý <span style="color:#28a745">Kỹ thuật viên</span></h2>
+            <p class="text-muted">Quản lý lịch hẹn, công việc và dịch vụ sửa chữa một cách hiệu quả!</p>
+        </div>
+    </div>
+    <div class="row justify-content-center g-4">
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card shadow h-100 text-center p-4 border-0">
+                <div class="mb-3" style="font-size:2.5rem; color:#007bff;"><i class="fa fa-calendar-check-o"></i></div>
+                <h5 class="fw-bold mb-2">Quản lý Lịch hẹn</h5>
+                <p class="text-muted mb-3">Xem tất cả lịch hẹn, nhận việc và cập nhật trạng thái công việc.</p>
+                <a href="@Url.Action("Tasks", "Technician")" class="btn btn-primary w-100">Quản lý Lịch hẹn</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card shadow h-100 text-center p-4 border-0">
+                <div class="mb-3" style="font-size:2.5rem; color:#28a745;"><i class="fa fa-tasks"></i></div>
+                <h5 class="fw-bold mb-2">Công việc đang làm</h5>
+                <p class="text-muted mb-3">Theo dõi các lịch hẹn đang thực hiện và cập nhật tiến độ.</p>
+                <a href="@Url.Action("Tasks", "Technician", new { tab = "mine" })" class="btn btn-success w-100">Xem công việc</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card shadow h-100 text-center p-4 border-0">
+                <div class="mb-3" style="font-size:2.5rem; color:#ffc107;"><i class="fa fa-history"></i></div>
+                <h5 class="fw-bold mb-2">Lịch sử hoàn thành</h5>
+                <p class="text-muted mb-3">Xem lại các lịch hẹn đã hoàn thành và đánh giá từ khách hàng.</p>
+                <a href="@Url.Action("Tasks", "Technician")" class="btn btn-warning w-100 text-white">Lịch sử</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card shadow h-100 text-center p-4 border-0">
+                <div class="mb-3" style="font-size:2.5rem; color:#17a2b8;"><i class="fa fa-cogs"></i></div>
+                <h5 class="fw-bold mb-2">Dịch vụ & Sản phẩm</h5>
+                <p class="text-muted mb-3">Xem danh sách dịch vụ và sản phẩm có sẵn tại garage.</p>
+                <a href="@Url.Action("Index", "Service")" class="btn btn-info w-100 text-white">Dịch vụ</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thống kê nhanh -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4 class="fw-bold mb-4 text-center" style="color:#28a745;">
+                <i class="fa fa-chart-bar"></i> Thống kê công việc
+            </h4>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white text-center p-3 border-0">
+                <div class="card-body">
+                    <i class="fa fa-clock-o fa-2x mb-2"></i>
+                    <h5 class="card-title">Đang chờ</h5>
+                    <h3 class="mb-0">@(ViewData["PendingCount"] ?? 0)</h3>
+                    <small>Lịch hẹn chờ xử lý</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white text-center p-3 border-0">
+                <div class="card-body">
+                    <i class="fa fa-spinner fa-2x mb-2"></i>
+                    <h5 class="card-title">Đang làm</h5>
+                    <h3 class="mb-0">@(ViewData["InProgressCount"] ?? 0)</h3>
+                    <small>Công việc đang thực hiện</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white text-center p-3 border-0">
+                <div class="card-body">
+                    <i class="fa fa-check-circle fa-2x mb-2"></i>
+                    <h5 class="card-title">Hoàn thành</h5>
+                    <h3 class="mb-0">@(ViewData["CompletedCount"] ?? 0)</h3>
+                    <small>Lịch hẹn đã hoàn thành</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white text-center p-3 border-0">
+                <div class="card-body">
+                    <i class="fa fa-calendar fa-2x mb-2"></i>
+                    <h5 class="card-title">Hôm nay</h5>
+                    <h3 class="mb-0">@(ViewData["TodayCount"] ?? 0)</h3>
+                    <small>Lịch hẹn hôm nay</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lịch hẹn gần đây -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow border-0">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="fa fa-calendar-o text-primary"></i> Lịch hẹn gần đây
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @{
+                        var recentAppointments = ViewData["RecentAppointments"] as List<test_2.Models.Appointment>;
+                    }
+
+                    @if (recentAppointments != null && recentAppointments.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mã lịch hẹn</th>
+                                        <th>Khách hàng</th>
+                                        <th>Dịch vụ</th>
+                                        <th>Thời gian</th>
+                                        <th>Trạng thái</th>
+                                        <th>Kỹ thuật viên</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var appointment in recentAppointments)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="badge bg-secondary">#@appointment.AppointmentId</span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <strong>@appointment.User?.FullName</strong>
+                                                    <br>
+                                                    <small class="text-muted">@appointment.User?.Phone</small>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if (appointment.AppointmentVehicleDetails != null && appointment.AppointmentVehicleDetails.Any())
+                                                {
+                                                    <div>
+                                                        @foreach (var detail in appointment.AppointmentVehicleDetails.Take(2))
+                                                        {
+                                                            <span class="badge bg-light text-dark me-1">
+                                                                @detail.Service?.ServiceName
+                                                            </span>
+                                                        }
+                                                        @if (appointment.AppointmentVehicleDetails.Count > 2)
+                                                        {
+                                                            <span class="badge bg-light text-dark">+@(appointment.AppointmentVehicleDetails.Count - 2) more</span>
+                                                        }
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <strong>@(appointment.AppointmentTime?.ToString("dd/MM/yyyy") ?? "N/A")</strong>
+                                                    <br>
+                                                    <small class="text-muted">@(appointment.AppointmentTime?.ToString("HH:mm") ?? "N/A")</small>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @{
+                                                    var statusClass = appointment.Status switch
+                                                    {
+                                                        "Pending" => "bg-secondary",
+                                                        "WaitingForAccept" => "bg-warning text-dark",
+                                                        "In_Progress" => "bg-info text-dark",
+                                                        "Completed" => "bg-success",
+                                                        "Cancelled" => "bg-danger",
+                                                        _ => "bg-secondary"
+                                                    };
+                                                }
+                                                <span class="badge @statusClass">@appointment.Status</span>
+                                            </td>
+                                            <td>
+                                                @if (appointment.AppointmentVehicleDetails != null && appointment.AppointmentVehicleDetails.Any())
+                                                {
+                                                    var technicians = appointment.AppointmentVehicleDetails
+                                                    .Select(d => d.Vehicle?.Technician?.FullName)
+                                                    .Where(name => !string.IsNullOrEmpty(name))
+                                                    .Distinct()
+                                                    .ToList();
+
+                                                    if (technicians.Any())
+                                                    {
+                                                        <span class="text-success">
+                                                            <i class="fa fa-user"></i> @string.Join(", ", technicians)
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">
+                                                            <i class="fa fa-user-times"></i> Chưa phân công
+                                                        </span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">
+                                                        <i class="fa fa-user-times"></i> Chưa có dữ liệu
+                                                    </span>
+                                                }
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="@Url.Action("Tasks", "Technician")" class="btn btn-primary">
+                                <i class="fa fa-list me-1"></i> Xem tất cả lịch hẹn
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-4">
+                            <i class="fa fa-calendar-times fa-3x mb-3"></i>
+                            <h5>Chưa có lịch hẹn nào</h5>
+                            <p>Hệ thống sẽ hiển thị các lịch hẹn gần đây tại đây</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<style>
+    .card {
+        border-radius: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+    .custom-dropdown {
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+        .custom-dropdown .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+
+    .btn {
+        border-radius: 0.5rem;
+        font-weight: 500;
+    }
+
+    .bg-primary {
+        background: linear-gradient(45deg, #007bff, #0056b3) !important;
+    }
+
+    .bg-info {
+        background: linear-gradient(45deg, #17a2b8, #138496) !important;
+    }
+
+    .bg-success {
+        background: linear-gradient(45deg, #28a745, #1e7e34) !important;
+    }
+
+    .bg-warning {
+        background: linear-gradient(45deg, #ffc107, #e0a800) !important;
+    }
+</style>
+
+<script>
+    // Thêm hiệu ứng hover cho các card thống kê
+    document.addEventListener('DOMContentLoaded', function() {
+        const statCards = document.querySelectorAll('.card');
+        statCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    });
+</script> 

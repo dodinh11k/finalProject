@@ -1,0 +1,33 @@
+﻿@{
+    var username = ViewData["username"] as string ?? "";
+    var fullname = ViewData["fullname"] as string ?? "";
+}
+
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper">
+    <div class="humberger__menu__logo">
+        <a href="@Url.Action("Index", "Home")"><img src="~/layout1/img/logo2.png" alt="MyGarage Logo" /></a>
+    </div>
+    <nav class="humberger__menu__nav mobile-menu">
+        <ul>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Services" ? "active" : "")"><a href="@Url.Action("Index", "Services")">Dịch vụ</a></li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Appointments" ? "active" : "")"><a href="@Url.Action("Create", "Appointments")">Đặt lịch</a></li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Garages" ? "active" : "")"><a href="@Url.Action("Index", "Garages")">Garage</a></li>
+
+            @if (string.IsNullOrEmpty(username))
+            {
+                <li><a href="@Url.Action("Login", "AccountLogin")">Đăng nhập</a></li>
+                <li><a href="@Url.Action("Register", "AccountRegister")">Đăng kí</a></li>
+            }
+            else
+            {
+                <li><a href="#">Xin chào, @fullname</a></li>
+                <li><a href="@Url.Action("Logout", "AccountLogin")">Đăng xuất</a></li>
+            }
+
+            <li><a href="@Url.Action("Contact", "Home")">Liên hệ</a></li>
+        </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+</div>

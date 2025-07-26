@@ -1,0 +1,165 @@
+﻿@model AppointmentHistoryViewModel
+
+@{
+    ViewData["Title"] = "Lịch sử đặt lịch";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #152A16;
+    }
+
+    .history-card {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border: 1px solid #ddd;
+        transition: 0.3s;
+    }
+
+        .history-card:hover {
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .history-card h5 {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #152A16;
+        }
+
+        .history-card ul {
+            padding-left: 20px;
+        }
+
+        .history-card li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+    .status-label {
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+    }
+
+    .status-Pending {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .status-Confirmed {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .status-Canceled {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .alert-info {
+        background-color: #fff3cd;
+        color: #856404;
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .action-buttons {
+        margin-top: 15px;
+    }
+
+        .action-buttons a {
+            display: inline-block;
+            margin-right: 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+    .btn-edit {
+        background-color: #ffc107;
+        color: #152A16;
+        border: none;
+    }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+            color: #fff;
+        }
+
+    .btn-cancel {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+        .btn-cancel:hover {
+            background-color: #b52d3b;
+            color: #fff;
+        }
+</style>
+
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4" style="color:#152A16; font-weight:bold;">Lịch sử đặt lịch của bạn</h2>
+
+    @if (!Model.Appointments.Any())
+    {
+        <div class="alert alert-info text-center">Bạn chưa có lịch hẹn nào.</div>
+    }
+    else
+    {
+        @foreach (var appt in Model.Appointments.OrderByDescending(a => a.AppointmentTime))
+        {
+            var statusClass = "status-" + (appt.Status?.Replace(" ", "") ?? "Pending");
+
+            var technician = Model.Details.FirstOrDefault(d => d.AppointmentId == appt.AppointmentId)?.Vehicle?.User;
+
+            <div class="history-card mb-4">
+                <h5>
+                    Ngày hẹn:
+                    @(appt.AppointmentTime.HasValue
+                        ? appt.AppointmentTime.Value.ToString("dd/MM/yyyy HH:mm")
+                        : "Chưa đặt")
+                </h5>
+
+                <p><strong>Garage:</strong> @(appt.Garage?.Address ?? "Không rõ")</p>
+                <p><strong>Kỹ thuật viên:</strong> @(technician?.FullName ?? technician?.Username ?? "Không rõ")</p>
+                <p><strong>Ghi chú:</strong> @(string.IsNullOrWhiteSpace(appt.Notes) ? "(Không có ghi chú)" : appt.Notes)</p>
+                <p>
+                    <strong>Trạng thái:</strong>
+                    <span class="status-label @statusClass">@appt.Status</span>
+                </p>
+
+                <h6 class="mt-3">Dịch vụ & Xe:</h6>
+                <ul>
+                    @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+                    {
+                        <li>
+                            <strong>Xe:</strong> @($"{detail.Vehicle?.Make ?? "Không rõ"} {detail.Vehicle?.Model ?? ""}")
+                            (@(detail.Vehicle?.LicensePlate ?? "Không rõ"))<br />
+                            <strong>Dịch vụ:</strong> @(detail.Service?.ServiceName ?? "Không rõ")<br />
+                            <strong>Số lượng:</strong> @detail.Quantity
+                        </li>
+                    }
+                </ul>
+
+                @if (appt.Status == "Pending")
+                {
+                    <div class="action-buttons">
+                        <a asp-action="Edit" asp-route-id="@appt.AppointmentId" class="btn-edit">Sửa</a>
+
+                        <a asp-action="Cancel" asp-route-id="@appt.AppointmentId"
+                           class="btn-cancel"
+                           onclick="return confirm('Bạn có chắc chắn muốn huỷ lịch hẹn này?');">
+                            Huỷ
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
