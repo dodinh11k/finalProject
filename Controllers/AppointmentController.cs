@@ -13,11 +13,13 @@ public class AppointmentController : Controller
 {
     private readonly MyGarageFinalContext _context;
     private readonly IEmailService _emailService;
+    private readonly IVoucherService _voucherService;
 
-    public AppointmentController(MyGarageFinalContext context, IEmailService emailService)
+    public AppointmentController(MyGarageFinalContext context, IEmailService emailService, IVoucherService voucherService)
     {
         _context = context;
         _emailService = emailService;
+        _voucherService = voucherService;
     }
 
     [HttpGet("")]
@@ -71,6 +73,28 @@ public class AppointmentController : Controller
 
         try
         {
+            // Validate voucher if provided
+            decimal discountAmount = 0;
+            if (!string.IsNullOrWhiteSpace(model.PromoCode))
+            {
+                var services = await _context.Services
+                    .Where(s => model.ServiceIds.Contains(s.ServiceId))
+                    .ToListAsync();
+                var totalServicePrice = services.Sum(s => s.Price ?? 0);
+                
+                var (isValid, message, discount) = await _voucherService.ValidateVoucherAsync(model.PromoCode, totalServicePrice);
+                
+                if (!isValid)
+                {
+                    ModelState.AddModelError("PromoCode", message);
+                    await LoadDropdowns(model);
+                    return View("~/Views/Appointment/Create.cshtml", model);
+                }
+                
+                discountAmount = discount;
+                TempData["VoucherMessage"] = message;
+            }
+
             var vehicle = new Vehicle
             {
                 UserId = user.UserId,
@@ -90,11 +114,14 @@ public class AppointmentController : Controller
                 AppointmentTime = model.AppointmentTime,
                 Notes = model.Notes,
                 Status = "Pending",
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                PromoCode = model.PromoCode,
+                DiscountAmount = discountAmount
             };
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 
+            decimal basePrice = 0;
             if (model.ServiceIds != null && model.ServiceIds.Count > 0)
             {
                 foreach (var serviceId in model.ServiceIds)
@@ -108,9 +135,52 @@ public class AppointmentController : Controller
                         Note = "Đặt lịch tự động"
                     };
                     _context.AppointmentVehicleDetails.Add(detail);
+                    // Lấy giá dịch vụ
+                    var service = await _context.Services.FirstOrDefaultAsync(s => s.ServiceId == serviceId);
+                    if (service != null && service.Price.HasValue)
+                        basePrice += service.Price.Value;
                 }
                 await _context.SaveChangesAsync();
             }
+
+            // --- TÍNH GIẢM GIÁ ---
+            // 1. Khách hàng thân thiết (từ lần 2 trở đi)
+            int previousAppointments = await _context.Appointments.CountAsync(a => a.UserId == user.UserId && a.AppointmentId != appointment.AppointmentId);
+            decimal loyaltyDiscount = previousAppointments >= 1 ? basePrice * 0.05m : 0; // 5%
+
+            // 2. Số lượng xe (1 xe nên không giảm, nếu muốn có thể set = 1)
+            decimal carCountDiscount = 0; // Đặt lịch 1 xe, không giảm
+
+            // 3. Mã khuyến mãi (sử dụng VoucherService)
+            decimal promoDiscount = 0;
+            if (!string.IsNullOrEmpty(model.PromoCode))
+            {
+                // Sử dụng VoucherService để validate và tính toán
+                var (isValid, message, voucherDiscount) = await _voucherService.ValidateVoucherAsync(model.PromoCode, basePrice);
+                
+                if (isValid)
+                {
+                    promoDiscount = voucherDiscount;
+                    TempData["VoucherMessage"] = message;
+                }
+                else
+                {
+                    // Fallback cho các mã cũ nếu cần
+                    if (model.PromoCode.ToUpper() == "WELCOME10")
+                        promoDiscount = basePrice * 0.10m; // 10%
+                    else if (model.PromoCode.ToUpper() == "SUMMER2025")
+                        promoDiscount = 50000; // Giảm 50k
+                }
+            }
+
+            decimal totalDiscount = loyaltyDiscount + carCountDiscount + promoDiscount;
+            decimal totalAmount = basePrice - totalDiscount;
+            if (totalAmount < 0) totalAmount = 0;
+
+            appointment.PromoCode = model.PromoCode;
+            appointment.DiscountAmount = totalDiscount;
+            appointment.TotalAmount = totalAmount;
+            await _context.SaveChangesAsync();
 
             var serviceNames = await _context.Services
                 .Where(s => model.ServiceIds.Contains(s.ServiceId))
@@ -237,6 +307,8 @@ public class AppointmentController : Controller
             await _context.SaveChangesAsync();
 
             var allServiceNames = new List<string>();
+            decimal basePrice = 0;
+            int carCount = model.Vehicles.Count;
 
             // Xử lý từng xe
             foreach (var vehicleItem in model.Vehicles)
@@ -282,6 +354,10 @@ public class AppointmentController : Controller
                             Note = vehicleItem.VehicleNotes ?? "Đặt lịch tự động"
                         };
                         _context.AppointmentVehicleDetails.Add(detail);
+                        // Lấy giá dịch vụ
+                        var service = await _context.Services.FirstOrDefaultAsync(s => s.ServiceId == serviceId);
+                        if (service != null && service.Price.HasValue)
+                            basePrice += service.Price.Value;
                     }
                     await _context.SaveChangesAsync();
 
@@ -293,6 +369,45 @@ public class AppointmentController : Controller
                     allServiceNames.AddRange(serviceNames);
                 }
             }
+
+            // --- TÍNH GIẢM GIÁ ---
+            // 1. Khách hàng thân thiết (từ lần 2 trở đi)
+            int previousAppointments = await _context.Appointments.CountAsync(a => a.UserId == user.UserId && a.AppointmentId != appointment.AppointmentId);
+            decimal loyaltyDiscount = previousAppointments >= 1 ? basePrice * 0.05m : 0; // 5%
+
+            // 2. Số lượng xe (>=2)
+            decimal carCountDiscount = carCount >= 2 ? basePrice * 0.10m : 0; // 10%
+
+            // 3. Mã khuyến mãi (sử dụng VoucherService)
+            decimal promoDiscount = 0;
+            if (!string.IsNullOrEmpty(model.PromoCode))
+            {
+                // Sử dụng VoucherService để validate và tính toán
+                var (isValid, message, voucherDiscount) = await _voucherService.ValidateVoucherAsync(model.PromoCode, basePrice);
+                
+                if (isValid)
+                {
+                    promoDiscount = voucherDiscount;
+                    TempData["VoucherMessage"] = message;
+                }
+                else
+                {
+                    // Fallback cho các mã cũ nếu cần
+                    if (model.PromoCode.ToUpper() == "WELCOME10")
+                        promoDiscount = basePrice * 0.10m; // 10%
+                    else if (model.PromoCode.ToUpper() == "SUMMER2025")
+                        promoDiscount = 50000; // Giảm 50k
+                }
+            }
+
+            decimal totalDiscount = loyaltyDiscount + carCountDiscount + promoDiscount;
+            decimal totalAmount = basePrice - totalDiscount;
+            if (totalAmount < 0) totalAmount = 0;
+
+            appointment.PromoCode = model.PromoCode;
+            appointment.DiscountAmount = totalDiscount;
+            appointment.TotalAmount = totalAmount;
+            await _context.SaveChangesAsync();
 
             // Gửi email xác nhận
             var garage = await _context.Garages.FirstOrDefaultAsync(g => g.GarageId == model.GarageId);
@@ -367,6 +482,27 @@ public class AppointmentController : Controller
     {
         var models = VehicleData.GetVehicleModelList(make);
         return Json(models);
+    }
+
+    [HttpPost("ValidateVoucher")]
+    public async Task<IActionResult> ValidateVoucher(string promoCode, decimal totalAmount)
+    {
+        if (string.IsNullOrWhiteSpace(promoCode))
+        {
+            return Json(new { isValid = false, message = "Mã khuyến mãi không được để trống" });
+        }
+
+        var (isValid, message, discountAmount) = await _voucherService.ValidateVoucherAsync(promoCode, totalAmount);
+        var discountedAmount = totalAmount - discountAmount;
+
+        return Json(new 
+        { 
+            isValid, 
+            message, 
+            discountAmount, 
+            discountedAmount,
+            originalAmount = totalAmount
+        });
     }
 
     [HttpGet("Edit")]
@@ -486,10 +622,69 @@ public class AppointmentController : Controller
             .Where(d => d.AppointmentId == id)
             .ToListAsync();
 
+        // Tính tổng tiền dịch vụ
+        decimal? totalServicePriceNullable = vehicleDetails.Sum(d => (d.Service?.Price ?? 0m) * d.Quantity);
+        decimal totalServicePrice = totalServicePriceNullable ?? 0m;
+        decimal discountAmount = appointment.DiscountAmount.HasValue ? appointment.DiscountAmount.Value : 0m;
+        decimal totalAmount = appointment.TotalAmount.HasValue ? appointment.TotalAmount.Value : (totalServicePrice - discountAmount);
+        if (totalAmount < 0) totalAmount = 0;
+
+        // Chi tiết giá từng dịch vụ
+        var servicePriceDetails = vehicleDetails
+            .Where(d => d.Service != null)
+            .GroupBy(d => d.Service.ServiceName)
+            .Select(g => (ServiceName: g.Key, Price: g.Sum(d => (d.Service.Price ?? 0m) * d.Quantity) ?? 0m))
+            .ToList();
+
+        // Chi tiết các loại giảm giá
+        var discountDetails = new List<(string DiscountType, decimal Amount)>();
+        decimal loyaltyDiscount = 0m, carCountDiscount = 0m, promoDiscount = 0m;
+        int previousAppointments = await _context.Appointments.CountAsync(a => a.UserId == appointment.UserId && a.AppointmentId != appointment.AppointmentId);
+        if (previousAppointments >= 1)
+        {
+            loyaltyDiscount = servicePriceDetails.Sum(x => x.Price) * 0.05m;
+            if (loyaltyDiscount > 0) discountDetails.Add(("Khách hàng thân thiết", loyaltyDiscount));
+        }
+        int carCount = vehicleDetails.Select(d => d.VehicleId).Distinct().Count();
+        if (carCount >= 2)
+        {
+            carCountDiscount = servicePriceDetails.Sum(x => x.Price) * 0.10m;
+            if (carCountDiscount > 0) discountDetails.Add(("Số lượng xe", carCountDiscount));
+        }
+        if (!string.IsNullOrEmpty(appointment.PromoCode))
+        {
+            if (appointment.PromoCode.ToUpper() == "WELCOME10")
+            {
+                promoDiscount = servicePriceDetails.Sum(x => x.Price) * 0.10m;
+            }
+            else if (appointment.PromoCode.ToUpper() == "SUMMER2025")
+            {
+                promoDiscount = 50000;
+            }
+            else
+            {
+                // Sử dụng VoucherService để lấy thông tin voucher
+                var voucher = await _context.PromoCodes.FirstOrDefaultAsync(p => p.Code.ToUpper() == appointment.PromoCode.ToUpper());
+                if (voucher != null)
+                {
+                    if (voucher.DiscountPercent.HasValue)
+                        promoDiscount = servicePriceDetails.Sum(x => x.Price) * (decimal)voucher.DiscountPercent.Value / 100;
+                    else if (voucher.DiscountAmount.HasValue)
+                        promoDiscount = voucher.DiscountAmount.Value;
+                }
+            }
+            if (promoDiscount > 0) discountDetails.Add(("Mã khuyến mãi", promoDiscount));
+        }
+
         var viewModel = new AppointmentDetailsViewModel
         {
             Appointment = appointment,
-            VehicleDetails = vehicleDetails
+            VehicleDetails = vehicleDetails,
+            TotalServicePrice = totalServicePrice,
+            DiscountAmount = discountAmount,
+            TotalAmount = totalAmount,
+            ServicePriceDetails = servicePriceDetails,
+            DiscountDetails = discountDetails
         };
 
         return View("~/Views/Appointment/Details.cshtml", viewModel);

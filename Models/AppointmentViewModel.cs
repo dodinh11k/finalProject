@@ -30,6 +30,8 @@ namespace test_2.Models
 
         public bool IsExistingUser { get; set; } = false;
 
+        public string? PromoCode { get; set; }
+
         // Dropdowns
         public List<SelectListItem> ServiceList { get; set; } = new();
         public List<SelectListItem> GarageList { get; set; } = new();

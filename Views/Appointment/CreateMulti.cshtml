@@ -11,7 +11,7 @@
         HttpContextAccessor.HttpContext.Response.Redirect("/Account/Login");
     }
 
-    ViewData["Title"] = "Đặt lịch ";
+    ViewData["Title"] = "Đặt lịch nhiều xe";
 }
 
 <style>
@@ -48,11 +48,11 @@
         border-radius: 6px;
     }
 
-    .form-control:focus {
-        background-color: #fff;
-        border-color: #152A16;
-        box-shadow: 0 0 0 0.2rem rgba(21, 42, 22, 0.15);
-    }
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #152A16;
+            box-shadow: 0 0 0 0.2rem rgba(21, 42, 22, 0.15);
+        }
 
     .text-danger {
         color: #C0392B !important;
@@ -67,10 +67,10 @@
         transition: 0.3s ease;
     }
 
-    .btn-custom:hover {
-        background-color: #0F1F10;
-        color: #fff;
-    }
+        .btn-custom:hover {
+            background-color: #0F1F10;
+            color: #fff;
+        }
 
     .btn-secondary {
         background-color: #6c757d;
@@ -81,10 +81,10 @@
         transition: 0.3s ease;
     }
 
-    .btn-secondary:hover {
-        background-color: #5a6268;
-        color: #fff;
-    }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            color: #fff;
+        }
 
     .user-info {
         font-size: 0.95rem;
@@ -94,9 +94,9 @@
         border-radius: 8px;
     }
 
-    .user-info strong {
-        color: #152A16;
-    }
+        .user-info strong {
+            color: #152A16;
+        }
 
     .form-group {
         margin-bottom: 15px;
@@ -138,9 +138,9 @@
         transition: 0.3s ease;
     }
 
-    .remove-vehicle:hover {
-        background-color: #c82333;
-    }
+        .remove-vehicle:hover {
+            background-color: #c82333;
+        }
 
     .add-vehicle-btn {
         background-color: #28a745;
@@ -154,9 +154,9 @@
         margin-bottom: 20px;
     }
 
-    .add-vehicle-btn:hover {
-        background-color: #218838;
-    }
+        .add-vehicle-btn:hover {
+            background-color: #218838;
+        }
 
     .service-checkboxes {
         display: grid;
@@ -173,30 +173,30 @@
         margin-bottom: 15px;
     }
 
-    .vehicle-type-toggle label {
-        margin-right: 15px;
-        cursor: pointer;
-    }
+        .vehicle-type-toggle label {
+            margin-right: 15px;
+            cursor: pointer;
+        }
 
-    .vehicle-type-toggle input[type="radio"] {
-        margin-right: 5px;
-    }
+        .vehicle-type-toggle input[type="radio"] {
+            margin-right: 5px;
+        }
 
     .vehicle-fields {
         display: none;
     }
 
-    .vehicle-fields.show {
-        display: block;
-    }
+        .vehicle-fields.show {
+            display: block;
+        }
 
     .existing-vehicle-select {
         display: none;
     }
 
-    .existing-vehicle-select.show {
-        display: block;
-    }
+        .existing-vehicle-select.show {
+            display: block;
+        }
 
     .time-selector {
         background-color: #f8f9fa;
@@ -206,51 +206,51 @@
         margin-bottom: 20px;
     }
 
-    .time-selector .row {
-        margin: 0;
-        align-items: center;
-    }
+        .time-selector .row {
+            margin: 0;
+            align-items: center;
+        }
 
-    .time-selector .col-md-2 {
-        padding: 0 8px;
-        margin-bottom: 10px;
-    }
+        .time-selector .col-md-2 {
+            padding: 0 8px;
+            margin-bottom: 10px;
+        }
 
-    .time-selector select {
-        font-size: 1.1rem !important;
-        padding: 12px 15px !important;
-        height: auto !important;
-        min-height: 50px !important;
-        border: 2px solid #dee2e6 !important;
-        border-radius: 8px !important;
-        background-color: #fff !important;
-        color: #152A16 !important;
-        font-weight: 500 !important;
-        cursor: pointer !important;
-        transition: all 0.3s ease !important;
-    }
+        .time-selector select {
+            font-size: 1.1rem !important;
+            padding: 12px 15px !important;
+            height: auto !important;
+            min-height: 50px !important;
+            border: 2px solid #dee2e6 !important;
+            border-radius: 8px !important;
+            background-color: #fff !important;
+            color: #152A16 !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+        }
 
-    .time-selector select:focus {
-        border-color: #152A16 !important;
-        box-shadow: 0 0 0 0.2rem rgba(21, 42, 22, 0.15) !important;
-        outline: none !important;
-    }
+            .time-selector select:focus {
+                border-color: #152A16 !important;
+                box-shadow: 0 0 0 0.2rem rgba(21, 42, 22, 0.15) !important;
+                outline: none !important;
+            }
 
-    .time-selector select:hover {
-        border-color: #152A16 !important;
-        background-color: #f8f9fa !important;
-    }
+            .time-selector select:hover {
+                border-color: #152A16 !important;
+                background-color: #f8f9fa !important;
+            }
 
-    /* Label cho từng dropdown */
-    .time-selector .col-md-2::before {
-        content: attr(data-label);
-        display: block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #152A16;
-        margin-bottom: 8px;
-        text-align: center;
-    }
+        /* Label cho từng dropdown */
+        .time-selector .col-md-2::before {
+            content: attr(data-label);
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #152A16;
+            margin-bottom: 8px;
+            text-align: center;
+        }
 
     .time-display {
         background-color: #e9ecef;
@@ -264,32 +264,32 @@
         transition: all 0.3s ease;
     }
 
-    .time-display.valid {
-        background-color: #d4edda;
-        color: #155724;
-        border: 2px solid #c3e6cb;
-        box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
-    }
+        .time-display.valid {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+        }
 
-    .time-display.invalid {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 2px solid #f5c6cb;
-        box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
-    }
+        .time-display.invalid {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+        }
 
     /* Responsive cho mobile */
     @@media (max-width: 768px) {
         .time-selector .col-md-2 {
             margin-bottom: 15px;
         }
-        
+
         .time-selector select {
             font-size: 1rem !important;
             padding: 10px 12px !important;
             min-height: 45px !important;
         }
-        
+
         .time-display {
             font-size: 1rem;
             padding: 12px 15px;
@@ -298,7 +298,7 @@
 </style>
 
 <div class="appointment-container">
-    <h2>Đặt lịch </h2>
+    <h2>Đặt lịch nhiều xe</h2>
 
     <div class="user-info">
         <p><strong>Họ tên:</strong> @(string.IsNullOrEmpty(fullname) ? "Không có" : fullname)</p>
@@ -318,7 +318,7 @@
 
         <div class="form-group">
             <label asp-for="AppointmentTime">Thời gian hẹn</label>
-                        <div class="time-selector">
+            <div class="time-selector">
                 <div class="row">
                     <div class="col-md-2" data-label="Giờ">
                         <select id="appointmentHour" class="form-control" onchange="updateDateTime()">
@@ -386,6 +386,13 @@
         </div>
 
         <div class="form-group">
+            <label asp-for="PromoCode">Mã khuyến mãi</label>
+            <input asp-for="PromoCode" class="form-control" id="promoCode" placeholder="Nhập mã khuyến mãi (nếu có)" onblur="validateVoucher()" />
+            <span asp-validation-for="PromoCode" class="text-danger"></span>
+            <div id="voucherMessage" class="mt-2"></div>
+        </div>
+
+        <div class="form-group">
             <label asp-for="Notes">Ghi chú chung</label>
             <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
             <span asp-validation-for="Notes" class="text-danger"></span>
@@ -421,7 +428,7 @@
                     <div class="vehicle-fields show" id="newVehicleFields_@i">
                         <div class="form-group">
                             <label>Hãng xe</label>
-                            <select name="Vehicles[@i].VehicleMake" class="form-control vehicle-make-select" 
+                            <select name="Vehicles[@i].VehicleMake" class="form-control vehicle-make-select"
                                     data-vehicle-index="@i" onchange="loadVehicleModels(@i)">
                                 <option value="">-- Chọn hãng xe --</option>
                                 @foreach (var make in Model.VehicleMakeList)
@@ -433,7 +440,7 @@
 
                         <div class="form-group">
                             <label>Dòng xe</label>
-                            <select name="Vehicles[@i].VehicleModel" class="form-control vehicle-model-select" 
+                            <select name="Vehicles[@i].VehicleModel" class="form-control vehicle-model-select"
                                     id="vehicleModel_@i" disabled>
                                 <option value="">-- Chọn dòng xe --</option>
                             </select>
@@ -465,8 +472,8 @@
                             {
                                 var isChecked = Model.Vehicles[i].ServiceIds != null && Model.Vehicles[i].ServiceIds.Contains(int.Parse(service.Value));
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" 
-                                           name="Vehicles[@i].ServiceIds" value="@service.Value" 
+                                    <input class="form-check-input" type="checkbox"
+                                           name="Vehicles[@i].ServiceIds" value="@service.Value"
                                            id="service_@i@service.Value" @(isChecked ? "checked" : "") />
                                     <label class="form-check-label" for="service_@i@service.Value">@service.Text</label>
                                 </div>
@@ -495,7 +502,7 @@
     function addVehicle() {
         const container = document.getElementById('vehiclesContainer');
         const newIndex = vehicleCount;
-        
+
         const vehicleHtml = `
             <div class="vehicle-section" data-vehicle-index="${newIndex}">
                 <div class="vehicle-header">
@@ -517,19 +524,19 @@
                 <div class="vehicle-fields show" id="newVehicleFields_${newIndex}">
                     <div class="form-group">
                         <label>Hãng xe</label>
-                        <select name="Vehicles[${newIndex}].VehicleMake" class="form-control vehicle-make-select" 
+                        <select name="Vehicles[${newIndex}].VehicleMake" class="form-control vehicle-make-select"
                                 data-vehicle-index="${newIndex}" onchange="loadVehicleModels(${newIndex})">
                             <option value="">-- Chọn hãng xe --</option>
-                            @foreach (var make in Model.VehicleMakeList)
-                            {
-                                <option value="@make.Value">@make.Text</option>
-                            }
+    @foreach (var make in Model.VehicleMakeList)
+    {
+                                    <option value="@make.Value">@make.Text</option>
+    }
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>Dòng xe</label>
-                        <select name="Vehicles[${newIndex}].VehicleModel" class="form-control vehicle-model-select" 
+                        <select name="Vehicles[${newIndex}].VehicleModel" class="form-control vehicle-model-select"
                                 id="vehicleModel_${newIndex}" disabled>
                             <option value="">-- Chọn dòng xe --</option>
                         </select>
@@ -546,10 +553,10 @@
                         <label>Chọn xe có sẵn</label>
                         <select name="Vehicles[${newIndex}].SelectedVehicleId" class="form-control">
                             <option value="">-- Chọn xe --</option>
-                            @foreach (var vehicle in Model.VehicleList)
-                            {
-                                <option value="@vehicle.Value">@vehicle.Text</option>
-                            }
+    @foreach (var vehicle in Model.VehicleList)
+    {
+                                    <option value="@vehicle.Value">@vehicle.Text</option>
+    }
                         </select>
                     </div>
                 </div>
@@ -557,15 +564,15 @@
                 <div class="form-group">
                     <label>Dịch vụ cho xe này</label>
                     <div class="service-checkboxes">
-                        @foreach (var service in Model.ServiceList)
-                        {
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" 
-                                       name="Vehicles[${newIndex}].ServiceIds" value="@service.Value" 
-                                       id="service_${newIndex}_@service.Value" />
-                                <label class="form-check-label" for="service_${newIndex}_@service.Value">@service.Text</label>
-                            </div>
-                        }
+    @foreach (var service in Model.ServiceList)
+    {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           name="Vehicles[${newIndex}].ServiceIds" value="@service.Value"
+                                           id="service_${newIndex}_@service.Value" />
+                                    <label class="form-check-label" for="service_${newIndex}_@service.Value">@service.Text</label>
+                                </div>
+    }
                     </div>
                 </div>
 
@@ -575,7 +582,7 @@
                 </div>
             </div>
         `;
-        
+
         container.insertAdjacentHTML('beforeend', vehicleHtml);
         vehicleCount++;
     }
@@ -602,7 +609,7 @@
     function toggleVehicleType(index, type) {
         const newVehicleFields = document.getElementById(`newVehicleFields_${index}`);
         const existingVehicleSelect = document.getElementById(`existingVehicleSelect_${index}`);
-        
+
         if (type === 'new') {
             newVehicleFields.classList.add('show');
             existingVehicleSelect.classList.remove('show');
@@ -660,7 +667,7 @@
 
             // Tạo đối tượng Date
             const selectedDate = new Date(year, month - 1, day, hour24, minute);
-            
+
             // Kiểm tra xem thời gian có trong tương lai không
             const now = new Date();
             if (selectedDate <= now) {
@@ -674,7 +681,7 @@
             const displayString = `${hour}:${minute} ${period} - ${day}/${month}/${year}`;
             document.getElementById('selectedDateTime').textContent = displayString;
             document.getElementById('selectedDateTime').style.color = '#28a745';
-            
+
             // Format cho input hidden (ISO string)
             document.getElementById('appointmentTime').value = selectedDate.toISOString();
         } else {
@@ -686,7 +693,7 @@
             if (day) displayString += ' ' + day;
             if (month) displayString += '/' + month;
             if (year) displayString += '/' + year;
-            
+
             document.getElementById('selectedDateTime').textContent = displayString || 'Chưa chọn';
             document.getElementById('selectedDateTime').style.color = '#6c757d';
             document.getElementById('appointmentTime').value = '';
@@ -705,7 +712,7 @@
         document.getElementById('appointmentDay').value = tomorrow.getDate().toString().padStart(2, '0');
         document.getElementById('appointmentMonth').value = (tomorrow.getMonth() + 1).toString().padStart(2, '0');
         document.getElementById('appointmentYear').value = tomorrow.getFullYear();
-        
+
         updateDateTime();
     }
 
@@ -713,4 +720,50 @@
     document.addEventListener('DOMContentLoaded', function() {
         setDefaultDateTime();
     });
+
+    // Voucher validation
+    function validateVoucher() {
+        const promoCode = document.getElementById('promoCode').value.trim();
+        const voucherMessage = document.getElementById('voucherMessage');
+        
+        if (!promoCode) {
+            voucherMessage.innerHTML = '';
+            return;
+        }
+
+        // Calculate total service price for all vehicles
+        const selectedServices = document.querySelectorAll('input[name*="ServiceIds"]:checked');
+        let totalAmount = 0;
+        
+        // This is a simplified calculation - in a real app, you'd get prices from the server
+        // For now, we'll use a placeholder value
+        totalAmount = selectedServices.length * 100000; // Assume 100k per service
+
+        fetch('/Appointment/ValidateVoucher', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `promoCode=${encodeURIComponent(promoCode)}&totalAmount=${totalAmount}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isValid) {
+                voucherMessage.innerHTML = `<div class="alert alert-success">
+                    <i class="fa fa-check-circle"></i> ${data.message}<br>
+                    <small>Giảm: ${data.discountAmount.toLocaleString()} VNĐ</small>
+                </div>`;
+            } else {
+                voucherMessage.innerHTML = `<div class="alert alert-danger">
+                    <i class="fa fa-exclamation-circle"></i> ${data.message}
+                </div>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error validating voucher:', error);
+            voucherMessage.innerHTML = `<div class="alert alert-warning">
+                <i class="fa fa-exclamation-triangle"></i> Lỗi kiểm tra mã khuyến mãi
+            </div>`;
+        });
+    }
 </script> 

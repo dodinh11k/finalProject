@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace test_2.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPaymentHistories : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,6 +43,23 @@ namespace test_2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__Products__B40CC6ED1AADDAAF", x => x.ProductID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PromoCode",
+                columns: table => new
+                {
+                    PromoCodeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DiscountPercent = table.Column<double>(type: "float", nullable: true),
+                    ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PromoCode", x => x.PromoCodeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,6 +176,9 @@ namespace test_2.Migrations
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
+                    PromoCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     UserId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -654,6 +674,9 @@ namespace test_2.Migrations
 
             migrationBuilder.DropTable(
                 name: "PaymentHistories");
+
+            migrationBuilder.DropTable(
+                name: "PromoCode");
 
             migrationBuilder.DropTable(
                 name: "RepairStatus");

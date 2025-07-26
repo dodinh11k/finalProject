@@ -19,6 +19,10 @@ namespace test_2.Models
 
         public DateTime? CreatedAt { get; set; }
 
+        public string? PromoCode { get; set; }
+        public decimal? DiscountAmount { get; set; }
+        public decimal? TotalAmount { get; set; }
+
         // 👇 Quan hệ: Mỗi lịch hẹn có thể gồm nhiều chi tiết (xe + dịch vụ + thợ)
         public virtual ICollection<AppointmentVehicleDetail> AppointmentVehicleDetails { get; set; } = new List<AppointmentVehicleDetail>();
 

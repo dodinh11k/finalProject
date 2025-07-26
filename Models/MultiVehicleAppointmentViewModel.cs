@@ -16,6 +16,8 @@ namespace test_2.Models
 
         public string? Notes { get; set; }
 
+        public string? PromoCode { get; set; }
+
         // Danh sách các xe cần đặt lịch
         [Required(ErrorMessage = "Vui lòng thêm ít nhất một xe.")]
         [MinLength(1, ErrorMessage = "Vui lòng thêm ít nhất một xe.")]
@@ -301,7 +303,7 @@ namespace test_2.Models
                 {
                     Value = make,
                     Text = make
-                }).ToList();
+                }).ToList(); 
         }
 
         public static List<SelectListItem> GetVehicleModelList(string make)
@@ -319,4 +321,4 @@ namespace test_2.Models
             return new List<SelectListItem>();
         }
     }
-} 
+}

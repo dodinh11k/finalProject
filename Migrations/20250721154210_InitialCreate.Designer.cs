@@ -12,8 +12,8 @@ using test_2.Models;
 namespace test_2.Migrations
 {
     [DbContext(typeof(MyGarageFinalContext))]
-    [Migration("20250720205626_AddPaymentHistories")]
-    partial class AddPaymentHistories
+    [Migration("20250721154210_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,6 +94,9 @@ namespace test_2.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
+                    b.Property<decimal?>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int?>("GarageId")
                         .HasColumnType("int")
                         .HasColumnName("GarageID");
@@ -102,9 +105,15 @@ namespace test_2.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("PromoCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int")
@@ -519,6 +528,38 @@ namespace test_2.Migrations
                         .HasName("PK__Products__B40CC6ED1AADDAAF");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("test_2.Models.PromoCode", b =>
+                {
+                    b.Property<int>("PromoCodeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("PromoCodeId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PromoCodeId"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<decimal?>("DiscountAmount")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<double?>("DiscountPercent")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PromoCodeId");
+
+                    b.ToTable("PromoCode", (string)null);
                 });
 
             modelBuilder.Entity("test_2.Models.RepairStatus", b =>

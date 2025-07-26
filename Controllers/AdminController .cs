@@ -410,15 +410,21 @@ namespace test_2.Controllers
             ViewBag.AdminNotifications = adminNotifications;
             ViewBag.AdminNotificationCount = adminNotifications.Count;
 
+            // --- DOANH THU TUẦN (TỔNG TIỀN PAYMENT THÀNH CÔNG) ---
+            // Xác định ngày đầu tuần (thứ 2) và cuối tuần (chủ nhật)
             var today = DateTime.Today;
+            int diff = (7 + (today.DayOfWeek - DayOfWeek.Monday)) % 7;
+            var startOfWeek = today.AddDays(-1 * diff).Date;
+            var endOfWeek = startOfWeek.AddDays(7).Date;
+
+            var weeklyRevenue = await _context.PaymentHistories
+                .Where(p => p.Status == "Success" && p.CreatedAt >= startOfWeek && p.CreatedAt < endOfWeek)
+                .SumAsync(p => (decimal?)p.Amount) ?? 0m;
+            ViewBag.WeeklySales = weeklyRevenue.ToString("N0");
+
+            // Thêm lại biến cho thống kê tháng
             var startOfMonth = new DateTime(today.Year, today.Month, 1);
             var startOfNextMonth = startOfMonth.AddMonths(1);
-
-            var weeklySales = await _context.OrderItems
-                .Where(oi => oi.Order.OrderDate >= startOfMonth
-                  && oi.Order.OrderDate < startOfNextMonth
-                  && oi.Order.Status == "Completed")
-                .SumAsync(oi => (int?)oi.Quantity) ?? 0;
 
             // Số đơn đã hoàn thành trong tháng
             var completedOrders = await _context.Appointments
@@ -431,7 +437,6 @@ namespace test_2.Controllers
 
             var visitorsOnline = 5 + new Random().Next(10, 50);
 
-            ViewBag.WeeklySales = weeklySales;
             ViewBag.WeeklyOrders = monthlyOrders;
             ViewBag.CompletedOrders = completedOrders;
             ViewBag.VisitorsOnline = visitorsOnline;
@@ -471,6 +476,62 @@ namespace test_2.Controllers
 
             ViewBag.TopTechnicians = topTechnicians;
             return View();
+        }
+
+        // --- VOUCHER / EVENT MANAGEMENT ---
+        [HttpGet]
+        public async Task<IActionResult> Event()
+        {
+            var vouchers = await _context.PromoCodes.ToListAsync();
+            return View("Event", vouchers);
+        }
+
+        [HttpGet]
+        public IActionResult AddVoucher()
+        {
+            return View("AddVoucher", new PromoCode());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddVoucher(PromoCode model, string discountType)
+        {
+            if (discountType == "percent")
+            {
+                model.DiscountAmount = null;
+            }
+            else
+            {
+                model.DiscountPercent = null;
+            }
+            _context.PromoCodes.Add(model);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Event");
+        }
+
+        // --- PAYMENT HISTORY MANAGEMENT ---
+        public async Task<IActionResult> PaymentHistories(int? userId, string status, DateTime? dateFrom, DateTime? dateTo)
+        {
+            await LoadAdminNotifications();
+            var query = _context.PaymentHistories
+                .Include(p => p.User)
+                .AsQueryable();
+
+            if (userId.HasValue)
+                query = query.Where(p => p.UserId == userId.Value);
+            if (!string.IsNullOrEmpty(status))
+                query = query.Where(p => p.Status == status);
+            if (dateFrom.HasValue)
+                query = query.Where(p => p.CreatedAt >= dateFrom.Value);
+            if (dateTo.HasValue)
+                query = query.Where(p => p.CreatedAt <= dateTo.Value);
+
+            var payments = await query.OrderByDescending(p => p.CreatedAt).ToListAsync();
+            ViewBag.UserId = userId;
+            ViewBag.Status = status;
+            ViewBag.DateFrom = dateFrom?.ToString("yyyy-MM-dd");
+            ViewBag.DateTo = dateTo?.ToString("yyyy-MM-dd");
+            return View("PaymentHistories", payments);
         }
 
         [HttpPost("Login")]
