@@ -1,0 +1,146 @@
+@model IEnumerable<test_2.Models.PaymentHistory>
+@{
+    ViewData["Title"] = "Lịch sử thanh toán";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #152A16;
+    }
+
+    .history-container {
+        background-color: #fff;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        margin-top: 40px;
+    }
+
+    .history-container h2 {
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: #152A16;
+    }
+
+    .table th {
+        background-color: #152A16;
+        color: #fff;
+        text-align: center;
+    }
+
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .status-pending {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .status-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .status-failed {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .status-cancelled {
+        background-color: #6c757d;
+        color: #fff;
+    }
+
+    .btn-custom {
+        background-color: #152A16;
+        color: #fff;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        border: none;
+        text-decoration: none;
+    }
+
+    .btn-custom:hover {
+        background-color: #0F1F10;
+        color: #fff;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container history-container">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="fa fa-credit-card fa-3x text-muted mb-3"></i>
+            <p class="lead">Bạn chưa có lịch sử thanh toán nào.</p>
+            <a href="@Url.Action("History", "Appointment")" class="btn-custom">
+                <i class="fa fa-calendar"></i> Xem lịch hẹn
+            </a>
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Mã thanh toán</th>
+                    <th>Mã lịch hẹn</th>
+                    <th>Số tiền</th>
+                    <th>Phương thức</th>
+                    <th>Trạng thái</th>
+                    <th>Thời gian</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var payment in Model)
+                {
+                    <tr>
+                        <td>#@payment.PaymentId</td>
+                        <td>#@payment.AppointmentId</td>
+                        <td>@payment.Amount.ToString("N0") VNĐ</td>
+                        <td>@payment.PaymentMethod</td>
+                        <td>
+                            @{
+                                var statusClass = payment.Status?.ToLower() switch
+                                {
+                                    "pending" => "status-pending",
+                                    "paid" => "status-success",
+                                    "success" => "status-success",
+                                    "failed" => "status-failed",
+                                    "cancelled" => "status-cancelled",
+                                    _ => "status-pending"
+                                };
+                            }
+                            <span class="status-badge @statusClass">@payment.Status</span>
+                        </td>
+                        <td>@payment.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@payment.Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="mt-4">
+            <a href="@Url.Action("History", "Appointment")" class="btn-custom">
+                <i class="fa fa-arrow-left"></i> Quay lại lịch hẹn
+            </a>
+        </div>
+    }
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> 

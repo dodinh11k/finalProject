@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Test PayOS Payment";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3>🧪 Test PayOS Payment Service</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="/payment/create">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">💰 Amount (VND)</label>
+                            <input type="number" class="form-control" id="amount" name="amount" value="100000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">📝 Description</label>
+                            <input type="text" class="form-control" id="description" name="description" value="Test Payment" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="appointmentId" class="form-label">📅 Appointment ID (Optional)</label>
+                            <input type="number" class="form-control" id="appointmentId" name="appointmentId" value="1">
+                        </div>
+                        <button type="submit" class="btn btn-primary">🚀 Create Payment</button>
+                    </form>
+
+                    <hr>
+
+                    <h5>🔧 Quick Test Links:</h5>
+                    <div class="d-grid gap-2 d-md-block">
+                        <a href="/payment/test" class="btn btn-info">🧪 Test PayOS API</a>
+                        <a href="/payment/mock-create?amount=100000&description=Test Payment" class="btn btn-success">🔧 Mock Payment</a>
+                    </div>
+
+                    <hr>
+
+                    <div class="alert alert-info">
+                        <h6>📋 Test Instructions:</h6>
+                        <ol>
+                            <li>Nhập số tiền và mô tả</li>
+                            <li>Nhấn "Create Payment"</li>
+                            <li>Nếu PayOS hoạt động → Hiện trang QR VietQR</li>
+                            <li>Nếu PayOS lỗi → Chuyển sang Mock Payment</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ServiceWithReviewViewModel>
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Danh sách dịch vụ";
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role")
+               ?? User?.FindFirst("Role")?.Value;
+}
+
+<h2 class="mb-4 text-center fw-bold" style="color: #152A16; margin-top: 60px;">@ViewData["Title"]</h2>
+
+@if (role == "Admin")
+{
+    <div>
+        <a class="btn btn-dark mb-3 ms-3" asp-controller="Service" asp-action="Create">
+            <i class="fa fa-plus"></i> Thêm dịch vụ
+        </a>
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <p class="text-center text-muted py-5">Không có dịch vụ nào.</p>
+}
+else
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var item in Model)
+            {
+                var service = item.Service;
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
+                    <div class="card shadow-sm w-100 h-100 border-0 product-card-hover" style="background: #fff; border-radius: 12px;">
+                        <a asp-controller="Service" asp-action="Details" asp-route-id="@service.ServiceId">
+                            <img src="@(!string.IsNullOrWhiteSpace(service.image_url) ? Url.Content("~/" + service.image_url.Trim()) : Url.Content("~/images/RuaXe.png"))" class="card-img-top" alt="@service.ServiceName" style="height: 180px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;" />
+                        </a>
+                        <div class="card-body d-flex flex-column justify-content-between p-3">
+                            <div>
+                                <h5 class="card-title fw-bold mb-1" style="color: #152A16;">@service.ServiceName</h5>
+                                <div class="mb-1 text-secondary" style="font-size: 0.95rem;">@service.Description</div>
+                                <div class="mb-1" style="color: #C6862B; font-weight: bold; font-size: 1.1rem;">
+                                    @if (service.Price.HasValue)
+                                    {
+                                        @service.Price.Value.ToString("N0")
+                                    }
+                                    else
+                                    {
+                                        <span>Liên hệ</span>
+                                    }
+                                </div>
+                                <div class="mb-1">
+                                    @if (item.AverageRating.HasValue)
+                                    {
+                                        <span title="@item.AverageRating.Value.ToString("0.0") sao">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= Math.Floor(item.AverageRating.Value))
+                                                {
+                                                    <i class="fa fa-star" style="color: #FFD700;"></i>
+                                                }
+                                                else if (i - item.AverageRating.Value < 1 && i > item.AverageRating.Value)
+                                                {
+                                                    <i class="fa fa-star-half-o" style="color: #FFD700;"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa fa-star-o" style="color: #FFD700;"></i>
+                                                }
+                                            }
+                                            <span style="color: #888; font-size: 0.95rem;">(@item.ReviewCount đánh giá)</span>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color: #888; font-size: 0.95rem;">Chưa có đánh giá</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<style>
+    .product-card-hover {
+        transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+        cursor: pointer;
+    }
+    .product-card-hover:hover {
+        transform: scale(1.08);
+        z-index: 2;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+</style>
