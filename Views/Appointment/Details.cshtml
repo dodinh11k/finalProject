@@ -1,0 +1,497 @@
+﻿@model test_2.Models.AppointmentDetailsViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết lịch hẹn";
+    var appointment = Model.Appointment;
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #152A16;
+    }
+
+    .appointment-details {
+        background-color: #fff;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        margin-top: 40px;
+    }
+
+    .appointment-details h2 {
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: #152A16;
+    }
+
+    .info-item {
+        margin-bottom: 10px;
+        font-size: 1rem;
+    }
+
+    .info-item strong {
+        color: #152A16;
+        font-weight: 600;
+    }
+
+    .table th {
+        background-color: #152A16;
+        color: #fff;
+        text-align: center;
+    }
+
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .btn-custom {
+        background-color: #152A16;
+        color: #fff;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        border: none;
+    }
+
+    .btn-custom:hover {
+        background-color: #0F1F10;
+        color: #fff;
+    }
+
+    .btn-outline-custom {
+        background-color: transparent;
+        color: #152A16;
+        border: 2px solid #152A16;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: 0.3s ease;
+    }
+
+    .btn-outline-custom:hover {
+        background-color: #152A16;
+        color: #fff;
+    }
+
+    /* Cải thiện card xe */
+    .vehicle-info-card {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 25px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 25px;
+        transition: all 0.3s ease;
+    }
+
+    .vehicle-info-card:hover {
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+
+    .vehicle-info-card h5 {
+        color: #152A16;
+        margin-bottom: 20px;
+        font-weight: bold;
+        border-bottom: 2px solid #28a745;
+        padding-bottom: 10px;
+    }
+
+    .vehicle-info-card h5 i {
+        color: #28a745;
+        margin-right: 8px;
+    }
+
+    /* Sản phẩm thay thế cho từng xe */
+    .vehicle-replacement-products {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #28a745;
+    }
+
+    .vehicle-replacement-products h6 {
+        color: #28a745;
+        font-weight: bold;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+
+    .vehicle-replacement-products .table {
+        margin-bottom: 0;
+        background-color: white;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .vehicle-replacement-products .table th {
+        background-color: #28a745;
+        color: white;
+        font-size: 0.9rem;
+        padding: 10px 8px;
+    }
+
+    .vehicle-replacement-products .table td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .vehicle-replacement-products .no-products {
+        color: #6c757d;
+        font-style: italic;
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* Cải thiện bảng tổng quan */
+    .overview-table {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .overview-table .table {
+        margin-bottom: 0;
+    }
+
+    /* Cải thiện bảng thanh toán */
+    .payment-table {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .payment-table .table {
+        margin-bottom: 0;
+    }
+
+    .payment-table th {
+        background-color: #152A16;
+        color: white;
+        font-weight: 600;
+    }
+
+    .payment-table .collapse-row {
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .payment-table .collapse-row:hover {
+        background-color: #f8f9fa;
+    }
+
+    .payment-table .collapse-row i {
+        transition: transform 0.2s ease;
+    }
+
+    .payment-table .collapse-row[aria-expanded="true"] i {
+        transform: rotate(180deg);
+    }
+
+    /* Sản phẩm thay thế tổng hợp */
+    .replacement-products-section {
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        padding: 25px;
+        margin-top: 30px;
+        border-left: 4px solid #28a745;
+    }
+
+    .replacement-products-section h5 {
+        color: #28a745;
+        font-weight: bold;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #28a745;
+        padding-bottom: 10px;
+    }
+
+    .replacement-products-section .table {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .replacement-products-section .table th {
+        background-color: #28a745;
+        color: white;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .appointment-details {
+            padding: 20px;
+        }
+        
+        .vehicle-info-card {
+            padding: 15px;
+        }
+        
+        .vehicle-replacement-products {
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="container appointment-details">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="mb-4">
+        <div class="info-item"><strong>Họ tên:</strong> @(appointment.User?.FullName ?? "Không có")</div>
+        <div class="info-item"><strong>Số điện thoại:</strong> @(appointment.User?.Phone ?? "Không có")</div>
+        <div class="info-item"><strong>Garage:</strong> @(appointment.Garage?.Address ?? "Không rõ")</div>
+        <div class="info-item">
+            <strong>Thời gian hẹn:</strong>
+            @((appointment.AppointmentTime.HasValue)
+                ? appointment.AppointmentTime.Value.ToString("dd/MM/yyyy HH:mm")
+                : "Không xác định")
+        </div>
+        <div class="info-item"><strong>Trạng thái:</strong> @appointment.Status</div>
+        <div class="info-item"><strong>Ghi chú:</strong> @(string.IsNullOrWhiteSpace(appointment.Notes) ? "(Không có ghi chú)" : appointment.Notes)</div>
+    </div>
+
+    <hr />
+    <h4 class="mb-3">Thông tin xe và dịch vụ</h4>
+
+    @{
+        var vehicleGroups = Model.VehicleDetails.GroupBy(d => d.VehicleId).ToList();
+    }
+
+    @foreach (var vehicleGroup in vehicleGroups)
+    {
+        var firstDetail = vehicleGroup.First();
+        var vehicle = firstDetail.Vehicle;
+        var services = vehicleGroup.Select(d => d.Service?.ServiceName).Where(s => !string.IsNullOrEmpty(s)).ToList();
+
+        <div class="vehicle-info-card">
+            <h5>
+                <i class="fa fa-car"></i>
+                Xe @(vehicleGroups.IndexOf(vehicleGroup) + 1): @($"{vehicle?.Make ?? "Không rõ"} {vehicle?.Model ?? ""}")
+            </h5>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-item"><strong>Biển số:</strong> @(vehicle?.LicensePlate ?? "Không rõ")</div>
+                    <div class="info-item"><strong>Năm sản xuất:</strong> @(vehicle?.Year?.ToString() ?? "Không rõ")</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-item"><strong>Số dịch vụ:</strong> @services.Count</div>
+                    <div class="info-item"><strong>Dịch vụ:</strong> @string.Join(", ", services)</div>
+                </div>
+            </div>
+
+            @if (vehicleGroup.Any(d => !string.IsNullOrWhiteSpace(d.Note)))
+            {
+                <div class="mt-2">
+                    <strong>Ghi chú:</strong>
+                    @{
+                        var notes = vehicleGroup.Where(d => !string.IsNullOrWhiteSpace(d.Note)).Select(d => d.Note).Distinct();
+                    }
+                    @string.Join("; ", notes)
+                </div>
+            }
+
+            @{
+                // Lấy sản phẩm thay thế cho xe này
+                var vehicleReplacementProducts = Model.ReplacementProducts
+                    .Where(p => p.AppointmentId == appointment.AppointmentId)
+                    .ToList();
+            }
+            
+            @if (vehicleReplacementProducts.Any())
+            {
+                <div class="vehicle-replacement-products">
+                    <h6><i class="fa fa-tools"></i> Sản phẩm thay thế cho xe này</h6>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in vehicleReplacementProducts)
+                            {
+                                <tr>
+                                    <td>@item.Product?.ProductName</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.UnitPrice.ToString("N0") đ</td>
+                                    <td>@((item.UnitPrice * item.Quantity).ToString("N0")) đ</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    }
+
+    <div class="mt-4">
+        <h5><i class="fa fa-list"></i> Tổng quan dịch vụ</h5>
+        <div class="overview-table">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên xe</th>
+                        <th>Biển số</th>
+                        <th>Dịch vụ</th>
+                        <th>Số lượng</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.VehicleDetails)
+                    {
+                        <tr>
+                            <td>@($"{detail.Vehicle?.Make ?? "Không rõ"} {detail.Vehicle?.Model ?? ""}")</td>
+                            <td>@(detail.Vehicle?.LicensePlate ?? "Không rõ")</td>
+                            <td>@(detail.Service?.ServiceName ?? "Không rõ")</td>
+                            <td>@detail.Quantity</td>
+                            <td>@(string.IsNullOrWhiteSpace(detail.Note) ? "(Không có)" : detail.Note)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h5><i class="fa fa-credit-card"></i> Thanh toán</h5>
+        <div class="payment-table">
+            <table class="table table-bordered">
+                <tr class="collapse-row" data-bs-toggle="collapse" data-bs-target="#servicePriceDetail">
+                    <th><i class="fa fa-cogs"></i> Tổng tiền dịch vụ <i class="fa fa-caret-down"></i></th>
+                    <td>@Model.TotalServicePrice.ToString("N0") đ</td>
+                </tr>
+                <tr class="collapse" id="servicePriceDetail">
+                    <td colspan="2">
+                        <ul class="mb-0">
+                            @foreach (var item in Model.ServicePriceDetails)
+                            {
+                                <li>@item.ServiceName: @item.Price.ToString("N0") đ</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+                @if (Model.ReplacementProducts != null && Model.ReplacementProducts.Count > 0)
+                {
+                    <tr class="collapse-row" data-bs-toggle="collapse" data-bs-target="#productPriceDetail">
+                        <th><i class="fa fa-tools"></i> Tổng tiền sản phẩm thay thế <i class="fa fa-caret-down"></i></th>
+                        <td>@Model.ReplacementProducts.Sum(p => p.UnitPrice * p.Quantity).ToString("N0") đ</td>
+                    </tr>
+                    <tr class="collapse" id="productPriceDetail">
+                        <td colspan="2">
+                            <ul class="mb-0">
+                                @foreach (var item in Model.ReplacementProducts)
+                                {
+                                    <li>@item.Product?.ProductName: @((item.UnitPrice * item.Quantity).ToString("N0")) đ</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+                <tr class="collapse-row" data-bs-toggle="collapse" data-bs-target="#discountDetail">
+                    <th><i class="fa fa-percent"></i> Tổng giảm giá <i class="fa fa-caret-down"></i></th>
+                    <td>-@Model.DiscountAmount.ToString("N0") đ</td>
+                </tr>
+                <tr class="collapse" id="discountDetail">
+                    <td colspan="2">
+                        <ul class="mb-0">
+                            @if (Model.DiscountDetails.Count == 0)
+                            {
+                                <li>Không có giảm giá nào được áp dụng.</li>
+                            }
+                            else
+                            {
+                                foreach (var item in Model.DiscountDetails)
+                                {
+                                    <li>@item.DiscountType: -@item.Amount.ToString("N0") đ</li>
+                                }
+                            }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th><i class="fa fa-money-bill-wave"></i> Khách cần thanh toán</th>
+                    <td><strong>@Model.TotalAmount.ToString("N0") đ</strong></td>
+                </tr>
+            </table>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.Appointment.PromoCode))
+        {
+            <div><strong>Mã khuyến mãi áp dụng:</strong> @Model.Appointment.PromoCode</div>
+        }
+        
+        @* Hiển thị nút thanh toán khi đã hoàn thành và chưa thanh toán *@
+        @if (ViewBag.PaymentSuccess == null) { ViewBag.PaymentSuccess = false; }
+        @if (Model.Appointment.Status == "Completed" && ViewBag.PaymentSuccess == false)
+        {
+            <div class="mt-3">
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i> <strong>Hướng dẫn thanh toán:</strong> Bạn có thể thanh toán từ trang "Lịch sử đặt lịch" hoặc sử dụng nút bên dưới.
+                </div>
+                <form method="post" action="/payment/create" style="display:inline;">
+                    <input type="hidden" name="amount" value="@Model.TotalAmount" />
+                    <input type="hidden" name="description" value="Thanh toán lịch hẹn #@Model.Appointment.AppointmentId - @Model.Appointment.User?.FullName@(Model.DiscountAmount > 0 ? $" (Đã giảm {Model.DiscountAmount:N0} VNĐ)" : "")" />
+                    <input type="hidden" name="appointmentId" value="@Model.Appointment.AppointmentId" />
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fa fa-credit-card"></i> Thanh toán ngay
+                    </button>
+                </form>
+            </div>
+        }
+        else if (ViewBag.PaymentSuccess == true)
+        {
+            <div class="mt-3 text-success"><i class="fa fa-check-circle"></i> Đã thanh toán</div>
+        }
+    </div>
+
+    @if (Model.ReplacementProducts != null && Model.ReplacementProducts.Count > 0)
+    {
+        <div class="replacement-products-section">
+            <h5><i class="fa fa-tools"></i> Tổng hợp sản phẩm thay thế</h5>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ReplacementProducts)
+                    {
+                        <tr>
+                            <td>@item.Product?.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.UnitPrice.ToString("N0") đ</td>
+                            <td>@((item.UnitPrice * item.Quantity).ToString("N0")) đ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="mt-4 d-flex justify-content-between">
+        <a asp-action="History" class="btn-outline-custom">
+            <i class="fa fa-arrow-left"></i> Quay lại danh sách
+        </a>
+        <div>
+            <a href="/invoice/appointment/@Model.Appointment.AppointmentId" class="btn-custom" style="background-color: #007bff; margin-right: 10px;">
+                <i class="fa fa-file-pdf-o"></i> Tải hóa đơn PDF
+            </a>
+            <a asp-action="CreateMulti" class="btn-custom" style="background-color: #28a745;">
+                <i class="fa fa-cars"></i> Tiếp tục đặt lịch
+            </a>
+        </div>
+    </div>
+</div>
+

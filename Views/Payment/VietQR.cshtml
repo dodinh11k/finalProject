@@ -1,0 +1,222 @@
+@{
+    ViewData["Title"] = "VietQR Payment";
+    var amount = ViewBag.Amount ?? 0;
+    var description = ViewBag.Description ?? "";
+    var orderCode = ViewBag.OrderCode ?? "";
+    var paymentId = ViewBag.PaymentId ?? 0;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VietQR Payment - PayOS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .payment-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .qr-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 2px dashed #007bff;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #007bff, #28a745);
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+        }
+        
+        .payment-details {
+            background: #e7f3ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+            color: #007bff;
+        }
+        
+        .amount {
+            font-size: 32px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 10px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background: #138496;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        
+        .bank-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .bank-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="logo">🏦 VietQR Payment</div>
+        
+        <div class="amount">@amount.ToString("N0") VND</div>
+        
+        <div class="qr-container">
+            <div class="qr-code">📱</div>
+            <p><strong>Quét mã QR để thanh toán</strong></p>
+            <p style="color: #666; font-size: 14px;">Sử dụng ứng dụng ngân hàng để quét mã QR này</p>
+        </div>
+        
+        <div class="payment-details">
+            <div class="detail-row">
+                <span>Mã đơn hàng:</span>
+                <span>@orderCode</span>
+            </div>
+            <div class="detail-row">
+                <span>Mô tả:</span>
+                <span>@description</span>
+            </div>
+            <div class="detail-row">
+                <span>Phương thức:</span>
+                <span>VietQR</span>
+            </div>
+            <div class="detail-row">
+                <span>Tổng tiền:</span>
+                <span>@amount.ToString("N0") VND</span>
+            </div>
+        </div>
+        
+        <div class="status">
+            ⏳ <strong>Đang chờ thanh toán...</strong><br>
+            Vui lòng hoàn tất thanh toán trong ứng dụng ngân hàng
+        </div>
+        
+        <div class="bank-list">
+            <div class="bank-item">🏦 Vietcombank</div>
+            <div class="bank-item">🏦 BIDV</div>
+            <div class="bank-item">🏦 Agribank</div>
+            <div class="bank-item">🏦 Techcombank</div>
+            <div class="bank-item">🏦 MB Bank</div>
+            <div class="bank-item">🏦 ACB</div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <a href="/payment/success?paymentId=@paymentId" class="btn btn-success">✅ Thanh toán thành công</a>
+            <a href="/payment/cancel?paymentId=@paymentId" class="btn btn-danger">❌ Hủy thanh toán</a>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a href="/payment/mock-create?amount=@amount&description=@description" class="btn btn-info">🔧 Quay lại Mock Gateway</a>
+        </div>
+        
+        <div style="margin-top: 20px; font-size: 12px; color: #666;">
+            <p><strong>Lưu ý:</strong> Đây là trang QR giả lập để test. Trong môi trường thật, đây sẽ là trang QR VietQR từ PayOS.</p>
+        </div>
+    </div>
+</body>
+</html> 
