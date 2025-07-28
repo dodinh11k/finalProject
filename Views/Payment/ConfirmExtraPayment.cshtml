@@ -1,0 +1,91 @@
+@model test_2.Models.MultiVehicleAppointmentViewModel
+@{
+    ViewData["Title"] = "Xác nhận thanh toán bổ sung";
+    var amount = ViewBag.Amount as decimal? ?? 0;
+    var oldTotal = ViewBag.OldTotal as string ?? "0";
+    var newTotal = ViewBag.NewTotal as string ?? "0";
+    var diff = ViewBag.Diff as string ?? "0";
+    var serviceDict = Model.ServiceList.ToDictionary(s => s.Value, s => s.Text);
+    decimal GetServicePrice(string text)
+    {
+        // Giả sử text dạng: "Tên dịch vụ - 100000 VNĐ"
+        var parts = text.Split('-');
+        if (parts.Length > 1 && decimal.TryParse(parts[1].Replace("VNĐ", "").Replace(",", "").Trim(), out var price))
+            return price;
+        return 0;
+    }
+}
+<style>
+    .xe-card { border: 1.5px solid #e9ecef; border-radius: 10px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(21,42,22,0.06); background: #fff; }
+    .xe-header { background: #f8f9fa; border-bottom: 1px solid #e9ecef; padding: 12px 20px; font-weight: bold; font-size: 1.1rem; border-radius: 10px 10px 0 0; }
+    .xe-body { padding: 18px 20px; }
+    .table-dichvu { width: 100%; margin-bottom: 0; }
+    .table-dichvu th, .table-dichvu td { text-align: left; padding: 6px 10px; }
+    .table-dichvu th { background: #f1f3f4; }
+    .total-xe { text-align: right; font-weight: bold; color: #007bff; margin-top: 8px; }
+    .summary-card { background: #f8f9fa; border: 2px solid #ffe082; border-radius: 10px; padding: 24px 30px; margin-bottom: 24px; text-align: center; }
+    .summary-card .label { font-size: 1.1rem; color: #888; }
+    .summary-card .value { font-size: 1.5rem; font-weight: bold; color: #152A16; }
+    .summary-card .diff { color: #28a745; font-size: 2rem; font-weight: bold; }
+    .btn-pay { font-size: 1.2rem; padding: 12px 40px; border-radius: 8px; font-weight: bold; }
+</style>
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4">Xác nhận thanh toán bổ sung</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            @for (int i = 0; i < Model.Vehicles.Count; i++)
+            {
+                var xe = Model.Vehicles[i];
+                decimal xeTotal = 0;
+                <div class="xe-card">
+                    <div class="xe-header">Xe @(i+1): @xe.VehicleMake @xe.VehicleModel (@xe.LicensePlate)</div>
+                    <div class="xe-body">
+                        <table class="table table-bordered table-dichvu">
+                            <thead>
+                                <tr><th>Dịch vụ</th><th>Giá</th></tr>
+                            </thead>
+                            <tbody>
+                                @if (xe.ServiceIds != null && xe.ServiceIds.Count > 0)
+                                {
+                                    foreach (var sid in xe.ServiceIds)
+                                    {
+                                        var text = serviceDict.ContainsKey(sid.ToString()) ? serviceDict[sid.ToString()] : "";
+                                        var price = GetServicePrice(text);
+                                        xeTotal += price;
+                                        <tr>
+                                            <td>@text.Split('-')[0]</td>
+                                            <td>@price.ToString("N0") VNĐ</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="2"><em>Không có dịch vụ</em></td></tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="total-xe">Tổng tiền xe @(i+1): <span>@xeTotal.ToString("N0") VNĐ</span></div>
+                        @if (!string.IsNullOrEmpty(xe.VehicleNotes))
+                        {
+                            <div style="margin-top:8px;"><strong>Ghi chú:</strong> @xe.VehicleNotes</div>
+                        }
+                    </div>
+                </div>
+            }
+            <div class="summary-card mb-4">
+                <div class="label">Tổng tiền cũ</div>
+                <div class="value">@decimal.Parse(oldTotal):N0 VNĐ</div>
+                <div class="label mt-2">Tổng tiền mới</div>
+                <div class="value">@decimal.Parse(newTotal):N0 VNĐ</div>
+                <div class="label mt-2">Số tiền cần thanh toán thêm</div>
+                <div class="diff">@decimal.Parse(diff):N0 VNĐ</div>
+            </div>
+            <form asp-action="CreatePayment" asp-controller="Payment" method="post" class="text-center">
+                <input type="hidden" name="amount" value="@amount" />
+                <input type="hidden" name="description" value="@ViewBag.Description" />
+                <input type="hidden" name="appointmentId" value="@ViewBag.AppointmentId" />
+                <button type="submit" class="btn btn-success btn-lg btn-pay">Thanh toán</button>
+            </form>
+        </div>
+    </div>
+</div> 

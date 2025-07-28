@@ -1,0 +1,352 @@
+@model test_2.Models.User
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+}
+
+<style>
+    .profile-hero {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+        padding: 60px 0;
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .profile-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+    }
+
+    .profile-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .profile-hero p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+        position: relative;
+        z-index: 2;
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .profile-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .profile-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .profile-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .profile-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .profile-header h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .profile-header p {
+        font-size: 1.1rem;
+        color: #6c757d;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        display: block;
+        font-size: 1rem;
+    }
+
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 15px 20px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+        color: #2c3e50;
+    }
+
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15);
+        background: white;
+        outline: none;
+    }
+
+    .form-control[readonly] {
+        background: #e9ecef;
+        color: #6c757d;
+        cursor: not-allowed;
+    }
+
+    .btn-update {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .btn-update:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        color: white;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+        border: 2px solid #a5d6a7;
+        border-radius: 12px;
+        padding: 15px 20px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .user-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        border-color: #28a745;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.1);
+    }
+
+    .info-card h4 {
+        color: #28a745;
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    .info-card p {
+        color: #2c3e50;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+        width: 60px;
+        height: 60px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+        width: 40px;
+        height: 40px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+        width: 30px;
+        height: 30px;
+        top: 40%;
+        left: 50%;
+        animation-delay: 4s;
+    }
+
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(180deg); }
+    }
+
+    @@media (max-width: 768px) {
+        .profile-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .profile-header h2 {
+            font-size: 1.8rem;
+        }
+        
+        .profile-card {
+            padding: 30px 20px;
+        }
+        
+        .user-info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="profile-hero">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <h1>Thông tin cá nhân</h1>
+        <p>Quản lý và cập nhật thông tin tài khoản của bạn</p>
+    </div>
+</section>
+
+<!-- Profile Section -->
+<section class="profile-section">
+    <div class="profile-container">
+        @if (TempData["success"] != null)
+        {
+            <div class="alert-success">
+                <i class="fa fa-check-circle"></i> @TempData["success"]
+            </div>
+        }
+
+        <div class="profile-card">
+            <div class="profile-header">
+            </div>
+
+            <div class="user-info-grid">
+                <div class="info-card">
+                    <h4><i class="fa fa-user"></i> Tài khoản</h4>
+                    <p>@Model.Username</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fa fa-money"></i> Số dư</h4>
+                    <p>@(Model.Amount?.ToString("N0") ?? "0") VNĐ</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fa fa-shield"></i> Vai trò</h4>
+                    <p>@Model.Role</p>
+                </div>
+            </div>
+
+            <form asp-action="Profile" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="Username">
+                        <i class="fa fa-user"></i> Tên đăng nhập
+                    </label>
+                    <input type="text" class="form-control" id="Username" value="@Model.Username" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="FullName">
+                        <i class="fa fa-id-card"></i> Họ và tên
+                    </label>
+                    <input type="text" class="form-control" name="FullName" value="@Model.FullName" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="Email">
+                        <i class="fa fa-envelope"></i> Email
+                    </label>
+                    <input type="email" class="form-control" name="Email" value="@Model.Email" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="Phone">
+                        <i class="fa fa-phone"></i> Số điện thoại
+                    </label>
+                    <input type="text" class="form-control" name="Phone" value="@Model.Phone" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="Address">
+                        <i class="fa fa-map-marker"></i> Địa chỉ
+                    </label>
+                    <input type="text" class="form-control" name="Address" value="@Model.Address" />
+                </div>
+
+                <button type="submit" class="btn-update">
+                    <i class="fa fa-save"></i> Cập nhật thông tin
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />

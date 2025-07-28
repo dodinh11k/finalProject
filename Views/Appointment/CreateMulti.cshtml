@@ -1,0 +1,1043 @@
+@model test_2.Models.MultiVehicleAppointmentViewModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username") ?? "";
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "";
+    var phone = HttpContextAccessor.HttpContext.Session.GetString("Phone") ?? "";
+
+    if (string.IsNullOrEmpty(username))
+    {
+        HttpContextAccessor.HttpContext.Response.Redirect("/Account/Login");
+    }
+
+    ViewData["Title"] = "Đặt lịch";
+}
+
+<style>
+    .appointment-hero {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+        padding: 60px 0;
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .appointment-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+    }
+
+    .appointment-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .appointment-hero p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+        position: relative;
+        z-index: 2;
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .appointment-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .appointment-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .appointment-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .appointment-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .appointment-title {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .appointment-title h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .user-info {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-left: 4px solid #28a745;
+    }
+
+    .user-info p {
+        margin: 0;
+        font-size: 1rem;
+        color: #2c3e50;
+    }
+
+    .user-info strong {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control, select, textarea {
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        color: #2c3e50;
+        border-radius: 10px;
+        padding: 12px 15px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus, select:focus, textarea:focus {
+        background: white;
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15);
+        outline: none;
+    }
+
+    .text-danger {
+        color: #dc3545 !important;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    .btn-custom {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 15px 30px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 15px 30px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(108, 117, 125, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .vehicle-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 25px;
+        position: relative;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .vehicle-section:hover {
+        border-color: #28a745;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.1);
+    }
+
+    .vehicle-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #e9ecef;
+    }
+
+    .vehicle-title {
+        font-weight: 700;
+        color: #2c3e50;
+        font-size: 1.2rem;
+    }
+
+    .remove-vehicle {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .remove-vehicle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    }
+
+    .add-vehicle-btn {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 15px 25px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 25px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .add-vehicle-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+    }
+
+    .service-checkboxes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .form-check {
+        background: white;
+        padding: 15px 20px;
+        border-radius: 12px;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form-check::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 0;
+    }
+
+    .form-check:hover {
+        border-color: #28a745;
+        background: #f8f9fa;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.1);
+    }
+
+    .form-check:hover::before {
+        opacity: 0.05;
+    }
+
+    .form-check-input {
+        position: relative;
+        z-index: 1;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        cursor: pointer;
+        accent-color: #28a745;
+    }
+
+    .form-check-label {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        cursor: pointer;
+        font-weight: 500;
+        color: #2c3e50;
+        transition: all 0.3s ease;
+    }
+
+    .form-check-input:checked + .form-check-label {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .form-check-input:checked ~ .form-check {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        border-color: #28a745;
+        box-shadow: 0 3px 10px rgba(40, 167, 69, 0.2);
+    }
+
+    .vehicle-type-toggle {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .vehicle-type-toggle label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 10px 15px;
+        background: white;
+        border-radius: 8px;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .vehicle-type-toggle label:hover {
+        border-color: #28a745;
+    }
+
+    .vehicle-type-toggle input[type="radio"]:checked + span {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .vehicle-fields {
+        display: none;
+    }
+
+    .vehicle-fields.show {
+        display: block;
+    }
+
+    .existing-vehicle-select {
+        display: none;
+    }
+
+    .existing-vehicle-select.show {
+        display: block;
+    }
+
+    .time-selector {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 25px;
+    }
+
+    .time-selector .row {
+        margin: 0;
+        align-items: center;
+    }
+
+    .time-selector .col-md-2 {
+        padding: 0 10px;
+        margin-bottom: 15px;
+    }
+
+    .time-selector select {
+        font-size: 1.1rem !important;
+        padding: 15px 20px !important;
+        height: auto !important;
+        min-height: 55px !important;
+        border: 2px solid #e9ecef !important;
+        border-radius: 10px !important;
+        background: white !important;
+        color: #2c3e50 !important;
+        font-weight: 500 !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .time-selector select:focus {
+        border-color: #28a745 !important;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15) !important;
+        outline: none !important;
+    }
+
+    .time-selector select:hover {
+        border-color: #28a745 !important;
+        background: #f8f9fa !important;
+    }
+
+    .time-selector .col-md-2::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .time-display {
+        background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 20px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-align: center;
+        border: 2px solid #dee2e6;
+        transition: all 0.3s ease;
+    }
+
+    .time-display.valid {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+        border: 2px solid #c3e6cb;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+    }
+
+    .time-display.invalid {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+        border: 2px solid #f5c6cb;
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.2);
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+        width: 60px;
+        height: 60px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+        width: 40px;
+        height: 40px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+        width: 30px;
+        height: 30px;
+        top: 40%;
+        left: 50%;
+        animation-delay: 4s;
+    }
+
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(180deg); }
+    }
+
+    .alert {
+        border-radius: 10px;
+        border: none;
+        padding: 15px 20px;
+        margin-top: 10px;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+        border-left: 4px solid #28a745;
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+    }
+
+    .alert-warning {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        color: #856404;
+        border-left: 4px solid #ffc107;
+    }
+
+    @@media (max-width: 768px) {
+        .time-selector .col-md-2 {
+            margin-bottom: 20px;
+        }
+
+        .time-selector select {
+            font-size: 1rem !important;
+            padding: 12px 15px !important;
+            min-height: 50px !important;
+        }
+
+        .time-display {
+            font-size: 1rem;
+            padding: 15px;
+        }
+
+        .vehicle-type-toggle {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="appointment-hero">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <h1>Đặt lịch nhiều xe</h1>
+        <p>Đặt lịch cho nhiều xe cùng lúc với các dịch vụ tùy chỉnh</p>
+    </div>
+</section>
+
+<!-- Appointment Section -->
+<section class="appointment-section">
+    <div class="appointment-container">
+        <div class="appointment-card">
+            <div class="appointment-title">
+                <h2>Đặt lịch</h2>
+            </div>
+
+            <div class="user-info">
+                <p><strong>Họ tên:</strong> @(string.IsNullOrEmpty(fullname) ? "Không có" : fullname)</p>
+                <p><strong>Số điện thoại:</strong> @(string.IsNullOrEmpty(phone) ? "Không có" : phone)</p>
+            </div>
+
+            <form asp-action="CreateMulti" method="post" id="multiVehicleForm">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="GarageId">Garage</label>
+                    <select asp-for="GarageId" asp-items="Model.GarageList" class="form-control">
+                        <option value="">-- Chọn garage --</option>
+                    </select>
+                    <span asp-validation-for="GarageId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="AppointmentTime">Thời gian hẹn</label>
+                    <div class="time-selector">
+                        <div class="row">
+                            <div class="col-md-2" data-label="Giờ">
+                                <select id="appointmentHour" class="form-control" onchange="updateDateTime()">
+                                    <option value="">--</option>
+                                    @for (int i = 1; i <= 12; i++)
+                                    {
+                                        <option value="@i.ToString("00")">@i</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2" data-label="Phút">
+                                <select id="appointmentMinute" class="form-control" onchange="updateDateTime()">
+                                    <option value="">--</option>
+                                    @for (int i = 0; i <= 59; i += 5)
+                                    {
+                                        <option value="@i.ToString("00")">@i.ToString("00")</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2" data-label="AM/PM">
+                                <select id="appointmentPeriod" class="form-control" onchange="updateDateTime()">
+                                    <option value="">--</option>
+                                    <option value="AM">Sáng (AM)</option>
+                                    <option value="PM">Chiều (PM)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2" data-label="Ngày">
+                                <select id="appointmentDay" class="form-control" onchange="updateDateTime()">
+                                    <option value="">--</option>
+                                    @for (int i = 1; i <= 31; i++)
+                                    {
+                                        <option value="@i.ToString("00")">@i</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2" data-label="Tháng">
+                                <select id="appointmentMonth" class="form-control" onchange="updateDateTime()">
+                                    <option value="">--</option>
+                                    @{
+                                        var months = new[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" };
+                                        var monthNames = new[] { "T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12" };
+                                    }
+                                    @for (int i = 0; i < months.Length; i++)
+                                    {
+                                        <option value="@months[i]">@monthNames[i]</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2" data-label="Năm">
+                                <select id="appointmentYear" class="form-control" onchange="updateDateTime()">
+                                    <option value="">--</option>
+                                    @for (int i = DateTime.Now.Year; i <= DateTime.Now.Year + 2; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input asp-for="AppointmentTime" type="hidden" id="appointmentTime" />
+                    <div class="time-display">
+                        <strong>Thời gian đã chọn:</strong> <span id="selectedDateTime">Chưa chọn</span>
+                    </div>
+                    <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="PromoCode">Mã khuyến mãi</label>
+                    <input asp-for="PromoCode" class="form-control" id="promoCode" placeholder="Nhập mã khuyến mãi (nếu có)" onblur="validateVoucher()" />
+                    <span asp-validation-for="PromoCode" class="text-danger"></span>
+                    <div id="voucherMessage"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="Notes">Ghi chú chung</label>
+                    <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Nhập ghi chú chung cho tất cả xe..."></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+
+                <button type="button" class="add-vehicle-btn" onclick="addVehicle()">
+                    <i class="fa fa-plus"></i> Thêm xe
+                </button>
+
+                <div id="vehiclesContainer">
+                    @for (int i = 0; i < Model.Vehicles.Count; i++)
+                    {
+                        <div class="vehicle-section" data-vehicle-index="@i">
+                            <div class="vehicle-header">
+                                <span class="vehicle-title">Xe @(i + 1)</span>
+                                @if (Model.Vehicles.Count > 1)
+                                {
+                                    <button type="button" class="remove-vehicle" onclick="removeVehicle(@i)">×</button>
+                                }
+                            </div>
+
+                            <div class="vehicle-type-toggle">
+                                <label>
+                                    <input type="radio" name="Vehicles[@i].VehicleType" value="new" checked onchange="toggleVehicleType(@i, 'new')" />
+                                    <span>Thêm xe mới</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="Vehicles[@i].VehicleType" value="existing" onchange="toggleVehicleType(@i, 'existing')" />
+                                    <span>Chọn xe có sẵn</span>
+                                </label>
+                            </div>
+
+                            <div class="vehicle-fields show" id="newVehicleFields_@i">
+                                <div class="form-group">
+                                    <label class="form-label">Hãng xe</label>
+                                    <select name="Vehicles[@i].VehicleMake" class="form-control vehicle-make-select"
+                                            data-vehicle-index="@i" onchange="loadVehicleModels(@i)">
+                                        <option value="">-- Chọn hãng xe --</option>
+                                        @foreach (var make in Model.VehicleMakeList)
+                                        {
+                                            <option value="@make.Value">@make.Text</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Dòng xe</label>
+                                    <select name="Vehicles[@i].VehicleModel" class="form-control vehicle-model-select"
+                                            id="vehicleModel_@i" disabled>
+                                        <option value="">-- Chọn dòng xe --</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Biển số</label>
+                                    <input name="Vehicles[@i].LicensePlate" class="form-control" placeholder="VD: 30A-12345" />
+                                </div>
+                            </div>
+
+                            <div class="existing-vehicle-select" id="existingVehicleSelect_@i">
+                                <div class="form-group">
+                                    <label class="form-label">Chọn xe có sẵn</label>
+                                    <select name="Vehicles[@i].SelectedVehicleId" class="form-control">
+                                        <option value="">-- Chọn xe --</option>
+                                        @foreach (var vehicle in Model.VehicleList)
+                                        {
+                                            <option value="@vehicle.Value">@vehicle.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Dịch vụ cho xe này</label>
+                                <div class="service-checkboxes">
+                                    @foreach (var service in Model.ServiceList)
+                                    {
+                                        var isChecked = Model.Vehicles[i].ServiceIds != null && Model.Vehicles[i].ServiceIds.Contains(int.Parse(service.Value));
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                   name="Vehicles[@i].ServiceIds" value="@service.Value"
+                                                   id="service_@i@service.Value" @(isChecked ? "checked" : "") />
+                                            <label class="form-check-label" for="service_@i@service.Value">@service.Text</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Ghi chú cho xe này</label>
+                                <textarea name="Vehicles[@i].VehicleNotes" class="form-control" rows="2" placeholder="Nhập ghi chú riêng cho xe này..."></textarea>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn-custom">Đặt lịch</button>
+                    <a href="@Url.Action("Create", "Appointment")" class="btn-secondary">Đặt lịch 1 xe</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<script>
+    let vehicleCount = @Model.Vehicles.Count;
+
+    function addVehicle() {
+        const container = document.getElementById('vehiclesContainer');
+        const newIndex = vehicleCount;
+
+        const vehicleHtml = `
+            <div class="vehicle-section" data-vehicle-index="${newIndex}">
+                <div class="vehicle-header">
+                    <span class="vehicle-title">Xe ${newIndex + 1}</span>
+                    <button type="button" class="remove-vehicle" onclick="removeVehicle(${newIndex})">×</button>
+                </div>
+
+                <div class="vehicle-type-toggle">
+                    <label>
+                        <input type="radio" name="Vehicles[${newIndex}].VehicleType" value="new" checked onchange="toggleVehicleType(${newIndex}, 'new')" />
+                        <span>Thêm xe mới</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="Vehicles[${newIndex}].VehicleType" value="existing" onchange="toggleVehicleType(${newIndex}, 'existing')" />
+                        <span>Chọn xe có sẵn</span>
+                    </label>
+                </div>
+
+                <div class="vehicle-fields show" id="newVehicleFields_${newIndex}">
+                    <div class="form-group">
+                        <label class="form-label">Hãng xe</label>
+                        <select name="Vehicles[${newIndex}].VehicleMake" class="form-control vehicle-make-select"
+                                data-vehicle-index="${newIndex}" onchange="loadVehicleModels(${newIndex})">
+                            <option value="">-- Chọn hãng xe --</option>
+    @foreach (var make in Model.VehicleMakeList)
+    {
+                            <option value="@make.Value">@make.Text</option>
+    }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Dòng xe</label>
+                        <select name="Vehicles[${newIndex}].VehicleModel" class="form-control vehicle-model-select"
+                                id="vehicleModel_${newIndex}" disabled>
+                            <option value="">-- Chọn dòng xe --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Biển số</label>
+                        <input name="Vehicles[${newIndex}].LicensePlate" class="form-control" placeholder="VD: 30A-12345" />
+                    </div>
+                </div>
+
+                <div class="existing-vehicle-select" id="existingVehicleSelect_${newIndex}">
+                    <div class="form-group">
+                        <label class="form-label">Chọn xe có sẵn</label>
+                        <select name="Vehicles[${newIndex}].SelectedVehicleId" class="form-control">
+                            <option value="">-- Chọn xe --</option>
+    @foreach (var vehicle in Model.VehicleList)
+    {
+                            <option value="@vehicle.Value">@vehicle.Text</option>
+    }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Dịch vụ cho xe này</label>
+                    <div class="service-checkboxes">
+    @foreach (var service in Model.ServiceList)
+    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   name="Vehicles[${newIndex}].ServiceIds" value="@service.Value"
+                                   id="service_${newIndex}_@service.Value" />
+                            <label class="form-check-label" for="service_${newIndex}_@service.Value">@service.Text</label>
+                        </div>
+    }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ghi chú cho xe này</label>
+                    <textarea name="Vehicles[${newIndex}].VehicleNotes" class="form-control" rows="2" placeholder="Nhập ghi chú riêng cho xe này..."></textarea>
+                </div>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', vehicleHtml);
+        vehicleCount++;
+    }
+
+    function removeVehicle(index) {
+        const vehicleSection = document.querySelector(`[data-vehicle-index="${index}"]`);
+        if (vehicleSection) {
+            vehicleSection.remove();
+            updateVehicleNumbers();
+        }
+    }
+
+    function updateVehicleNumbers() {
+        const vehicleSections = document.querySelectorAll('.vehicle-section');
+        vehicleSections.forEach((section, index) => {
+            const title = section.querySelector('.vehicle-title');
+            if (title) {
+                title.textContent = `Xe ${index + 1}`;
+            }
+            section.setAttribute('data-vehicle-index', index);
+        });
+    }
+
+    function toggleVehicleType(index, type) {
+        const newVehicleFields = document.getElementById(`newVehicleFields_${index}`);
+        const existingVehicleSelect = document.getElementById(`existingVehicleSelect_${index}`);
+
+        if (type === 'new') {
+            newVehicleFields.classList.add('show');
+            existingVehicleSelect.classList.remove('show');
+        } else {
+            newVehicleFields.classList.remove('show');
+            existingVehicleSelect.classList.add('show');
+        }
+    }
+
+    function loadVehicleModels(vehicleIndex) {
+        const makeSelect = document.querySelector(`select[name="Vehicles[${vehicleIndex}].VehicleMake"]`);
+        const modelSelect = document.getElementById(`vehicleModel_${vehicleIndex}`);
+        const selectedMake = makeSelect.value;
+
+        // Reset model select
+        modelSelect.innerHTML = '<option value="">-- Chọn dòng xe --</option>';
+        modelSelect.disabled = true;
+
+        if (selectedMake) {
+            // Fetch models from server
+            fetch(`/Appointment/GetVehicleModels?make=${encodeURIComponent(selectedMake)}`)
+                .then(response => response.json())
+                .then(models => {
+                    models.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.value;
+                        option.textContent = model.text;
+                        modelSelect.appendChild(option);
+                    });
+                    modelSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error loading vehicle models:', error);
+                });
+        }
+    }
+
+    function updateDateTime() {
+        const hour = document.getElementById('appointmentHour').value;
+        const minute = document.getElementById('appointmentMinute').value;
+        const period = document.getElementById('appointmentPeriod').value;
+        const day = document.getElementById('appointmentDay').value;
+        const month = document.getElementById('appointmentMonth').value;
+        const year = document.getElementById('appointmentYear').value;
+
+        // Kiểm tra xem tất cả các trường đã được chọn chưa
+        if (hour && minute && period && day && month && year) {
+            // Chuyển đổi sang định dạng 24h
+            let hour24 = parseInt(hour);
+            if (period === 'PM' && hour24 !== 12) {
+                hour24 += 12;
+            } else if (period === 'AM' && hour24 === 12) {
+                hour24 = 0;
+            }
+
+            // Tạo đối tượng Date
+            const selectedDate = new Date(year, month - 1, day, hour24, minute);
+
+            // Kiểm tra xem thời gian có trong tương lai không
+            const now = new Date();
+            if (selectedDate <= now) {
+                document.getElementById('selectedDateTime').textContent = 'Thời gian phải trong tương lai!';
+                document.getElementById('selectedDateTime').style.color = '#dc3545';
+                document.getElementById('appointmentTime').value = '';
+                return;
+            }
+
+            // Format cho hiển thị
+            const displayString = `${hour}:${minute} ${period} - ${day}/${month}/${year}`;
+            document.getElementById('selectedDateTime').textContent = displayString;
+            document.getElementById('selectedDateTime').style.color = '#28a745';
+
+            // Format cho input hidden (ISO string)
+            document.getElementById('appointmentTime').value = selectedDate.toISOString();
+        } else {
+            // Hiển thị thông tin đã chọn
+            let displayString = '';
+            if (hour) displayString += hour + 'h';
+            if (minute) displayString += minute + 'p';
+            if (period) displayString += ' ' + period;
+            if (day) displayString += ' ' + day;
+            if (month) displayString += '/' + month;
+            if (year) displayString += '/' + year;
+
+            document.getElementById('selectedDateTime').textContent = displayString || 'Chưa chọn';
+            document.getElementById('selectedDateTime').style.color = '#6c757d';
+            document.getElementById('appointmentTime').value = '';
+        }
+    }
+
+    // Tự động chọn thời gian mặc định (ngày mai, 9:00 AM)
+    function setDefaultDateTime() {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(9, 0, 0, 0);
+
+        document.getElementById('appointmentHour').value = '09';
+        document.getElementById('appointmentMinute').value = '00';
+        document.getElementById('appointmentPeriod').value = 'AM';
+        document.getElementById('appointmentDay').value = tomorrow.getDate().toString().padStart(2, '0');
+        document.getElementById('appointmentMonth').value = (tomorrow.getMonth() + 1).toString().padStart(2, '0');
+        document.getElementById('appointmentYear').value = tomorrow.getFullYear();
+
+        updateDateTime();
+    }
+
+    // Gọi hàm khi trang load
+    document.addEventListener('DOMContentLoaded', function() {
+        setDefaultDateTime();
+    });
+
+    // Voucher validation
+    function validateVoucher() {
+        const promoCode = document.getElementById('promoCode').value.trim();
+        const voucherMessage = document.getElementById('voucherMessage');
+        
+        if (!promoCode) {
+            voucherMessage.innerHTML = '';
+            return;
+        }
+
+        // Calculate total service price for all vehicles
+        const selectedServices = document.querySelectorAll('input[name*="ServiceIds"]:checked');
+        let totalAmount = 0;
+        
+        // This is a simplified calculation - in a real app, you'd get prices from the server
+        // For now, we'll use a placeholder value
+        totalAmount = selectedServices.length * 100000; // Assume 100k per service
+
+        fetch('/Appointment/ValidateVoucher', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `promoCode=${encodeURIComponent(promoCode)}&totalAmount=${totalAmount}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isValid) {
+                voucherMessage.innerHTML = `<div class="alert alert-success">
+                    <i class="fa fa-check-circle"></i> ${data.message}<br>
+                    <small>Giảm: ${data.discountAmount.toLocaleString()} VNĐ</small>
+                </div>`;
+            } else {
+                voucherMessage.innerHTML = `<div class="alert alert-danger">
+                    <i class="fa fa-exclamation-circle"></i> ${data.message}
+                </div>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error validating voucher:', error);
+            voucherMessage.innerHTML = `<div class="alert alert-warning">
+                <i class="fa fa-exclamation-triangle"></i> Lỗi kiểm tra mã khuyến mãi
+            </div>`;
+        });
+    }
+</script> 

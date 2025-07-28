@@ -1,0 +1,796 @@
+﻿@model AppointmentHistoryViewModel
+@{
+    var myAppointments = ViewBag.MyAppointments as List<test_2.Models.Appointment>;
+    string GetStatusBadge(string status) => status switch
+    {
+        "Pending" => "bg-secondary",
+        "WaitingForAccept" => "bg-warning text-dark",
+        "In_Progress" => "bg-info text-dark",
+        "Completed" => "bg-success",
+        "Cancelled" => "bg-danger",
+        _ => "bg-secondary"
+    };
+}
+
+@{
+    ViewData["Title"] = "Quản lý Lịch hẹn - Kỹ thuật viên";
+}
+
+<style>
+    .tasks-hero {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+        padding: 60px 0;
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tasks-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+    }
+
+    .tasks-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .tasks-hero p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+        position: relative;
+        z-index: 2;
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .tasks-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .tasks-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .tasks-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .tasks-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .tasks-header p {
+        font-size: 1.1rem;
+        color: #6c757d;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .nav-tabs {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        border: none;
+    }
+
+    .nav-tabs .nav-link {
+        border: none;
+        border-radius: 0;
+        padding: 20px 30px;
+        font-weight: 600;
+        color: #6c757d;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+    }
+
+    .nav-tabs .nav-link.active {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+    }
+
+    .nav-tabs .nav-link:hover {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: #28a745;
+    }
+
+    .appointment-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        position: relative;
+        border: none;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .appointment-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .appointment-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-bottom: 2px solid #e9ecef;
+        padding: 20px;
+    }
+
+    .badge {
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: none;
+    }
+
+    .bg-secondary {
+        background: linear-gradient(135deg, #e2e3e5 0%, #d6d8db 100%);
+        color: #383d41;
+    }
+
+    .bg-warning {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffe082 100%);
+        color: #856404;
+    }
+
+    .bg-info {
+        background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        color: #0c5460;
+    }
+
+    .bg-success {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+    }
+
+    .bg-danger {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .card-body p {
+        margin-bottom: 12px;
+        font-size: 1rem;
+        color: #2c3e50;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .card-body strong {
+        color: #28a745;
+        font-weight: 600;
+        min-width: 80px;
+    }
+
+    .card-body i {
+        color: #28a745;
+        width: 16px;
+    }
+
+    .service-details {
+        max-height: 200px;
+        overflow-y: auto;
+        margin: 15px 0;
+    }
+
+    .service-item {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .service-item:hover {
+        background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .alert {
+        border-radius: 12px;
+        border: none;
+        padding: 15px 20px;
+        margin: 15px 0;
+        font-weight: 600;
+    }
+
+    .alert-info {
+        background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        color: #0c5460;
+        border: 2px solid #bee5eb;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+        border: 2px solid #a5d6a7;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-outline-primary {
+        background: transparent;
+        color: #007bff;
+        border: 2px solid #007bff;
+    }
+
+    .btn-outline-primary:hover {
+        background: #007bff;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+        text-decoration: none;
+    }
+
+    .btn-outline-success {
+        background: transparent;
+        color: #28a745;
+        border: 2px solid #28a745;
+    }
+
+    .btn-outline-success:hover {
+        background: #28a745;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        text-decoration: none;
+    }
+
+    .form-select {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 10px 15px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+    }
+
+    .form-select:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15);
+        background: white;
+        outline: none;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    .empty-state h5 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .empty-state p {
+        color: #6c757d;
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+        width: 60px;
+        height: 60px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+        width: 40px;
+        height: 40px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+        width: 30px;
+        height: 30px;
+        top: 40%;
+        left: 50%;
+        animation-delay: 4s;
+    }
+
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(180deg); }
+    }
+
+    /* Custom scrollbar */
+    .service-details::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .service-details::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    .service-details::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+
+    .service-details::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+
+    @@media (max-width: 768px) {
+        .tasks-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .tasks-header h2 {
+            font-size: 2rem;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+        
+        .nav-tabs .nav-link {
+            padding: 15px 20px;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="tasks-hero">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <h1>Quản lý Lịch hẹn</h1>
+        <p>Quản lý và theo dõi các lịch hẹn sửa chữa, bảo dưỡng xe</p>
+    </div>
+</section>
+
+<!-- Tasks Section -->
+<section class="tasks-section">
+    <div class="tasks-container">
+        <div class="tasks-header">
+            <h2>Quản lý Lịch hẹn - Kỹ thuật viên</h2>
+            <p>Quản lý và theo dõi các lịch hẹn sửa chữa, bảo dưỡng xe</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <ul class="nav nav-tabs nav-fill" id="taskTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button id="btnAll" class="nav-link active" onclick="showTab('all')" type="button">
+                            <i class="fa fa-list me-2"></i> Tất cả lịch hẹn
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button id="btnMine" class="nav-link" onclick="showTab('mine')" type="button">
+                            <i class="fa fa-clipboard-check me-2"></i> Các lịch bạn đã nhận
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- All Appointments Tab -->
+        <div id="tabAll">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="fa fa-calendar-alt text-primary me-2"></i> Tất cả lịch hẹn
+                        </h4>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary btn-sm" onclick="refreshData()">
+                                <i class="fa fa-refresh"></i> Làm mới
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (!Model.Appointments.Any())
+            {
+                <div class="empty-state">
+                    <i class="fa fa-calendar-times-o"></i>
+                    <h5>Hiện tại không có lịch hẹn nào</h5>
+                    <p>Tất cả lịch hẹn sẽ hiển thị ở đây</p>
+                </div>
+            }
+            else
+            {
+                <div class="row g-4">
+                    @foreach (var appt in Model.Appointments)
+                    {
+                        <div class="col-md-6 col-lg-4">
+                            <div class="appointment-card">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge @GetStatusBadge(appt.Status)">
+                                            <i class="fa fa-tag me-1"></i> @appt.Status
+                                        </span>
+                                        <span class="text-muted small">
+                                            <i class="fa fa-clock-o me-1"></i>
+                                            @(appt.AppointmentTime?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa xác định")
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <p>
+                                            <i class="fa fa-user"></i>
+                                            <strong>Khách hàng:</strong>
+                                            <span>@appt.User?.FullName</span>
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-phone"></i>
+                                            <strong>Số điện thoại:</strong>
+                                            <span>@appt.User?.Phone</span>
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-warehouse"></i>
+                                            <strong>Địa điểm:</strong>
+                                            <span>@appt.Garage?.Address</span>
+                                        </p>
+                                        @if (!string.IsNullOrWhiteSpace(appt.Notes))
+                                        {
+                                            <p>
+                                                <i class="fa fa-sticky-note"></i>
+                                                <strong>Ghi chú:</strong>
+                                                <span>@appt.Notes</span>
+                                            </p>
+                                        }
+                                    </div>
+
+                                    @{
+                                        var technicianNames = Model.Details
+                                        .Where(d => d.AppointmentId == appt.AppointmentId && d.Vehicle?.Technician?.FullName != null)
+                                        .Select(d => d.Vehicle.Technician.FullName)
+                                        .Distinct()
+                                        .ToList();
+                                    }
+
+                                    @if (appt.Status == "In_Progress" && technicianNames.Any())
+                                    {
+                                        <div class="alert alert-info">
+                                            <i class="fa fa-tools me-1"></i>
+                                            Đang sửa chữa bởi: <strong>@string.Join(", ", technicianNames)</strong>
+                                        </div>
+                                    }
+                                    else if (appt.Status == "Completed" && technicianNames.Any())
+                                    {
+                                        <div class="alert alert-success">
+                                            <i class="fa fa-check-circle me-1"></i>
+                                            Đã hoàn thành bởi: <strong>@string.Join(", ", technicianNames)</strong>
+                                        </div>
+                                    }
+
+                                    <div class="mb-3">
+                                        <h6 class="text-primary mb-2">
+                                            <i class="fa fa-car me-1"></i> Dịch vụ & Xe
+                                        </h6>
+                                        <div class="service-details">
+                                            @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+                                            {
+                                                <div class="service-item">
+                                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                                        <strong class="text-dark">@detail.Vehicle?.Make @detail.Vehicle?.Model</strong>
+                                                        <span class="badge bg-light text-dark">@detail.Vehicle?.LicensePlate</span>
+                                                    </div>
+                                                    <div class="text-muted small">
+                                                        <i class="fa fa-cogs me-1"></i> @detail.Service?.ServiceName
+                                                        <span class="ms-2">
+                                                            <i class="fa fa-sort-numeric-up me-1"></i> SL: @detail.Quantity
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    @if (appt.Status == "Pending" || appt.Status == "WaitingForAccept")
+                                    {
+                                        <form asp-action="UpdateStatus" asp-controller="Technician" method="post" class="mt-3">
+                                            <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                            <input type="hidden" name="Status" value="In_Progress" />
+                                            <button type="submit" class="btn btn-success w-100">
+                                                <i class="fa fa-hand-pointer me-1"></i> Nhận việc
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- My Appointments Tab -->
+        <div id="tabMine" style="display:none;">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="fa fa-clipboard-check text-success me-2"></i> Các lịch bạn đã nhận
+                        </h4>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-success btn-sm" onclick="refreshData()">
+                                <i class="fa fa-refresh"></i> Làm mới
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (myAppointments != null && myAppointments.Any())
+            {
+                <div class="row g-4">
+                    @foreach (var appt in myAppointments)
+                    {
+                        <div class="col-md-6 col-lg-4">
+                            <div class="appointment-card">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge @GetStatusBadge(appt.Status)">
+                                            <i class="fa fa-tag me-1"></i> @appt.Status
+                                        </span>
+                                        <span class="text-muted small">
+                                            <i class="fa fa-clock-o me-1"></i>
+                                            @(appt.AppointmentTime?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa xác định")
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <p>
+                                            <i class="fa fa-user"></i>
+                                            <strong>Khách hàng:</strong>
+                                            <span>@appt.User?.FullName</span>
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-warehouse"></i>
+                                            <strong>Địa điểm:</strong>
+                                            <span>@appt.Garage?.Address</span>
+                                        </p>
+                                        @if (!string.IsNullOrWhiteSpace(appt.Notes))
+                                        {
+                                            <p>
+                                                <i class="fa fa-sticky-note"></i>
+                                                <strong>Ghi chú:</strong>
+                                                <span>@appt.Notes</span>
+                                            </p>
+                                        }
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <h6 class="text-primary mb-2">
+                                            <i class="fa fa-car me-1"></i> Dịch vụ & Xe
+                                        </h6>
+                                        <div class="service-details">
+                                            @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+                                            {
+                                                <div class="service-item">
+                                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                                        <strong class="text-dark">@detail.Vehicle?.Make @detail.Vehicle?.Model</strong>
+                                                        <span class="badge bg-light text-dark">@detail.Vehicle?.LicensePlate</span>
+                                                    </div>
+                                                    <div class="text-muted small">
+                                                        <i class="fa fa-cogs me-1"></i> @detail.Service?.ServiceName
+                                                        <span class="ms-2">
+                                                            <i class="fa fa-sort-numeric-up me-1"></i> SL: @detail.Quantity
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <form asp-action="UpdateStatus" asp-controller="Technician" method="post" class="mb-2">
+                                            <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                            <div class="row g-2 align-items-center">
+                                                <div class="col-8">
+                                                    <select name="Status" class="form-select">
+                                                        <option value="In_Progress" selected="@(appt.Status == "In_Progress")">Đang thực hiện</option>
+                                                        <option value="Completed" selected="@(appt.Status == "Completed")">Hoàn thành</option>
+                                                        <option value="Cancelled" selected="@(appt.Status == "Cancelled")">Hủy bỏ</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-4">
+                                                    <button type="submit" class="btn btn-primary w-100">
+                                                        <i class="fa fa-save"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <form asp-action="Unassign" asp-controller="Technician" method="post">
+                                            <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                            <button type="submit" class="btn btn-danger w-100"
+                                                    onclick="return confirm('Bạn chắc chắn muốn bỏ nhận lịch này?');">
+                                                <i class="fa fa-times me-1"></i> Hủy nhận lịch
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class="fa fa-clipboard"></i>
+                    <h5>Bạn chưa nhận lịch nào</h5>
+                    <p>Hãy chuyển sang tab "Tất cả lịch hẹn" để nhận việc</p>
+                    <button class="btn btn-primary" onclick="showTab('all')">
+                        <i class="fa fa-list me-1"></i> Xem tất cả lịch hẹn
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- FontAwesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<script>
+    function showTab(tab) {
+        document.getElementById('tabAll').style.display = (tab === 'all') ? 'block' : 'none';
+        document.getElementById('tabMine').style.display = (tab === 'mine') ? 'block' : 'none';
+
+        // Update active state
+        document.getElementById('btnAll').classList.toggle('active', tab === 'all');
+        document.getElementById('btnMine').classList.toggle('active', tab === 'mine');
+    }
+
+    function refreshData() {
+        location.reload();
+    }
+
+    // Tự động chuyển tab nếu có query string tab=mine
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('tab') === 'mine') {
+            showTab('mine');
+        } else {
+            showTab('all');
+        }
+    };
+
+    // Add smooth animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.appointment-card');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+</script>

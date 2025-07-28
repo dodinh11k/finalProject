@@ -1,0 +1,619 @@
+﻿@model AppointmentHistoryViewModel
+
+@{
+    ViewData["Title"] = "Lịch sử đặt lịch";
+}
+
+<style>
+    .history-hero {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+        padding: 60px 0;
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .history-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+    }
+
+    .history-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .history-hero p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+        position: relative;
+        z-index: 2;
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .history-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .history-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .history-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .history-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .history-header p {
+        font-size: 1.1rem;
+        color: #6c757d;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .history-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .history-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .history-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .history-card h5 {
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #2c3e50;
+        font-size: 1.3rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .appointment-id {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-weight: 400;
+        background: #f8f9fa;
+        padding: 5px 10px;
+        border-radius: 8px;
+    }
+
+    .appointment-date {
+        font-weight: 700;
+        color: #28a745;
+    }
+
+    .history-info {
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        font-size: 1rem;
+        color: #2c3e50;
+    }
+
+    .info-item strong {
+        color: #28a745;
+        font-weight: 600;
+        min-width: 120px;
+    }
+
+    .info-item i {
+        color: #28a745;
+        width: 16px;
+    }
+
+    .status-label {
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 140px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        border: none;
+    }
+
+    .status-Pending {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffe082 100%);
+        color: #856404;
+    }
+
+    .status-Confirmed {
+        background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        color: #0c5460;
+    }
+
+    .status-Completed {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+    }
+
+    .status-Canceled {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+    }
+
+    .status-InProgress {
+        background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        color: #0c5460;
+    }
+
+    .vehicle-section {
+        margin-top: 25px;
+    }
+
+    .vehicle-section h6 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .vehicle-group-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .vehicle-group-card:hover {
+        border-color: #28a745;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.1);
+    }
+
+    .vehicle-group-card strong {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .action-buttons {
+        margin-top: 25px;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-cancel {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-cancel:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .review-box {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .review-box:hover {
+        border-color: #28a745;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.1);
+    }
+
+    .review-title {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .review-stars {
+        color: #ffc107;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .review-comment {
+        font-style: italic;
+        color: #444;
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    .review-date {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    .empty-state h3 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .empty-state p {
+        color: #6c757d;
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    .btn-create {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-create:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+        width: 60px;
+        height: 60px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+        width: 40px;
+        height: 40px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+        width: 30px;
+        height: 30px;
+        top: 40%;
+        left: 50%;
+        animation-delay: 4s;
+    }
+
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(180deg); }
+    }
+
+    @@media (max-width: 768px) {
+        .history-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .history-header h2 {
+            font-size: 2rem;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+        }
+        
+        .btn-edit, .btn-cancel {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="history-hero">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <h1>Lịch sử đặt lịch</h1>
+        <p>Xem lại tất cả lịch hẹn đã xác nhận và đã thanh toán</p>
+    </div>
+</section>
+
+<!-- History Section -->
+<section class="history-section">
+    <div class="history-container">
+        <div class="history-header">
+        </div>
+
+        @if (!Model.Appointments.Any())
+        {
+            <div class="empty-state">
+                <i class="fa fa-calendar-times-o"></i>
+                <h3>Chưa có lịch hẹn nào</h3>
+                <p>Bạn chưa có lịch hẹn nào trong lịch sử.</p>
+                <a href="@Url.Action("Create", "Appointment")" class="btn-create">
+                    <i class="fa fa-plus"></i>
+                    Đặt lịch ngay
+                </a>
+            </div>
+        }
+        else
+        {
+            @foreach (var appt in Model.Appointments.OrderByDescending(a => a.AppointmentId))
+            {
+                var statusClass = "status-" + (appt.Status?.Replace(" ", "").Replace("_", "") ?? "Pending");
+                var technicianNames = string.Join(", ",
+                    Model.Details
+                        .Where(d => d.AppointmentId == appt.AppointmentId && d.Technician != null)
+                        .Select(d => d.Technician.FullName ?? d.Technician.Username)
+                        .Where(name => !string.IsNullOrEmpty(name))
+                );
+                if (string.IsNullOrEmpty(technicianNames))
+                {
+                    technicianNames = "Chưa phân công";
+                }
+
+                <div class="history-card">
+                    <h5>
+                        <span class="appointment-id">#@appt.AppointmentId</span>
+                        <span class="appointment-date">
+                            <i class="fa fa-calendar"></i>
+                            @(appt.AppointmentTime.HasValue ? appt.AppointmentTime.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa đặt")
+                        </span>
+                    </h5>
+
+                    <div class="history-info">
+                        <div class="info-item">
+                            <i class="fa fa-map-marker"></i>
+                            <strong>Garage:</strong>
+                            <span>@(appt.Garage?.Address ?? "Không rõ")</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa fa-user"></i>
+                            <strong>Kỹ thuật viên:</strong>
+                            <span>@technicianNames</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa fa-sticky-note"></i>
+                            <strong>Ghi chú:</strong>
+                            <span>@(string.IsNullOrWhiteSpace(appt.Notes) ? "(Không có ghi chú)" : appt.Notes)</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa fa-info-circle"></i>
+                            <strong>Trạng thái:</strong>
+                            <span class="status-label @statusClass">
+                                <i class="fa fa-circle"></i>
+                                @(appt.Status switch {
+                                    "Pending" => "Chờ xác nhận",
+                                    "In_Progress" => "Đang thực hiện",
+                                    "Completed" => "Hoàn thành",
+                                    "Cancelled" => "Đã hủy",
+                                    _ => appt.Status
+                                })
+                            </span>
+                            @if (appt.Status == "Pending")
+                            {
+                                <span style="color: #28a745; margin-left: 10px;">
+                                    <i class="fa fa-check-circle"></i> Đã thanh toán
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="vehicle-section">
+                        <h6>
+                            <i class="fa fa-car"></i>
+                            Thông tin xe và dịch vụ
+                        </h6>
+                        @{
+                            var vehicleGroups = Model.Details.Where(d => d.AppointmentId == appt.AppointmentId)
+                                                           .GroupBy(d => d.VehicleId)
+                                                           .ToList();
+                        }
+                        
+                        @foreach (var vehicleGroup in vehicleGroups)
+                        {
+                            var firstDetail = vehicleGroup.First();
+                            var vehicle = firstDetail.Vehicle;
+                            var services = vehicleGroup.Select(d => d.Service?.ServiceName).Where(s => !string.IsNullOrEmpty(s)).ToList();
+                            <div class="vehicle-group-card">
+                                <strong>Xe @(vehicleGroups.IndexOf(vehicleGroup) + 1):</strong>
+                                @($"{vehicle?.Make ?? "Không rõ"} {vehicle?.Model ?? ""}")
+                                (@(vehicle?.LicensePlate ?? "Không rõ"))<br />
+                                <strong>Dịch vụ:</strong> @string.Join(", ", services)<br />
+                                <strong>Số dịch vụ:</strong> @services.Count
+                            </div>
+                        }
+                    </div>
+
+                    @if (appt.Status == "Pending")
+                    {
+                        <div class="action-buttons">
+                            @if (Model.Details.Count(d => d.AppointmentId == appt.AppointmentId) > 1)
+                            {
+                                <a asp-action="EditMulti" asp-route-id="@appt.AppointmentId" class="btn-edit">
+                                    <i class="fa fa-edit"></i> Sửa
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="Edit" asp-route-id="@appt.AppointmentId" class="btn-edit">
+                                    <i class="fa fa-edit"></i> Sửa
+                                </a>
+                            }
+                            <a asp-action="Cancel" asp-route-id="@appt.AppointmentId"
+                               class="btn-cancel"
+                               onclick="return confirm('Bạn có chắc chắn muốn huỷ lịch hẹn này?');">
+                                <i class="fa fa-times"></i> Huỷ
+                            </a>
+                        </div>
+                    }
+
+                    @{
+                        var reviewForCompletedStatus = Model.Reviews.FirstOrDefault(r => r.AppointmentId == appt.AppointmentId);
+                    }
+
+                    @if (appt.Status == "Completed")
+                    {
+                        var reviewForCompletedStatusInner = Model.Reviews.FirstOrDefault(r => r.AppointmentId == appt.AppointmentId);
+
+                        if (reviewForCompletedStatusInner != null)
+                        {
+                            <div class="review-box">
+                                <div class="review-title">
+                                    <i class="fa fa-star"></i>
+                                    Đánh giá của bạn
+                                </div>
+                                <div class="review-stars">
+                                    @for (int i = 1; i <= (reviewForCompletedStatusInner.Rating ?? 0); i++)
+                                    {
+                                        <span>&#9733;</span>
+                                    }
+                                    @for (int i = (reviewForCompletedStatusInner.Rating ?? 0) + 1; i <= 5; i++)
+                                    {
+                                        <span style="color:#e4e5e9">&#9733;</span>
+                                    }
+                                </div>
+                                <div class="review-comment">@reviewForCompletedStatusInner.Comment</div>
+                                <div class="review-date">@reviewForCompletedStatusInner.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="action-buttons">
+                                <a asp-action="Review" asp-route-id="@appt.AppointmentId" class="btn-edit">
+                                    <i class="fa fa-star"></i> Đánh giá
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />

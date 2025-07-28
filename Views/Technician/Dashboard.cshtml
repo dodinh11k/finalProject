@@ -1,0 +1,781 @@
+@{
+    ViewBag.Title = "Technician Dashboard";
+}
+@{
+    var username = ViewData["username"] as string ?? "";
+    var fullname = ViewData["fullname"] as string ?? "";
+}
+
+<style>
+    .dashboard-hero {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+        padding: 60px 0;
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dashboard-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+    }
+
+    .dashboard-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .dashboard-hero p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+        position: relative;
+        z-index: 2;
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .dashboard-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .dashboard-header p {
+        font-size: 1.1rem;
+        color: #6c757d;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .feature-card i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .feature-card h5 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .feature-card p {
+        color: #6c757d;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: white;
+    }
+
+    .btn-warning:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 193, 7, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-info {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+    }
+
+    .btn-info:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(23, 162, 184, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .stats-section {
+        margin: 60px 0;
+    }
+
+    .stats-section h4 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #28a745;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        padding: 30px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+    }
+
+    .stat-card.bg-primary::before {
+        background: linear-gradient(90deg, #007bff, #0056b3);
+    }
+
+    .stat-card.bg-info::before {
+        background: linear-gradient(90deg, #17a2b8, #138496);
+    }
+
+    .stat-card.bg-success::before {
+        background: linear-gradient(90deg, #28a745, #20c997);
+    }
+
+    .stat-card.bg-warning::before {
+        background: linear-gradient(90deg, #ffc107, #e0a800);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .stat-card i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .stat-card h5 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .stat-card h3 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 5px;
+    }
+
+    .stat-card small {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .content-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-bottom: 2px solid #e9ecef;
+        padding: 20px 25px;
+    }
+
+    .card-header h5 {
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table th {
+        font-weight: 600;
+        color: #2c3e50;
+        border-bottom: 2px solid #e9ecef;
+        padding: 15px;
+    }
+
+    .table td {
+        padding: 15px;
+        vertical-align: middle;
+        border-bottom: 1px solid #f8f9fa;
+    }
+
+    .badge {
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .bg-secondary {
+        background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+        color: white;
+    }
+
+    .bg-warning {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: #212529;
+    }
+
+    .bg-info {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+    }
+
+    .bg-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+    }
+
+    .bg-danger {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+    }
+
+    .bg-light {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: #212529;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.5;
+    }
+
+    .empty-state h5 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+
+    .empty-state p {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+        width: 60px;
+        height: 60px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+        width: 40px;
+        height: 40px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+        width: 30px;
+        height: 30px;
+        top: 40%;
+        left: 50%;
+        animation-delay: 4s;
+    }
+
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(180deg); }
+    }
+
+    @@media (max-width: 768px) {
+        .dashboard-hero h1 {
+            font-size: 2.2rem;
+        }
+        
+        .dashboard-header h2 {
+            font-size: 2rem;
+        }
+        
+        .feature-card {
+            padding: 25px 20px;
+        }
+        
+        .stat-card {
+            padding: 25px 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="dashboard-hero">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <h1>Chào mừng đến trang quản lý Kỹ thuật viên</h1>
+        <p>Quản lý lịch hẹn, công việc và dịch vụ sửa chữa một cách hiệu quả!</p>
+    </div>
+</section>
+
+<!-- Dashboard Section -->
+<section class="dashboard-section">
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>Bảng điều khiển Kỹ thuật viên</h2>
+            <p>Quản lý và theo dõi công việc một cách hiệu quả</p>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <i class="fa fa-calendar-check-o" style="color: #007bff;"></i>
+                    <h5>Quản lý Lịch hẹn</h5>
+                    <p>Xem tất cả lịch hẹn, nhận việc và cập nhật trạng thái công việc.</p>
+                    <a href="@Url.Action("Tasks", "Technician")" class="btn btn-primary">
+                        <i class="fa fa-calendar"></i> Quản lý Lịch hẹn
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <i class="fa fa-tasks" style="color: #28a745;"></i>
+                    <h5>Công việc đang làm</h5>
+                    <p>Theo dõi các lịch hẹn đang thực hiện và cập nhật tiến độ.</p>
+                    <a href="@Url.Action("Tasks", "Technician", new { tab = "mine" })" class="btn btn-success">
+                        <i class="fa fa-clipboard"></i> Xem công việc
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <i class="fa fa-history" style="color: #ffc107;"></i>
+                    <h5>Lịch sử hoàn thành</h5>
+                    <p>Xem lại các lịch hẹn đã hoàn thành và đánh giá từ khách hàng.</p>
+                    <a href="@Url.Action("Tasks", "Technician")" class="btn btn-warning">
+                        <i class="fa fa-clock-o"></i> Lịch sử
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <i class="fa fa-cogs" style="color: #17a2b8;"></i>
+                    <h5>Dịch vụ & Sản phẩm</h5>
+                    <p>Xem danh sách dịch vụ và sản phẩm có sẵn tại garage.</p>
+                    <a href="@Url.Action("Index", "Service")" class="btn btn-info">
+                        <i class="fa fa-wrench"></i> Dịch vụ
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h4>
+                <i class="fa fa-chart-bar"></i> Thống kê công việc
+            </h4>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="stat-card bg-primary text-white">
+                        <i class="fa fa-clock-o"></i>
+                        <h5>Đang chờ</h5>
+                        <h3>@(ViewData["PendingCount"] ?? 0)</h3>
+                        <small>Lịch hẹn chờ xử lý</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card bg-info text-white">
+                        <i class="fa fa-spinner"></i>
+                        <h5>Đang làm</h5>
+                        <h3>@(ViewData["InProgressCount"] ?? 0)</h3>
+                        <small>Công việc đang thực hiện</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card bg-success text-white">
+                        <i class="fa fa-check-circle"></i>
+                        <h5>Hoàn thành</h5>
+                        <h3>@(ViewData["CompletedCount"] ?? 0)</h3>
+                        <small>Lịch hẹn đã hoàn thành</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card bg-warning text-white">
+                        <i class="fa fa-calendar"></i>
+                        <h5>Hôm nay</h5>
+                        <h3>@(ViewData["TodayCount"] ?? 0)</h3>
+                        <small>Lịch hẹn hôm nay</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Appointments -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h5>
+                            <i class="fa fa-calendar-o text-primary me-2"></i> Lịch hẹn gần đây
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var recentAppointments = ViewData["RecentAppointments"] as List<test_2.Models.Appointment>;
+                        }
+
+                        @if (recentAppointments != null && recentAppointments.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã lịch hẹn</th>
+                                            <th>Khách hàng</th>
+                                            <th>Dịch vụ</th>
+                                            <th>Thời gian</th>
+                                            <th>Trạng thái</th>
+                                            <th>Kỹ thuật viên</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var appointment in recentAppointments)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <span class="badge bg-secondary">#@appointment.AppointmentId</span>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <strong>@appointment.User?.FullName</strong>
+                                                        <br>
+                                                        <small class="text-muted">@appointment.User?.Phone</small>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @if (appointment.AppointmentVehicleDetails != null && appointment.AppointmentVehicleDetails.Any())
+                                                    {
+                                                        <div>
+                                                            @foreach (var detail in appointment.AppointmentVehicleDetails.Take(2))
+                                                            {
+                                                                <span class="badge bg-light text-dark me-1">
+                                                                    @detail.Service?.ServiceName
+                                                                </span>
+                                                            }
+                                                            @if (appointment.AppointmentVehicleDetails.Count > 2)
+                                                            {
+                                                                <span class="badge bg-light text-dark">+@(appointment.AppointmentVehicleDetails.Count - 2) more</span>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <strong>@(appointment.AppointmentTime?.ToString("dd/MM/yyyy") ?? "N/A")</strong>
+                                                        <br>
+                                                        <small class="text-muted">@(appointment.AppointmentTime?.ToString("HH:mm") ?? "N/A")</small>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var statusClass = appointment.Status switch
+                                                        {
+                                                            "Pending" => "bg-secondary",
+                                                            "WaitingForAccept" => "bg-warning text-dark",
+                                                            "In_Progress" => "bg-info text-dark",
+                                                            "Completed" => "bg-success",
+                                                            "Cancelled" => "bg-danger",
+                                                            _ => "bg-secondary"
+                                                        };
+                                                    }
+                                                    <span class="badge @statusClass">@appointment.Status</span>
+                                                </td>
+                                                <td>
+                                                    @if (appointment.AppointmentVehicleDetails != null && appointment.AppointmentVehicleDetails.Any())
+                                                    {
+                                                        var technicians = appointment.AppointmentVehicleDetails
+                                                        .Select(d => d.Technician?.FullName)
+                                                        .Where(name => !string.IsNullOrEmpty(name))
+                                                        .Distinct()
+                                                        .ToList();
+
+                                                        if (technicians.Any())
+                                                        {
+                                                            <span class="text-success">
+                                                                <i class="fa fa-user"></i> @string.Join(", ", technicians)
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="text-muted">
+                                                                <i class="fa fa-user-times"></i> Chưa phân công
+                                                            </span>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">
+                                                            <i class="fa fa-user-times"></i> Chưa có dữ liệu
+                                                        </span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="@Url.Action("Tasks", "Technician")" class="btn btn-primary">
+                                    <i class="fa fa-list me-1"></i> Xem tất cả lịch hẹn
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-state">
+                                <i class="fa fa-calendar-times"></i>
+                                <h5>Chưa có lịch hẹn nào</h5>
+                                <p>Hệ thống sẽ hiển thị các lịch hẹn gần đây tại đây</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Jobs -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h5>
+                            <i class="fa fa-hand-paper-o text-warning me-2"></i> Công việc chờ nhận
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var availableAppointments = ViewData["AvailableAppointments"] as List<test_2.Models.Appointment>;
+                        }
+                        @if (availableAppointments != null && availableAppointments.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã lịch hẹn</th>
+                                            <th>Khách hàng</th>
+                                            <th>Dịch vụ</th>
+                                            <th>Thời gian</th>
+                                            <th>Trạng thái</th>
+                                            <th>Nhận việc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var appointment in availableAppointments)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <span class="badge bg-secondary">#@appointment.AppointmentId</span>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <strong>@appointment.User?.FullName</strong>
+                                                        <br>
+                                                        <small class="text-muted">@appointment.User?.Phone</small>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @if (appointment.AppointmentVehicleDetails != null && appointment.AppointmentVehicleDetails.Any())
+                                                    {
+                                                        <div>
+                                                            @foreach (var detail in appointment.AppointmentVehicleDetails.Take(2))
+                                                            {
+                                                                <span class="badge bg-light text-dark me-1">
+                                                                    @detail.Service?.ServiceName
+                                                                </span>
+                                                            }
+                                                            @if (appointment.AppointmentVehicleDetails.Count > 2)
+                                                            {
+                                                                <span class="badge bg-light text-dark">+@(appointment.AppointmentVehicleDetails.Count - 2) more</span>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <strong>@(appointment.AppointmentTime?.ToString("dd/MM/yyyy") ?? "N/A")</strong>
+                                                        <br>
+                                                        <small class="text-muted">@(appointment.AppointmentTime?.ToString("HH:mm") ?? "N/A")</small>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-secondary">@appointment.Status</span>
+                                                </td>
+                                                <td>
+                                                    <form asp-action="AcceptJob" asp-controller="Technician" method="post" style="display:inline;">
+                                                        <input type="hidden" name="AppointmentId" value="@appointment.AppointmentId" />
+                                                        <button type="submit" class="btn btn-warning btn-sm">
+                                                            <i class="fa fa-hand-pointer-o"></i> Nhận việc
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-state">
+                                <i class="fa fa-hand-paper-o"></i>
+                                <h5>Không có công việc chờ nhận</h5>
+                                <p>Hiện tại không có công việc nào đang chờ nhận</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FontAwesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> 

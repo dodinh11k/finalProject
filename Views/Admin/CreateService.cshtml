@@ -1,0 +1,113 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model test_2.Models.Service
+@{
+    ViewBag.Title = "Thêm Dịch vụ";
+}
+
+<style>
+    body {
+        background-color: #1c1c1c;
+        color: #f5f5f5;
+    }
+
+    .create-container {
+        min-height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 60px;
+    }
+
+    .create-card {
+        background-color: #2b2b2b;
+        padding: 30px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+    }
+
+        .create-card h2 {
+            font-weight: bold;
+            text-align: center;
+            color: #ffc107;
+            margin-bottom: 30px;
+        }
+
+    .form-label {
+        font-weight: 600;
+        color: #ffc107;
+    }
+
+    .form-control {
+        background-color: #3a3a3a;
+        color: #fff;
+        border: 1px solid #555;
+    }
+
+        .form-control:focus {
+            background-color: #3a3a3a;
+            color: #fff;
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.15rem rgba(255, 193, 7, 0.25);
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="create-container">
+    <div class="create-card">
+        <h2>Thêm Dịch vụ</h2>
+
+        <form asp-action="CreateService" method="post">
+            <div class="mb-3">
+                <label class="form-label">Tên dịch vụ</label>
+                <input asp-for="ServiceName" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mô tả</label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Giá</label>
+                <input asp-for="Price" class="form-control" type="number" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Hình ảnh (URL)</label>
+                <input asp-for="image_url" class="form-control" />
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-success px-4">💾 Lưu</button>
+                <a href="@Url.Action("Services", "Admin")" class="btn btn-secondary px-4">← Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>

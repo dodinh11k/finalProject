@@ -1,0 +1,12 @@
+@* @model List<test_2.Models.User>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Chọn user để chat";
+}
+<h2>Chọn user để xem lịch sử chat</h2>
+<ul>
+@foreach(var user in Model)
+{
+    <li><a href="@Url.Action("Chat", "Admin", new { userId = user.UserId })">@user.FullName (@user.Username)</a></li>
+}
+</ul>  *@

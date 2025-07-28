@@ -1,0 +1,503 @@
+﻿@model test_2.Models.AppointmentViewModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username") ?? "";
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName") ?? "";
+    var phone = HttpContextAccessor.HttpContext.Session.GetString("Phone") ?? "";
+
+    if (string.IsNullOrEmpty(username))
+    {
+        HttpContextAccessor.HttpContext.Response.Redirect("/Account/Login");
+    }
+
+    ViewData["Title"] = "Đặt lịch hẹn";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #152A16;
+    }
+
+    .appointment-container {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 40px 30px;
+        max-width: 700px;
+        margin: 50px auto;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        color: #152A16;
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+    }
+
+    label {
+        color: #152A16;
+        font-weight: 600;
+    }
+
+    .form-control, select, textarea {
+        background-color: #f8f8f8;
+        border: 1px solid #ccc;
+        color: #152A16;
+        border-radius: 6px;
+    }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #152A16;
+            box-shadow: 0 0 0 0.2rem rgba(21, 42, 22, 0.15);
+        }
+
+    .text-danger {
+        color: #C0392B !important;
+    }
+
+    .btn-custom {
+        background-color: #152A16;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 10px 25px;
+        transition: 0.3s ease;
+    }
+
+        .btn-custom:hover {
+            background-color: #0F1F10;
+            color: #fff;
+        }
+
+    .user-info {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        background-color: #f3f3f3;
+        padding: 12px 20px;
+        border-radius: 8px;
+    }
+
+        .user-info strong {
+            color: #152A16;
+        }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .time-selector {
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+
+        .time-selector .row {
+            margin: 0;
+            align-items: center;
+        }
+
+        .time-selector .col-md-2 {
+            padding: 0 8px;
+            margin-bottom: 10px;
+        }
+
+        .time-selector select {
+            font-size: 1.1rem !important;
+            padding: 12px 15px !important;
+            height: auto !important;
+            min-height: 50px !important;
+            border: 2px solid #dee2e6 !important;
+            border-radius: 8px !important;
+            background-color: #fff !important;
+            color: #152A16 !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+        }
+
+            .time-selector select:focus {
+                border-color: #152A16 !important;
+                box-shadow: 0 0 0 0.2rem rgba(21, 42, 22, 0.15) !important;
+                outline: none !important;
+            }
+
+            .time-selector select:hover {
+                border-color: #152A16 !important;
+                background-color: #f8f9fa !important;
+            }
+
+        /* Label cho từng dropdown */
+        .time-selector .col-md-2::before {
+            content: attr(data-label);
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #152A16;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+    .time-display {
+        background-color: #e9ecef;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-top: 15px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-align: center;
+        border: 2px solid #dee2e6;
+        transition: all 0.3s ease;
+    }
+
+        .time-display.valid {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+        }
+
+        .time-display.invalid {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+        }
+
+    /* Responsive cho mobile */
+    @@media (max-width: 768px) {
+        .time-selector .col-md-2 {
+            margin-bottom: 15px;
+        }
+
+        .time-selector select {
+            font-size: 1rem !important;
+            padding: 10px 12px !important;
+            min-height: 45px !important;
+        }
+
+        .time-display {
+            font-size: 1rem;
+            padding: 12px 15px;
+        }
+    }
+</style>
+
+<div class="appointment-container">
+    <h2>Đặt lịch hẹn</h2>
+
+    <div class="user-info">
+        <p><strong>Họ tên:</strong> @(string.IsNullOrEmpty(fullname) ? "Không có" : fullname)</p>
+        <p><strong>Số điện thoại:</strong> @(string.IsNullOrEmpty(phone) ? "Không có" : phone)</p>
+    </div>
+
+    <form asp-action="Create" method="post">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label asp-for="VehicleMake">Hãng xe</label>
+            <select asp-for="VehicleMake" class="form-control vehicle-make-select" onchange="loadVehicleModelsSingle()">
+                <option value="">-- Chọn hãng xe --</option>
+                @foreach (var make in VehicleData.GetVehicleMakeList())
+                {
+                    <option value="@make.Value">@make.Text</option>
+                }
+            </select>
+            <span asp-validation-for="VehicleMake" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="VehicleModel">Dòng xe</label>
+            <select asp-for="VehicleModel" class="form-control vehicle-model-select" id="vehicleModelSingle" disabled>
+                <option value="">-- Chọn dòng xe --</option>
+            </select>
+            <span asp-validation-for="VehicleModel" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LicensePlate">Biển số</label>
+            <input asp-for="LicensePlate" class="form-control" placeholder="VD: 30A-12345" />
+            <span asp-validation-for="LicensePlate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PromoCode">Mã khuyến mãi</label>
+            <input asp-for="PromoCode" class="form-control" id="promoCode" placeholder="Nhập mã khuyến mãi (nếu có)" onblur="validateVoucher()" />
+            <span asp-validation-for="PromoCode" class="text-danger"></span>
+            <div id="voucherMessage" class="mt-2"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Dịch vụ</label>
+            <div>
+                @foreach (var service in Model.ServiceList)
+                {
+                    var isChecked = Model.ServiceIds != null && Model.ServiceIds.Contains(int.Parse(service.Value));
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="ServiceIds" value="@service.Value" id="service_@service.Value" @(isChecked ? "checked" : "") />
+                        <label class="form-check-label" for="service_@service.Value">@service.Text</label>
+                    </div>
+                }
+            </div>
+            <span asp-validation-for="ServiceIds" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="GarageId">Garage</label>
+            <select asp-for="GarageId" asp-items="Model.GarageList" class="form-control">
+                <option value="">-- Chọn garage --</option>
+            </select>
+            <span asp-validation-for="GarageId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="AppointmentTime">Thời gian hẹn</label>
+            <div class="time-selector">
+                <div class="row">
+                    <div class="col-md-2" data-label="Giờ">
+                        <select id="appointmentHour" class="form-control" onchange="updateDateTimeSingle()">
+                            <option value="">--</option>
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@i.ToString("00")">@i</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2" data-label="Phút">
+                        <select id="appointmentMinute" class="form-control" onchange="updateDateTimeSingle()">
+                            <option value="">--</option>
+                            @for (int i = 0; i <= 59; i += 5)
+                            {
+                                <option value="@i.ToString("00")">@i.ToString("00")</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2" data-label="AM/PM">
+                        <select id="appointmentPeriod" class="form-control" onchange="updateDateTimeSingle()">
+                            <option value="">--</option>
+                            <option value="AM">Sáng (AM)</option>
+                            <option value="PM">Chiều (PM)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" data-label="Ngày">
+                        <select id="appointmentDay" class="form-control" onchange="updateDateTimeSingle()">
+                            <option value="">--</option>
+                            @for (int i = 1; i <= 31; i++)
+                            {
+                                <option value="@i.ToString("00")">@i</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2" data-label="Tháng">
+                        <select id="appointmentMonth" class="form-control" onchange="updateDateTimeSingle()">
+                            <option value="">--</option>
+                            @{
+                                var months = new[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" };
+                                var monthNames = new[] { "T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12" };
+                            }
+                            @for (int i = 0; i < months.Length; i++)
+                            {
+                                <option value="@months[i]">@monthNames[i]</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2" data-label="Năm">
+                        <select id="appointmentYear" class="form-control" onchange="updateDateTimeSingle()">
+                            <option value="">--</option>
+                            @for (int i = DateTime.Now.Year; i <= DateTime.Now.Year + 2; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <input asp-for="AppointmentTime" type="hidden" id="appointmentTime" />
+            <div class="time-display">
+                <strong>Thời gian đã chọn:</strong> <span id="selectedDateTime">Chưa chọn</span>
+            </div>
+            <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Notes">Ghi chú</label>
+            <textarea asp-for="Notes" class="form-control"></textarea>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-custom">Đặt lịch</button>
+            <a href="@Url.Action("CreateMulti", "Appointment")" class="btn btn-secondary" style="background-color: #28a745; color: white; margin-left: 10px;">
+                <i class="fa fa-cars"></i> Đặt lịch nhiều xe
+            </a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function loadVehicleModelsSingle() {
+        const makeSelect = document.querySelector('select[name="VehicleMake"]');
+        const modelSelect = document.getElementById('vehicleModelSingle');
+        const selectedMake = makeSelect.value;
+
+        // Reset model select
+        modelSelect.innerHTML = '<option value="">-- Chọn dòng xe --</option>';
+        modelSelect.disabled = true;
+
+        if (selectedMake) {
+            // Fetch models from server
+            fetch(`/Appointment/GetVehicleModels?make=${encodeURIComponent(selectedMake)}`)
+                .then(response => response.json())
+                .then(models => {
+                    models.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.value;
+                        option.textContent = model.text;
+                        modelSelect.appendChild(option);
+                    });
+                    modelSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error loading vehicle models:', error);
+                });
+        }
+    }
+
+    function updateDateTimeSingle() {
+        const hour = document.getElementById('appointmentHour').value;
+        const minute = document.getElementById('appointmentMinute').value;
+        const period = document.getElementById('appointmentPeriod').value;
+        const day = document.getElementById('appointmentDay').value;
+        const month = document.getElementById('appointmentMonth').value;
+        const year = document.getElementById('appointmentYear').value;
+
+        // Kiểm tra xem tất cả các trường đã được chọn chưa
+        if (hour && minute && period && day && month && year) {
+            // Chuyển đổi sang định dạng 24h
+            let hour24 = parseInt(hour);
+            if (period === 'PM' && hour24 !== 12) {
+                hour24 += 12;
+            } else if (period === 'AM' && hour24 === 12) {
+                hour24 = 0;
+            }
+
+            // Tạo đối tượng Date
+            const selectedDate = new Date(year, month - 1, day, hour24, minute);
+
+            // Kiểm tra xem thời gian có trong tương lai không
+            const now = new Date();
+            if (selectedDate <= now) {
+                document.getElementById('selectedDateTime').textContent = 'Thời gian phải trong tương lai!';
+                document.getElementById('selectedDateTime').style.color = '#dc3545';
+                document.getElementById('appointmentTime').value = '';
+                return;
+            }
+
+            // Format cho hiển thị
+            const displayString = `${hour}:${minute} ${period} - ${day}/${month}/${year}`;
+            document.getElementById('selectedDateTime').textContent = displayString;
+            document.getElementById('selectedDateTime').style.color = '#28a745';
+
+            // Format cho input hidden (ISO string)
+            document.getElementById('appointmentTime').value = selectedDate.toISOString();
+        } else {
+            // Hiển thị thông tin đã chọn
+            let displayString = '';
+            if (hour) displayString += hour + 'h';
+            if (minute) displayString += minute + 'p';
+            if (period) displayString += ' ' + period;
+            if (day) displayString += ' ' + day;
+            if (month) displayString += '/' + month;
+            if (year) displayString += '/' + year;
+
+            document.getElementById('selectedDateTime').textContent = displayString || 'Chưa chọn';
+            document.getElementById('selectedDateTime').style.color = '#6c757d';
+            document.getElementById('appointmentTime').value = '';
+        }
+    }
+
+    // Tự động chọn thời gian mặc định (ngày mai, 9:00 AM)
+    function setDefaultDateTimeSingle() {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(9, 0, 0, 0);
+
+        document.getElementById('appointmentHour').value = '09';
+        document.getElementById('appointmentMinute').value = '00';
+        document.getElementById('appointmentPeriod').value = 'AM';
+        document.getElementById('appointmentDay').value = tomorrow.getDate().toString().padStart(2, '0');
+        document.getElementById('appointmentMonth').value = (tomorrow.getMonth() + 1).toString().padStart(2, '0');
+        document.getElementById('appointmentYear').value = tomorrow.getFullYear();
+
+        updateDateTimeSingle();
+    }
+
+    // Gọi hàm khi trang load
+    document.addEventListener('DOMContentLoaded', function() {
+        setDefaultDateTimeSingle();
+    });
+
+    // Voucher validation
+    function validateVoucher() {
+        const promoCode = document.getElementById('promoCode').value.trim();
+        const voucherMessage = document.getElementById('voucherMessage');
+        
+        if (!promoCode) {
+            voucherMessage.innerHTML = '';
+            return;
+        }
+
+        // Calculate total service price
+        const selectedServices = document.querySelectorAll('input[name="ServiceIds"]:checked');
+        let totalAmount = 0;
+        
+        // This is a simplified calculation - in a real app, you'd get prices from the server
+        // For now, we'll use a placeholder value
+        totalAmount = selectedServices.length * 100000; // Assume 100k per service
+
+        fetch('/Appointment/ValidateVoucher', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `promoCode=${encodeURIComponent(promoCode)}&totalAmount=${totalAmount}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isValid) {
+                voucherMessage.innerHTML = `<div class="alert alert-success">
+                    <i class="fa fa-check-circle"></i> ${data.message}<br>
+                    <small>Giảm: ${data.discountAmount.toLocaleString()} VNĐ</small>
+                </div>`;
+            } else {
+                voucherMessage.innerHTML = `<div class="alert alert-danger">
+                    <i class="fa fa-exclamation-circle"></i> ${data.message}
+                </div>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error validating voucher:', error);
+            voucherMessage.innerHTML = `<div class="alert alert-warning">
+                <i class="fa fa-exclamation-triangle"></i> Lỗi kiểm tra mã khuyến mãi
+            </div>`;
+        });
+    }
+</script>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("appointmentTime");
+            if (input && !input.value) {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                input.value = now.toISOString().slice(0, 16);
+            }
+        });
+        <partial name="_ValidationScriptsPartial" />
+    </script>
+}
