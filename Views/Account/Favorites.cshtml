@@ -1,0 +1,389 @@
+﻿@model IEnumerable<test_2.Models.FavoriteProduct>
+
+@{
+    ViewData["Title"] = "Sản phẩm yêu thích";
+}
+
+<style>
+    .favorites-hero {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+        padding: 60px 0;
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .favorites-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.2;
+        }
+
+        .favorites-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .favorites-hero p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+    .favorites-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .favorites-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .favorites-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+        .favorites-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .favorites-header p {
+            font-size: 1.1rem;
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+    .favorite-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        position: relative;
+        border: none;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+        .favorite-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #28a745, #20c997);
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .favorite-card img {
+            height: 200px;
+            object-fit: contain;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            transition: all 0.3s ease;
+        }
+
+        .favorite-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .favorite-card .card-body {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: calc(100% - 200px);
+        }
+
+        .favorite-card .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .favorite-card .card-text {
+            color: #6c757d;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .favorite-card .price {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+    .btn-remove {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+        .btn-remove:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+    .alert {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+        border: 2px solid #a5d6a7;
+        border-radius: 12px;
+        padding: 15px 20px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .alert-info {
+        background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        color: #0c5460;
+        border: 2px solid #bee5eb;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+    .btn-shop {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .btn-shop:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+        .shape:nth-child(1) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 40px;
+            height: 40px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 30px;
+            height: 30px;
+            top: 40%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+    @@keyframes float {
+        0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-15px) rotate(180deg);
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .favorites-hero h1 {
+            font-size: 2.2rem;
+        }
+
+        .favorites-header h2 {
+            font-size: 2rem;
+        }
+
+        .favorite-card .card-body {
+            padding: 20px;
+        }
+
+        .btn-remove {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="favorites-hero">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <h1>Sản phẩm yêu thích</h1>
+        <p>Quản lý danh sách sản phẩm yêu thích của bạn</p>
+    </div>
+</section>
+
+<!-- Favorites Section -->
+<section class="favorites-section">
+    <div class="favorites-container">
+        <div class="favorites-header">
+        </div>
+
+        @if (TempData["success"] != null)
+        {
+            <div class="alert">
+                <i class="fa fa-check-circle"></i>
+                @TempData["success"]
+            </div>
+        }
+        @if (TempData["info"] != null)
+        {
+            <div class="alert alert-info">
+                <i class="fa fa-info-circle"></i>
+                @TempData["info"]
+            </div>
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+                <i class="fa fa-heart-o"></i>
+                <h3>Chưa có sản phẩm yêu thích</h3>
+                <p>Bạn chưa có sản phẩm nào trong danh sách yêu thích.</p>
+                <a href="@Url.Action("Index", "Products")" class="btn-shop">
+                    <i class="fa fa-shopping-cart"></i>
+                    Mua sắm ngay
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var favorite in Model)
+                {
+                    var product = favorite.Product;
+                    if (product != null)
+                    {
+                        <div class="col">
+                            <div class="favorite-card">
+                                <img src="@Url.Content("~/" + product.ImageUrl)" class="card-img-top" alt="@product.ProductName" />
+
+                                <div class="card-body">
+                                    <div>
+                                        <h5 class="card-title">@product.ProductName</h5>
+                                        <p class="card-text">@product.Description</p>
+                                        <p class="price">@product.Price.ToString("N0") ₫</p>
+                                    </div>
+
+                                    <form asp-controller="Favorites" asp-action="RemoveFavorite" method="post">
+                                        <input type="hidden" name="productId" value="@product.ProductId" />
+                                        <button type="submit" class="btn-remove">
+                                            <i class="fa fa-heart-broken"></i> Xóa khỏi yêu thích
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+</section>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />

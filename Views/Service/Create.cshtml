@@ -1,0 +1,108 @@
+﻿@model test_2.Models.Service
+
+@{
+    ViewData["Title"] = "Thêm dịch vụ";
+}
+
+<style>
+    body {
+        background-color: #1c1c1c;
+        color: #f5f5f5;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 60px auto;
+        background-color: #2b2b2b;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 12px rgba(255, 193, 7, 0.15);
+    }
+
+    .form-title {
+        color: #ffc107;
+        font-weight: bold;
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    label {
+        font-weight: 600;
+        color: #ffc107;
+    }
+
+    .form-control {
+        background-color: #3a3a3a;
+        border: 1px solid #555;
+        color: #fff;
+    }
+
+        .form-control:focus {
+            background-color: #3a3a3a;
+            color: #fff;
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.15rem rgba(255, 193, 7, 0.25);
+        }
+
+    .text-danger {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+    }
+
+    .btn-save {
+        background-color: #28a745;
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+        .btn-save:hover {
+            background-color: #218838;
+        }
+
+    .btn-cancel {
+        background-color: #6c757d;
+        color: #fff;
+        font-weight: 600;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+    }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+        }
+</style>
+
+<div class="form-container">
+    <h2 class="form-title">@ViewData["Title"]</h2>
+
+    <form asp-controller="Service" asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="ServiceName" class="form-label">Tên dịch vụ</label>
+            <input asp-for="ServiceName" class="form-control" />
+            <span asp-validation-for="ServiceName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Giá</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="image_url" class="form-label">Đường dẫn hình ảnh</label>
+            <input asp-for="image_url" class="form-control" />
+            <span asp-validation-for="image_url" class="text-danger"></span>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-save">💾 Lưu</button>
+            <a asp-controller="Service" asp-action="AdminList" class="btn btn-cancel">Hủy</a>
+        </div>
+    </form>
+</div>

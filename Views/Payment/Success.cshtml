@@ -1,0 +1,103 @@
+@{
+    ViewData["Title"] = "Thanh toán thành công";
+    var payment = ViewBag.Payment as test_2.Models.PaymentHistory;
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #152A16;
+    }
+
+    .success-container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .success-icon {
+        font-size: 4rem;
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+
+    .success-title {
+        color: #28a745;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .btn-custom {
+        background-color: #152A16;
+        color: #fff;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+    }
+
+    .btn-custom:hover {
+        background-color: #0F1F10;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .btn-outline-custom {
+        background-color: transparent;
+        color: #152A16;
+        border: 2px solid #152A16;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+    }
+
+    .btn-outline-custom:hover {
+        background-color: #152A16;
+        color: #fff;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container success-container">
+    <div class="success-icon">
+        <i class="fa fa-check-circle"></i>
+    </div>
+    
+    <h2 class="success-title">Thanh toán thành công!</h2>
+    
+    <p class="lead">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>
+    
+    @if (payment != null)
+    {
+        <div class="mt-4">
+            <p><strong>Mã thanh toán:</strong> #@payment.PaymentId</p>
+            <p><strong>Mã lịch hẹn:</strong> #@payment.AppointmentId</p>
+            <p><strong>Số tiền:</strong> @payment.Amount.ToString("N0") VNĐ</p>
+            <p><strong>Phương thức:</strong> @payment.PaymentMethod</p>
+            <p><strong>Thời gian:</strong> @payment.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</p>
+            <p><strong>Trạng thái:</strong> <span class="text-success">@payment.Status</span></p>
+        </div>
+    }
+    
+    <div class="mt-5">
+        <a href="@Url.Action("History", "Appointment")" class="btn-outline-custom">
+            <i class="fa fa-list"></i> Xem lịch hẹn
+        </a>
+        <a href="@Url.Action("Index", "Home")" class="btn-custom">
+            <i class="fa fa-home"></i> Về trang chủ
+        </a>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> 

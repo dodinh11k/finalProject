@@ -1,0 +1,102 @@
+@model test_2.Models.Appointment
+@{
+    ViewData["Title"] = "Đánh giá lịch hẹn";
+}
+<style>
+    .review-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 28px 32px;
+        box-shadow: 0 4px 16px rgba(21,42,22,0.08);
+        border: 1.5px solid #e9ecef;
+        max-width: 600px;
+        margin: 40px auto;
+    }
+    .review-card h3 {
+        font-weight: 700;
+        color: #152A16;
+        margin-bottom: 18px;
+    }
+    .review-card label {
+        font-weight: 600;
+        margin-top: 12px;
+    }
+    .review-card textarea {
+        width: 100%;
+        min-height: 90px;
+        border-radius: 8px;
+        border: 1.5px solid #e9ecef;
+        padding: 10px;
+        font-size: 1rem;
+        margin-bottom: 18px;
+    }
+    .review-card .star {
+        font-size: 1.5rem;
+        color: #ffc107;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .review-card .star.inactive {
+        color: #e4e5e9;
+    }
+    .review-card button {
+        background: #ffe082;
+        color: #152A16;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 28px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-top: 10px;
+        transition: background 0.2s;
+    }
+    .review-card button:hover {
+        background: #ffd54f;
+    }
+</style>
+<div class="review-card">
+    <h3>Đánh giá lịch hẹn #@Model.AppointmentId</h3>
+    <p><strong>Ngày hẹn:</strong> @Model.AppointmentTime?.ToString("dd/MM/yyyy HH:mm")</p>
+    <p><strong>Garage:</strong> @Model.Garage?.Address</p>
+    @if (ViewBag.PaymentRequired == true)
+    {
+        <div style="color: red; font-weight: bold; margin: 20px 0;">Bạn cần thanh toán thành công trước khi có thể đánh giá dịch vụ!</div>
+    }
+    else
+    {
+    <form method="post" action="">
+        <label for="rating">Chọn số sao:</label><br />
+        <span id="star-container">
+            @for (int i = 1; i <= 5; i++)
+            {
+                <i class="fa fa-star-o star inactive" data-value="@i" onclick="setRating(@i)"></i>
+            }
+        </span>
+        <input type="hidden" name="Rating" id="rating-input" value="0" />
+        <br />
+        <label for="content">Nội dung đánh giá:</label>
+        <textarea name="Content" id="content" placeholder="Nhập nhận xét của bạn..."></textarea>
+        <br />
+        <button type="submit">Gửi đánh giá</button>
+    </form>
+    }
+</div>
+<script>
+    function setRating(star) {
+        document.getElementById('rating-input').value = star;
+        var stars = document.querySelectorAll('#star-container .star');
+        stars.forEach(function (el, idx) {
+            if (idx < star) {
+                el.classList.remove('inactive');
+                el.classList.remove('fa-star-o');
+                el.classList.add('fa-star');
+            } else {
+                el.classList.add('inactive');
+                el.classList.remove('fa-star');
+                el.classList.add('fa-star-o');
+            }
+        });
+    }
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> 

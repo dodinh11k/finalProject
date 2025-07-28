@@ -1,0 +1,151 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = "Trang chủ";
+}
+
+<!-- Nút Scroll -->
+<div class="scroll-indicator">
+    <span>SCROLL</span>
+    <a href="#main-content"><i class="fa fa-angle-down"></i></a>
+</div>
+</section>
+
+<!-- Services Section -->
+<section id="main-content" class="services-section py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Dịch vụ của chúng tôi</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa fa-car"></i></div>
+                    <h3>Bảo dưỡng định kỳ</h3>
+                    <p>Kiểm tra và bảo dưỡng toàn diện theo khuyến nghị của nhà sản xuất</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa fa-wrench"></i></div>
+                    <h3>Sửa chữa chuyên sâu</h3>
+                    <p>Khắc phục các vấn đề về động cơ, hệ thống điện và cơ khí</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa fa-paint-brush"></i></div>
+                    <h3>Chăm sóc ngoại thất</h3>
+                    <p>Rửa xe, đánh bóng, phủ ceramic và các dịch vụ làm đẹp xe</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- News Section -->
+<section class="news-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Tin tức & Sự kiện</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="news-card">
+                    <img src="~/images/KhuyenMai1.png" class="img-fluid" alt="News 1">
+                    <div class="news-content">
+                        <h4>Khuyến mãi tháng 5</h4>
+                        <p>Giảm giá 20% cho dịch vụ bảo dưỡng định kỳ</p>
+                        <a href="#" class="btn btn-outline-primary">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="news-card">
+                    <img src="~/images/BaoDuongTaiNha.png" class="img-fluid" alt="News 2">
+                    <div class="news-content">
+                        <h4>Workshop bảo dưỡng xe</h4>
+                        <p>Hướng dẫn cách tự bảo dưỡng xe tại nhà</p>
+                        <a href="#" class="btn btn-outline-primary">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="news-card">
+                    <img src="~/images/ChiNhanhMoi.png" class="img-fluid" alt="News 3">
+                    <div class="news-content">
+                        <h4>Mở rộng chi nhánh</h4>
+                        <p>Thông báo khai trương chi nhánh mới tại Quận 7</p>
+                        <a href="#" class="btn btn-outline-primary">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners Section -->
+<section class="partners-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">Đối tác của chúng tôi</h2>
+            <p class="section-subtitle">Hợp tác cùng các thương hiệu uy tín</p>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="partner-card">
+                    <div class="brand-logo">
+                        <img src="~/images/toyota.png" class="img-fluid" alt="Toyota">
+                        <span class="brand-name">TOYOTA</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="partner-card">
+                    <div class="brand-logo">
+                        <img src="~/images/honda.jpg" class="img-fluid" alt="Honda">
+                        <span class="brand-name">HONDA</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="partner-card">
+                    <div class="brand-logo">
+                        <img src="~/images/audi.jpg" class="img-fluid" alt="Audi">
+                        <span class="brand-name">AUDI</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="partner-card">
+                    <div class="brand-logo">
+                        <img src="~/images/bmw.jpg" class="img-fluid" alt="BMW">
+                        <span class="brand-name">BMW</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section py-5">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <div class="newsletter-card">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h3 class="newsletter-title">Đăng ký nhận thông tin</h3>
+                    <p class="newsletter-subtitle">Nhận thông tin về khuyến mãi và sự kiện mới nhất từ chúng tôi</p>
+                    <form class="newsletter-form">
+                        <div class="input-group">
+                            <input type="email" class="form-control newsletter-input" placeholder="Email của bạn" required>
+                            <button class="btn btn-primary newsletter-btn" type="submit">
+                                <i class="fa fa-paper-plane"></i> Đăng ký
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

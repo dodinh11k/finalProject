@@ -1,0 +1,328 @@
+﻿@model IEnumerable<ServiceWithReviewViewModel>
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Danh sách dịch vụ";
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role")
+               ?? User?.FindFirst("Role")?.Value;
+}
+
+<!-- Hero Section Style Title -->
+<section class="service-hero">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <h2>@ViewData["Title"]</h2>
+        <p class="service-hero-desc">Khám phá các dịch vụ chất lượng, giá tốt và được đánh giá cao từ khách hàng của chúng tôi.</p>
+    </div>
+</section>
+
+@if (role == "Admin")
+{
+    <div class="container mb-4 text-center">
+        <a class="btn btn-service-add shadow-lg" asp-controller="Service" asp-action="Create">
+            <i class="fa fa-plus fa-fw fa-bounce"></i> Thêm dịch vụ
+        </a>
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <div class="container">
+        <p class="text-center text-muted py-5">Không có dịch vụ nào.</p>
+    </div>
+}
+else
+{
+    <section class="service-list-section">
+        <div class="container">
+            <div class="row justify-content-center g-4">
+                @foreach (var item in Model)
+                {
+                    var service = item.Service;
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
+                        <div class="service-card w-100 h-100">
+                            <a asp-controller="Service" asp-action="Details" asp-route-id="@service.ServiceId" class="service-card-img-link">
+                                <img src="@(!string.IsNullOrWhiteSpace(service.image_url) ? Url.Content("~/" + service.image_url.Trim()) : Url.Content("~/images/RuaXe.png"))" class="service-card-img" alt="@service.ServiceName" />
+                            </a>
+                            <div class="service-card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="service-card-title" title="@service.ServiceName">@service.ServiceName</h5>
+                                    <div class="service-card-desc" title="@service.Description">
+                                        @(service.Description != null && service.Description.Length > 60 ? service.Description.Substring(0, 60) + "..." : service.Description)
+                                    </div>
+                                    <div class="service-card-price">
+                                        @if (service.Price.HasValue)
+                                        {
+                                            <span class="gradient-text">@service.Price.Value.ToString("N0")</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Liên hệ</span>
+                                        }
+                                    </div>
+                                    <div class="service-card-rating">
+                                        @if (item.AverageRating.HasValue)
+                                        {
+                                            <span title="@item.AverageRating.Value.ToString("0.0") sao">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= Math.Floor(item.AverageRating.Value))
+                                                    {
+                                                        <i class="fa fa-star"></i>
+                                                    }
+                                                    else if (i - item.AverageRating.Value < 1 && i > item.AverageRating.Value)
+                                                    {
+                                                        <i class="fa fa-star-half-o"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-star-o"></i>
+                                                    }
+                                                }
+                                                <span class="service-card-review-count">(@item.ReviewCount đánh giá)</span>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="service-card-review-count">Chưa có đánh giá</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<style>
+    body {
+        background: #f8f9fa;
+    }
+    .service-hero {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+        padding: 60px 0 30px 0;
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+        border-radius: 0;
+        box-shadow: 0 10px 30px rgba(40,167,69,0.08);
+        position: relative;
+        overflow: hidden;
+    }
+    .service-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.2;
+        z-index: 1;
+    }
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 2;
+    }
+    .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+    .shape:nth-child(1) {
+        width: 80px;
+        height: 80px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+    .shape:nth-child(2) {
+        width: 60px;
+        height: 60px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+    .shape:nth-child(3) {
+        width: 40px;
+        height: 40px;
+        top: 40%;
+        left: 50%;
+        animation-delay: 4s;
+    }
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    .service-hero h2 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.12);
+    }
+    .service-hero-desc {
+        font-size: 1.2rem;
+        opacity: 0.95;
+        font-weight: 300;
+        margin-bottom: 0;
+    }
+    .btn-service-add {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        border-radius: 16px;
+        padding: 16px 36px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: white;
+        transition: all 0.3s;
+        box-shadow: 0 6px 24px rgba(40,167,69,0.18);
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-service-add:hover {
+        background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 16px 32px rgba(40,167,69,0.22);
+    }
+    .service-list-section {
+        padding: 48px 0 72px 0;
+        background: #f8f9fa;
+    }
+    .service-card {
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(40,167,69,0.10), 0 1.5px 8px rgba(32,32,32,0.04);
+        padding: 0;
+        margin-bottom: 0;
+        transition: box-shadow 0.35s cubic-bezier(.4,2,.6,1), border 0.3s, transform 0.3s;
+        border: 2px solid #e9ecef;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        position: relative;
+    }
+    .service-card:hover {
+        box-shadow: 0 16px 48px rgba(40,167,69,0.18), 0 4px 24px rgba(32,32,32,0.08);
+        border: 2px solid;
+        border-image: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border-image-slice: 1;
+        z-index: 2;
+    }
+    .service-card-img-link {
+        display: block;
+        overflow: hidden;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
+    }
+    .service-card-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
+        background: #e9ecef;
+        transition: transform 0.4s cubic-bezier(.4,2,.6,1);
+    }
+    .service-card:hover .service-card-img {
+        transform: scale(1.08) rotate(-1deg);
+    }
+    .service-card-body {
+        padding: 28px 20px 20px 20px;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .service-card-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #152A16;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+        text-shadow: 1px 1px 2px rgba(40,167,69,0.06);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .service-card-desc {
+        color: #6c757d;
+        font-size: 1rem;
+        margin-bottom: 14px;
+        min-height: 40px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .service-card-price {
+        font-weight: bold;
+        font-size: 1.15rem;
+        margin-bottom: 12px;
+    }
+    .gradient-text {
+        background: linear-gradient(90deg, #C6862B 0%, #FFD700 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        filter: drop-shadow(0 1px 2px #fffbe7);
+    }
+    .service-card-rating {
+        margin-bottom: 0;
+        transition: filter 0.3s;
+    }
+    .service-card:hover .service-card-rating i {
+        filter: drop-shadow(0 0 6px #FFD700);
+        animation: star-glow 1.2s infinite alternate;
+    }
+    .service-card-rating i.fa-star,
+    .service-card-rating i.fa-star-half-o {
+        color: #FFD700;
+        transition: filter 0.3s;
+    }
+    .service-card-rating i.fa-star-o {
+        color: #FFD700;
+        opacity: 0.5;
+        transition: filter 0.3s;
+    }
+    .service-card-review-count {
+        color: #888;
+        font-size: 0.97rem;
+        margin-left: 8px;
+    }
+    @@keyframes star-glow {
+        0% { filter: drop-shadow(0 0 0px #FFD700); }
+        100% { filter: drop-shadow(0 0 8px #FFD700); }
+    }
+    @@media (max-width: 991px) {
+        .service-card-img { height: 160px; }
+        .service-card-body { padding: 18px 10px 14px 10px; }
+    }
+    @@media (max-width: 767px) {
+        .service-hero h2 { font-size: 2rem; }
+        .service-card-body { padding: 12px 6px 10px 6px; }
+        .service-card-img { height: 120px; }
+    }
+    .fa-bounce {
+        animation: bounce 1.2s infinite alternate;
+    }
+    @@keyframes bounce {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-8px); }
+    }
+</style>

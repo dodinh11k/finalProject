@@ -1,0 +1,198 @@
+@using System.Text.Json
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Bảng điều khiển quản trị";
+}
+
+<div class="container py-5">
+    <div class="row g-4 mb-5 justify-content-center">
+        <div class="col-12 col-md-4">
+            <div class="card shadow border-0 p-4 stat-card" style="background: linear-gradient(135deg, #ffb6b9 0%, #fa709a 100%); color: #fff; position: relative; overflow: hidden;">
+                <div style="position:absolute;top:20px;right:20px;font-size:2rem;opacity:0.2;"><i class="fa fa-line-chart"></i></div>
+                <div class="mb-2" style="font-size:1.2rem;">Doanh thu tuần</div>
+                <div class="fw-bold mb-2" style="font-size:2.2rem;">@ViewBag.WeeklySales</div>
+                <div class="stat-bg-circle"></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card shadow border-0 p-4 stat-card" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%); color: #fff; position: relative; overflow: hidden;">
+                <div style="position:absolute;top:20px;right:20px;font-size:2rem;opacity:0.2;"><i class="fa fa-bookmark"></i></div>
+                <div class="mb-2" style="font-size:1.2rem;">Đơn hàng tháng</div>
+                <div class="fw-bold mb-2" style="font-size:2.2rem;">@ViewBag.WeeklyOrders</div>
+                <div style="font-size:1rem;">Đã hoàn thành: <span class="fw-bold">@ViewBag.CompletedOrders</span></div>
+                <div class="stat-bg-circle"></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card shadow border-0 p-4 stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #fff; position: relative; overflow: hidden;">
+                <div style="position:absolute;top:20px;right:20px;font-size:2rem;opacity:0.2;"><i class="fa fa-diamond"></i></div>
+                <div class="mb-2" style="font-size:1.2rem;">Số lượng khách truy cập</div>
+                <div class="fw-bold mb-2" style="font-size:2.2rem;">@ViewBag.VisitorsOnline</div>
+                <div style="font-size:1rem;">Tăng 5%</div>
+                <div class="stat-bg-circle"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-stretch mb-5">
+        <div class="col-12 col-lg-8 mb-4 mb-lg-0">
+            <div class="card shadow border-0 p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Thống kê</h5>
+                    <button class="btn btn-light btn-sm" style="border-radius:8px;">This month <i class="fa fa-chevron-down ms-1"></i></button>
+                </div>
+                <canvas id="ordersBarChart" height="120"></canvas>
+
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card shadow border-0 p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Todo List</h5>
+                    <button class="btn btn-primary btn-sm rounded-circle"><i class="fa fa-plus"></i></button>
+                </div>
+                <ul class="list-unstyled">
+                    <li class="mb-4 d-flex align-items-start gap-3">
+                        <input type="checkbox" class="form-check-input mt-1" checked disabled>
+                        <div style="flex:1;">
+                            <div>Lorem Ipsum is simply dummy text of the printing</div>
+                            <div class="text-muted" style="font-size:0.95em;">24 June 2020 <span class="badge bg-warning text-dark ms-2">Due tomorrow</span></div>
+                        </div>
+                        <i class="fa fa-flag text-muted"></i>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start gap-3">
+                        <input type="checkbox" class="form-check-input mt-1" checked disabled>
+                        <div style="flex:1;">
+                            <div>Lorem Ipsum is simply dummy text of the printing</div>
+                            <div class="text-muted" style="font-size:0.95em;">23 June 2020 <span class="badge bg-info text-white ms-2">Done</span></div>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start gap-3">
+                        <input type="checkbox" class="form-check-input mt-1" checked disabled>
+                        <div style="flex:1;">
+
+                            <div class="text-muted" style="font-size:0.95em;">24 June 2020 <span class="badge bg-info text-white ms-2">Done</span></div>
+                        </div>
+                    </li>
+                    <li class="mb-4 d-flex align-items-start gap-3">
+                        <input type="checkbox" class="form-check-input mt-1" disabled>
+                        <div style="flex:1;">
+
+                            <div class="text-muted" style="font-size:0.95em;">24 June 2020 <span class="badge bg-danger text-white ms-2">Expired</span></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 col-lg-10">
+            <div class="card shadow border-0 p-4">
+                <h5 class="fw-bold mb-4">Kỹ thuật viên xuất sắc (Năng suất nhất)</h5>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Kỹ thuật viên</th>
+                                <th class="text-center">Số đơn hoàn thành</th>
+                                <th class="text-center">Hoàn thành gần nhất</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.TopTechnicians != null)
+                            {
+                                foreach (var tech in ViewBag.TopTechnicians)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <img src="@tech.AvatarUrl" alt="avatar" class="rounded-circle" style="width:48px;height:48px;object-fit:cover;">
+                                                <span class="fw-semibold">@tech.FullName</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success" style="font-size:1rem;">@tech.TotalCompleted</span>
+                                        </td>
+                                        <td class="text-center">
+                                            @if (tech.LastCompletedAt != null && tech.LastCompletedAt != DateTime.MinValue)
+                                            {
+                                                @(((DateTime)tech.LastCompletedAt).ToString("dd/MM/yyyy"))
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="3" class="text-center text-muted">Không có dữ liệu</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome CDN nếu chưa có -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<style>
+    .stat-card {
+        border-radius: 1.2rem;
+        min-height: 180px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        transition: box-shadow 0.2s;
+    }
+
+        .stat-card:hover {
+            box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+        }
+
+    .stat-bg-circle {
+        position: absolute;
+        bottom: -40px;
+        right: -40px;
+        width: 120px;
+        height: 120px;
+        background: rgba(255,255,255,0.12);
+        border-radius: 50%;
+        z-index: 0;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('ordersBarChart').getContext('2d');
+    var months = ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"];
+    var orderCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthlyOrderCounts ?? new int[12]));
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Đơn hàng',
+                data: orderCounts,
+                backgroundColor: '#a084e8',
+                borderRadius: 8,
+                maxBarThickness: 40
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: false }
+            },
+            scales: {
+                x: { grid: { display: false } },
+                y: { beginAtZero: true, grid: { color: '#eee' } }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,105 @@
+﻿body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: 'Cairo', sans-serif;
+    background: url('/images/3.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Wrapper full height + canh phải */
+.register-page {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100vh;
+    padding-right: 50px;
+}
+
+/* Form mờ nổi bật */
+.register-form-container {
+    background: rgba(255, 255, 255, 0.15);
+    background-color: white;
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    max-width: 420px;
+    width: 100%;
+    margin: auto;
+}
+
+    .register-form-container h2 {
+        text-align: center;
+        margin-bottom: 24px;
+        font-size: 1.8rem;
+        color: #333;
+    }
+
+/* Input group wrapper */
+.register-form .input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+    /* Input styling */
+    .register-form .input-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        background-color: rgba(255, 255, 255, 0.8);
+        transition: border-color 0.3s, background-color 0.3s;
+    }
+
+        /* Lỗi input */
+        .register-form .input-group input.input-error {
+            border: 2px solid red !important;
+            background-color: #ffe6e6 !important;
+        }
+
+    /* Hiển thị lỗi dưới input */
+    /* Chỉ hiển thị chữ đỏ bên dưới khi lỗi */
+    .register-form .input-group .error-text {
+        color: red;
+        font-size: 0.875rem;
+        margin-top: 4px;
+        font-weight: 500;
+        background: none;
+        padding: 0;
+    }
+
+
+/* Submit button */
+.register-form button {
+    width: 100%;
+    padding: 12px;
+    background: #0072ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .register-form button:hover {
+        background: #005bb5;
+    }
+
+/* Link dưới cùng */
+.register-form .mt-3 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-form a {
+    color: #0072ff;
+    text-decoration: none;
+}
+
+    .register-form a:hover {
+        text-decoration: underline;
+    }

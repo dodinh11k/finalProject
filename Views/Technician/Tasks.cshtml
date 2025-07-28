@@ -1,0 +1,667 @@
+﻿@model AppointmentHistoryViewModel
+@{
+    var myAppointments = ViewBag.MyAppointments as List<test_2.Models.Appointment>;
+    string GetStatusBadge(string status) => status switch
+    {
+        "Pending" => "status-pending",
+        "WaitingForAccept" => "status-waiting",
+        "In_Progress" => "status-progress",
+        "Completed" => "status-completed",
+        "Cancelled" => "status-cancelled",
+        _ => "status-other"
+    };
+}
+
+@{
+    ViewData["Title"] = "Quản lý Lịch hẹn - Kỹ thuật viên";
+}
+
+<!-- Hero Section -->
+<section class="tasks-hero">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="container">
+        <h1><i class="fa fa-calendar-check-o"></i> Quản lý Lịch hẹn</h1>
+        <p>Quản lý và theo dõi các lịch hẹn sửa chữa, bảo dưỡng xe</p>
+    </div>
+</section>
+
+<div class="container tasks-section">
+    <!-- Navigation Tabs -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="tasks-nav-card">
+                <ul class="tasks-nav" id="taskTabs" role="tablist">
+                    <li class="tasks-nav-item" role="presentation">
+                        <button id="btnAll" class="tasks-nav-link active" onclick="showTab('all')" type="button">
+                            <i class="fa fa-list me-2"></i> Tất cả lịch hẹn
+                        </button>
+                    </li>
+                    <li class="tasks-nav-item" role="presentation">
+                        <button id="btnMine" class="tasks-nav-link" onclick="showTab('mine')" type="button">
+                            <i class="fa fa-clipboard-check me-2"></i> Các lịch bạn đã nhận
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- All Appointments Tab -->
+    <div id="tabAll">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="tasks-title">
+                        <i class="fa fa-calendar-alt"></i> Tất cả lịch hẹn
+                    </h4>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary btn-sm btn-action" onclick="refreshData()">
+                            <i class="fa fa-refresh"></i> Làm mới
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (!Model.Appointments.Any())
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="empty-state-card">
+                        <div class="empty-state">
+                            <i class="fa fa-calendar-times"></i>
+                            <h5>Hiện tại không có lịch hẹn nào</h5>
+                            <p>Tất cả lịch hẹn sẽ hiển thị ở đây</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var appt in Model.Appointments)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="appointment-card">
+                            <div class="appointment-card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="status-badge @GetStatusBadge(appt.Status)">
+                                        <i class="fa fa-tag me-1"></i> @appt.Status
+                                    </span>
+                                    <span class="appointment-time">
+                                        <i class="fa fa-clock-o me-1"></i>
+                                        @(appt.AppointmentTime?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa xác định")
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="appointment-card-body">
+                                <div class="appointment-info">
+                                    <div class="info-row">
+                                        <i class="fa fa-user text-info"></i>
+                                        <strong>@appt.User?.FullName</strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fa fa-phone text-success"></i>
+                                        <span>@appt.User?.Phone</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fa fa-warehouse text-warning"></i>
+                                        <strong>@appt.Garage?.Address</strong>
+                                    </div>
+                                    @if (!string.IsNullOrWhiteSpace(appt.Notes))
+                                    {
+                                        <div class="info-row">
+                                            <i class="fa fa-sticky-note text-secondary"></i>
+                                            <span class="small">@appt.Notes</span>
+                                        </div>
+                                    }
+                                </div>
+
+                                @{
+                                    var technicianNames = Model.Details
+                                    .Where(d => d.AppointmentId == appt.AppointmentId && d.Vehicle?.Technician?.FullName != null)
+                                    .Select(d => d.Vehicle.Technician.FullName)
+                                    .Distinct()
+                                    .ToList();
+                                }
+
+                                @if (appt.Status == "In_Progress" && technicianNames.Any())
+                                {
+                                    <div class="alert alert-info">
+                                        <i class="fa fa-tools me-1"></i>
+                                        Đang sửa chữa bởi: <strong>@string.Join(", ", technicianNames)</strong>
+                                    </div>
+                                }
+                                else if (appt.Status == "Completed" && technicianNames.Any())
+                                {
+                                    <div class="alert alert-success">
+                                        <i class="fa fa-check-circle me-1"></i>
+                                        Đã hoàn thành bởi: <strong>@string.Join(", ", technicianNames)</strong>
+                                    </div>
+                                }
+
+                                <div class="service-section">
+                                    <h6 class="service-title">
+                                        <i class="fa fa-car me-1"></i> Dịch vụ & Xe
+                                    </h6>
+                                    <div class="service-details">
+                                        @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+                                        {
+                                            <div class="service-item">
+                                                <div class="service-header">
+                                                    <strong class="vehicle-info">@detail.Vehicle?.Make @detail.Vehicle?.Model</strong>
+                                                    <span class="license-plate">@detail.Vehicle?.LicensePlate</span>
+                                                </div>
+                                                <div class="service-info">
+                                                    <i class="fa fa-cogs me-1"></i> @detail.Service?.ServiceName
+                                                    <span class="quantity">
+                                                        <i class="fa fa-sort-numeric-up me-1"></i> SL: @detail.Quantity
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                @if (appt.Status == "Pending" || appt.Status == "WaitingForAccept")
+                                {
+                                    <form asp-action="UpdateStatus" asp-controller="Technician" method="post" class="mt-3">
+                                        <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                        <input type="hidden" name="Status" value="In_Progress" />
+                                        <button type="submit" class="btn btn-success btn-action w-100">
+                                            <i class="fa fa-hand-pointer me-1"></i> Nhận việc
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- My Appointments Tab -->
+    <div id="tabMine" style="display:none;">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="tasks-title">
+                        <i class="fa fa-clipboard-check"></i> Các lịch bạn đã nhận
+                    </h4>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-success btn-sm btn-action" onclick="refreshData()">
+                            <i class="fa fa-refresh"></i> Làm mới
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (myAppointments != null && myAppointments.Any())
+        {
+            <div class="row g-4">
+                @foreach (var appt in myAppointments)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="appointment-card my-appointment">
+                            <div class="appointment-card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="status-badge @GetStatusBadge(appt.Status)">
+                                        <i class="fa fa-tag me-1"></i> @appt.Status
+                                    </span>
+                                    <span class="appointment-time">
+                                        <i class="fa fa-clock-o me-1"></i>
+                                        @(appt.AppointmentTime?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa xác định")
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="appointment-card-body">
+                                <div class="appointment-info">
+                                    <div class="info-row">
+                                        <i class="fa fa-user text-info"></i>
+                                        <strong>@appt.User?.FullName</strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fa fa-warehouse text-warning"></i>
+                                        <strong>@appt.Garage?.Address</strong>
+                                    </div>
+                                    @if (!string.IsNullOrWhiteSpace(appt.Notes))
+                                    {
+                                        <div class="info-row">
+                                            <i class="fa fa-sticky-note text-secondary"></i>
+                                            <span class="small">@appt.Notes</span>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="service-section">
+                                    <h6 class="service-title">
+                                        <i class="fa fa-car me-1"></i> Dịch vụ & Xe
+                                    </h6>
+                                    <div class="service-details">
+                                        @foreach (var detail in Model.Details.Where(d => d.AppointmentId == appt.AppointmentId))
+                                        {
+                                            <div class="service-item">
+                                                <div class="service-header">
+                                                    <strong class="vehicle-info">@detail.Vehicle?.Make @detail.Vehicle?.Model</strong>
+                                                    <span class="license-plate">@detail.Vehicle?.LicensePlate</span>
+                                                </div>
+                                                <div class="service-info">
+                                                    <i class="fa fa-cogs me-1"></i> @detail.Service?.ServiceName
+                                                    <span class="quantity">
+                                                        <i class="fa fa-sort-numeric-up me-1"></i> SL: @detail.Quantity
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="action-section">
+                                    <form asp-action="UpdateStatus" asp-controller="Technician" method="post" class="mb-2">
+                                        <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                        <div class="row g-2 align-items-center">
+                                            <div class="col-8">
+                                                <select name="Status" class="form-select form-select-sm">
+                                                    <option value="In_Progress" selected="@(appt.Status == "In_Progress")">Đang thực hiện</option>
+                                                    <option value="Completed" selected="@(appt.Status == "Completed")">Hoàn thành</option>
+                                                    <option value="Cancelled" selected="@(appt.Status == "Cancelled")">Hủy bỏ</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit" class="btn btn-primary btn-sm w-100 btn-action">
+                                                    <i class="fa fa-save"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form asp-action="Unassign" asp-controller="Technician" method="post">
+                                        <input type="hidden" name="AppointmentId" value="@appt.AppointmentId" />
+                                        <button type="submit" class="btn btn-danger btn-sm w-100 btn-action"
+                                                onclick="return confirm('Bạn chắc chắn muốn bỏ nhận lịch này?');">
+                                            <i class="fa fa-times me-1"></i> Hủy nhận lịch
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="empty-state-card">
+                        <div class="empty-state">
+                            <i class="fa fa-clipboard"></i>
+                            <h5>Bạn chưa nhận lịch nào</h5>
+                            <p>Hãy chuyển sang tab "Tất cả lịch hẹn" để nhận việc</p>
+                            <button class="btn btn-primary btn-action" onclick="showTab('all')">
+                                <i class="fa fa-list me-1"></i> Xem tất cả lịch hẹn
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- FontAwesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<style>
+    body {
+        background: #f8f9fa;
+        color: #152A16;
+    }
+    .tasks-hero {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+        padding: 60px 0 40px 0;
+        margin-top: 80px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+    .shape {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+    .shape:nth-child(1) {
+        width: 80px;
+        height: 80px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+    .shape:nth-child(2) {
+        width: 60px;
+        height: 60px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+    .shape:nth-child(3) {
+        width: 40px;
+        height: 40px;
+        top: 40%;
+        left: 50%;
+        animation-delay: 4s;
+    }
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    .tasks-hero h1 {
+        font-size: 2.6rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.18);
+        position: relative;
+        z-index: 2;
+    }
+    .tasks-hero p {
+        font-size: 1.15rem;
+        opacity: 0.95;
+        font-weight: 300;
+        margin-bottom: 0;
+        position: relative;
+        z-index: 2;
+    }
+    .tasks-section {
+        padding: 48px 0 72px 0;
+    }
+    .tasks-nav-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(40,167,69,0.08);
+        overflow: hidden;
+    }
+    .tasks-nav {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .tasks-nav-item {
+        flex: 1;
+    }
+    .tasks-nav-link {
+        width: 100%;
+        padding: 18px 24px;
+        border: none;
+        background: transparent;
+        color: #6c757d;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .tasks-nav-link:hover {
+        background: #f8f9fa;
+        color: #28a745;
+    }
+    .tasks-nav-link.active {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+    }
+    .tasks-title {
+        color: #152A16;
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+    .btn-action {
+        font-weight: 700;
+        border-radius: 12px;
+        font-size: 1rem;
+        padding: 10px 24px;
+        box-shadow: 0 2px 8px rgba(40,167,69,0.07);
+    }
+    .appointment-card {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(40,167,69,0.08);
+        overflow: hidden;
+        transition: box-shadow 0.3s, transform 0.3s;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .appointment-card:hover {
+        box-shadow: 0 16px 40px rgba(40,167,69,0.15);
+        transform: translateY(-4px);
+    }
+    .my-appointment {
+        border: 2px solid #28a745;
+    }
+    .appointment-card-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 16px 20px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+    .status-pending {
+        background: linear-gradient(90deg, #fff3cd 0%, #ffe082 100%);
+        color: #856404;
+    }
+    .status-waiting {
+        background: linear-gradient(90deg, #fff3cd 0%, #ffd54f 100%);
+        color: #f57f17;
+    }
+    .status-progress {
+        background: linear-gradient(90deg, #d1ecf1 0%, #bee5eb 100%);
+        color: #0c5460;
+    }
+    .status-completed {
+        background: linear-gradient(90deg, #d4edda 0%, #a5d6a7 100%);
+        color: #155724;
+    }
+    .status-cancelled {
+        background: linear-gradient(90deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+    }
+    .status-other {
+        background: linear-gradient(90deg, #e9ecef 0%, #dee2e6 100%);
+        color: #495057;
+    }
+    .appointment-time {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-weight: 500;
+    }
+    .appointment-card-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    .appointment-info {
+        margin-bottom: 16px;
+    }
+    .info-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        gap: 8px;
+    }
+    .info-row i {
+        width: 16px;
+        text-align: center;
+    }
+    .service-section {
+        margin-bottom: 16px;
+        flex-grow: 1;
+    }
+    .service-title {
+        color: #28a745;
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    .service-details {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    .service-item {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 8px;
+        transition: background-color 0.2s ease;
+    }
+    .service-item:hover {
+        background: #e9ecef;
+    }
+    .service-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+    }
+    .vehicle-info {
+        color: #152A16;
+        font-size: 0.9rem;
+    }
+    .license-plate {
+        background: #e9ecef;
+        color: #495057;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .service-info {
+        color: #666;
+        font-size: 0.85rem;
+    }
+    .quantity {
+        margin-left: 8px;
+    }
+    .alert {
+        border-radius: 8px;
+        border: none;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+    }
+    .action-section {
+        margin-top: auto;
+        padding-top: 16px;
+    }
+    .form-select {
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    .empty-state-card {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(40,167,69,0.08);
+        overflow: hidden;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+    }
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.5;
+    }
+    .empty-state h5 {
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #152A16;
+    }
+    .empty-state p {
+        margin-bottom: 20px;
+        opacity: 0.8;
+    }
+    .service-details::-webkit-scrollbar {
+        width: 6px;
+    }
+    .service-details::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    .service-details::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+    .service-details::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+    @@media (max-width: 991px) {
+        .appointment-card { padding: 16px; }
+        .tasks-section { padding: 24px 0 36px 0; }
+    }
+    @@media (max-width: 767px) {
+        .tasks-hero h1 { font-size: 1.8rem; }
+        .tasks-title { font-size: 1.3rem; }
+        .tasks-nav-link { padding: 14px 16px; font-size: 0.9rem; }
+    }
+</style>
+
+<script>
+    function showTab(tab) {
+        document.getElementById('tabAll').style.display = (tab === 'all') ? 'block' : 'none';
+        document.getElementById('tabMine').style.display = (tab === 'mine') ? 'block' : 'none';
+
+        // Update active state
+        document.getElementById('btnAll').classList.toggle('active', tab === 'all');
+        document.getElementById('btnMine').classList.toggle('active', tab === 'mine');
+    }
+
+    function refreshData() {
+        location.reload();
+    }
+
+    // Tự động chuyển tab nếu có query string tab=mine
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('tab') === 'mine') {
+            showTab('mine');
+        } else {
+            showTab('all');
+        }
+    };
+
+    // Add smooth animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.appointment-card');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+</script>

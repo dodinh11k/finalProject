@@ -1,0 +1,106 @@
+/* Icon Font Protection - Simplified and Focused */
+
+/* Reset font-family for all Font Awesome elements */
+.fa, .fas, .far, .fal, .fab,
+[class^="fa-"], [class*=" fa-"],
+[class^="fas-"], [class*=" fas-"],
+[class^="far-"], [class*=" far-"],
+[class^="fal-"], [class*=" fal-"],
+[class^="fab-"], [class*=" fab-"],
+i[class*="fa"], i[class*="fas"], i[class*="far"], i[class*="fal"], i[class*="fab"],
+span[class*="fa"], span[class*="fas"], span[class*="far"], span[class*="fal"], span[class*="fab"],
+div[class*="fa"], div[class*="fas"], div[class*="far"], div[class*="fal"], div[class*="fab"] {
+    font-family: "FontAwesome" !important;
+}
+
+/* Specific protection for star icons */
+.fa-star, .fa-star-o, .fa-star-half-o, .fa-star-half,
+[class*="fa-star"], [class*="star"],
+.rating-stars i, .service-card-rating i, .star {
+    font-family: "FontAwesome" !important;
+}
+
+/* Protect Material Design Icons */
+.mdi, [class^="mdi-"], [class*=" mdi-"] {
+    font-family: "Material Design Icons" !important;
+}
+
+/* Protect Themify Icons */
+.ti, [class^="ti-"], [class*=" ti-"] {
+    font-family: "themify" !important;
+}
+
+/* Protect Typicons */
+.typcn, [class^="typcn-"], [class*=" typcn-"] {
+    font-family: "typicons" !important;
+}
+
+/* Protect Simple Line Icons */
+.icon, [class^="icon-"], [class*=" icon-"] {
+    font-family: "simple-line-icons" !important;
+}
+
+/* Protect Elegant Icons */
+.icon_elegant, [class^="icon_elegant-"], [class*=" icon_elegant-"] {
+    font-family: "ElegantIcons" !important;
+}
+
+/* Protect Feather Icons */
+.feather, [class^="feather-"], [class*=" feather-"] {
+    font-family: "Feather" !important;
+}
+
+/* Protect Bootstrap Icons */
+.bi, [class^="bi-"], [class*=" bi-"] {
+    font-family: "Bootstrap Icons" !important;
+}
+
+/* Protect any element with icon-related classes */
+[class*="icon"], [class*="Icon"], [class*="ICON"] {
+    font-family: inherit !important;
+}
+
+/* Protect elements with specific icon attributes */
+[data-icon], [data-icon-] {
+    font-family: inherit !important;
+}
+
+/* Additional protection for common icon patterns */
+[class*="glyphicon"], [class*="Glyphicon"] {
+    font-family: "Glyphicons Halflings" !important;
+}
+
+[class*="ion"], [class*="Ion"] {
+    font-family: "Ionicons" !important;
+}
+
+[class*="zmdi"], [class*="Zmdi"] {
+    font-family: "Material-Design-Iconic-Font" !important;
+}
+
+[class*="pe-7s"], [class*="Pe-7s"] {
+    font-family: "Pe-icon-7-stroke" !important;
+}
+
+[class*="et"], [class*="Et"] {
+    font-family: "ElegantIcons" !important;
+}
+
+[class*="lnr"], [class*="Lnr"] {
+    font-family: "Linearicons-Free" !important;
+}
+
+[class*="flaticon"], [class*="Flaticon"] {
+    font-family: inherit !important;
+}
+
+/* Protect any element with unicode content that might be an icon */
+*:before, *:after {
+    font-family: inherit !important;
+}
+
+/* Specific protection for pseudo-elements with icon content */
+.fa:before, .fas:before, .far:before, .fal:before, .fab:before,
+.mdi:before, .ti:before, .typcn:before, .icon:before, .bi:before, .feather:before {
+    font-family: inherit !important;
+} 

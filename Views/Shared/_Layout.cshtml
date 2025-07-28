@@ -1,0 +1,333 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+    var fullname = HttpContextAccessor.HttpContext.Session.GetString("FullName");
+
+    ViewData["username"] = username;
+    ViewData["fullname"] = fullname;
+
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var isAuthPage = (currentController == "AccountLogin" && currentAction == "Login")
+        || (currentController == "AccountRegister" && currentAction == "Register");
+
+    var bodyPaddingTop = isAuthPage ? "0" : "140px";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"] - Đặt lịch bảo dưỡng ô tô</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Trang đặt lịch bảo dưỡng ô tô" />
+    <meta name="keywords" content="Bảo dưỡng ô tô, đặt lịch, garage, dịch vụ ô tô" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="~/css/font-fix.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
+
+
+    <link rel="stylesheet" href="~/layout1/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/nice-select.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/jquery-ui.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/layout1/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+
+
+    <!-- AI Chatbot CSS -->
+    <link rel="stylesheet" href="~/css/chatbot.css" asp-append-version="true" />
+
+</head>
+
+<body style="margin: 0; padding: 0; overflow-x: hidden;">
+    <!-- Loader -->
+    <div id="preloder"><div class="loader"></div></div>
+
+    <!-- Mobile menu -->
+    @await Html.PartialAsync("_MobileMenu", new { username, fullname })
+
+    <!-- Header -->
+    @if (!isAuthPage)
+    {
+        @await Html.PartialAsync("_Header")
+    }
+    @if (!isAuthPage && !(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && (ViewContext.RouteData.Values["action"] == null || ViewContext.RouteData.Values["action"].ToString() == "Index")))
+    {
+        <style>
+            body {
+                background: #fff !important;
+            }
+        </style>
+    }
+
+    <!-- Main content -->
+    <main class="w-100 position-relative" style="padding-top: @bodyPaddingTop;">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    @if (!isAuthPage)
+    {
+        @await Html.PartialAsync("_Footer")
+    }
+
+    <!-- JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/layout1/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery-ui.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/jquery.slicknav.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/layout1/js/main.js" asp-append-version="true"></script>
+
+    @await Html.PartialAsync("_Scripts")
+    @RenderSection("Scripts", required: false)
+
+    <!-- Messenger-like Chat Icon & Modal -->
+    <style>
+        #chat-fb-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            background: #0084ff;
+            color: #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        #chat-fb-modal {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            max-width: 95vw;
+            height: 450px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+            z-index: 10000;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #chat-fb-modal-header {
+            background: #0084ff;
+            color: #fff;
+            padding: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #chat-fb-modal-close {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        #chat-fb-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f5f6fa;
+        }
+
+        #chat-fb-input {
+            display: flex;
+            border-top: 1px solid #eee;
+            background: #fff;
+        }
+
+            #chat-fb-input input {
+                flex: 1;
+                border: none;
+                padding: 10px;
+                outline: none;
+            }
+
+            #chat-fb-input button {
+                background: #0084ff;
+                color: #fff;
+                border: none;
+                padding: 0 16px;
+                cursor: pointer;
+            }
+    </style>
+    @if (!isAuthPage)
+    {
+        <div id="chat-fb-btn" style="width:60px;height:60px;position:fixed;bottom:30px;right:30px;z-index:9999;">
+            <img src="/images/messenger.png" alt="Messenger" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+            <span id="messenger-badge" style="display:none;position:absolute;top:8px;right:8px;width:16px;height:16px;background:#ff3b30;border-radius:50%;border:2px solid #fff;"></span>
+        </div>
+        <div id="chat-fb-modal">
+            <div id="chat-fb-modal-header">
+                Chat với Admin
+                <span id="chat-fb-modal-close">&times;</span>
+            </div>
+            <div id="chat-fb-box"></div>
+            <div id="chat-fb-input">
+                <input type="text" id="chat-fb-message" placeholder="Nhập tin nhắn..." />
+                <button id="chat-fb-send">Gửi</button>
+            </div>
+        </div>
+    }
+
+    <!-- AI Chatbot HTML -->
+    @if (!isAuthPage)
+    {
+        <!-- AI Chatbot Toggler -->
+        <button id="chatbot-toggler">
+            <span class="chat-icon">💬</span>
+            <span class="close-icon">✕</span>
+        </button>
+
+        <!-- AI Chatbot Popup -->
+        <div class="chatbot-popup">
+            <!-- Chatbot Header -->
+            <div class="chat-header">
+                <div class="header-info">
+                    <span class="chatbot-logo">🤖</span>
+                    <h2 class="logo-text">AI Assistant</h2>
+                </div>
+                <button id="close-chatbot">▼</button>
+            </div>
+            <!-- Chatbot Body -->
+            <div class="chat-body">
+                <div class="message bot-message">
+                    <span class="bot-avatar">🤖</span>
+                    <div class="message-text">Xin chào! 👋 Tôi là AI Assistant của MyGarage<br />🚗 Tôi có thể tư vấn dịch vụ bảo dưỡng, hướng dẫn đặt lịch và giải đáp thắc mắc về ô tô.<br />Xe bạn loại gì và cần hỗ trợ gì ạ?</div>
+                </div>
+            </div>
+            <!-- Chatbot Footer -->
+            <div class="chat-form">
+                <div class="file-upload-wrapper">
+                    <img src="#" alt="Uploaded file" />
+                    <button id="file-cancel" type="button">✕</button>
+                </div>
+                <textarea class="message-input" placeholder="Nhập tin nhắn của bạn..." rows="1"></textarea>
+                <button id="file-upload" type="button">
+                    <span class="upload-icon">📷</span>
+                </button>
+                <button id="send-message" type="button">
+                    <span class="send-icon">➤</span>
+                </button>
+                <input type="file" id="file-input" accept="image/*" style="display: none;" />
+            </div>
+        </div>
+    }
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+                // Hiện/ẩn modal chat
+                document.getElementById('chat-fb-btn').onclick = function() {
+                    document.getElementById('chat-fb-modal').style.display = 'flex';
+                    // Load lịch sử chat khi mở modal
+                    fetch('/api/chat/history').then(r=>r.json()).then(function(messages){
+                        const userId = '@HttpContextAccessor.HttpContext.Session.GetString("UserId")';
+                        let html = '';
+                        messages.forEach(function(m){
+                            const align = m.senderId == userId ? "right" : "left";
+                            const who = m.senderId == userId ? "Bạn" : "Admin";
+        html += `<div style='text-align:${align};margin-bottom:4px;'><b>${who}:</b> ${m.content} <span style='font-size:smaller;color:gray;'>${m.timestamp}</span></div>`;
+                        });
+                        document.getElementById("chat-fb-box").innerHTML = html;
+                        document.getElementById("chat-fb-box").scrollTop = document.getElementById("chat-fb-box").scrollHeight;
+                    });
+                };
+                document.getElementById('chat-fb-modal-close').onclick = function() {
+                    document.getElementById('chat-fb-modal').style.display = 'none';
+                };
+                // SignalR chat logic
+                const userId = '@HttpContextAccessor.HttpContext.Session.GetString("UserId")';
+                let adminId = '';
+                // Lấy adminId từ server (AJAX)
+                fetch('/api/chat/admin-id').then(r=>r.json()).then(data=>{ adminId = data.adminId; console.log("[Chat] adminId:", adminId); });
+                console.log("[Chat] userId:", userId);
+                console.log("[Chat] document.cookie:", document.cookie);
+                const connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+                connection.on("ReceiveMessage", function (fromId, message) {
+                    console.log("[Chat] Received:", fromId, message);
+                    const align = fromId == userId ? "right" : "left";
+                    const who = fromId == userId ? "Bạn" : "Admin";
+                    const now = new Date().toLocaleTimeString();
+                    const msgDiv = `<div style='text-align:${align};margin-bottom:4px;'><b>${who}:</b> ${message} <span style='font-size:smaller;color:gray;'>${now}</span></div>`;
+                    document.getElementById("chat-fb-box").innerHTML += msgDiv;
+                    document.getElementById("chat-fb-box").scrollTop = document.getElementById("chat-fb-box").scrollHeight;
+                });
+                connection.start()
+                  .then(function () {
+                    console.log("[Chat] SignalR connected!");
+                    document.getElementById("chat-fb-send").onclick = sendMsg;
+                    document.getElementById("chat-fb-message").addEventListener("keypress", function(e){ if(e.key==="Enter") sendMsg(); });
+                  })
+                  .catch(function(err){
+                    console.error("[Chat] SignalR connection error:", err);
+                  });
+                function sendMsg() {
+                    const msg = document.getElementById("chat-fb-message").value;
+                    if (!msg || !adminId) return;
+                    console.log("[Chat] SendMessage:", userId, adminId, msg);
+                    connection.invoke("SendMessage", parseInt(userId), parseInt(adminId), msg)
+                        .catch(function(err) { console.error("[Chat] SendMessage error:", err); });
+                    document.getElementById("chat-fb-message").value = "";
+                }
+    </script>
+    <script>
+                // Hiện badge khi có tin nhắn mới nếu modal đang đóng
+                function showMessengerBadge() {
+                    document.getElementById('messenger-badge').style.display = 'block';
+                }
+                function hideMessengerBadge() {
+        document.getElementById('messenger-badge').style.display = 'none';
+                }
+                // Khi nhận tin nhắn mới qua SignalR
+                // (Chèn vào sự kiện ReceiveMessage, nếu modal đang đóng)
+                const chatModal = document.getElementById('chat-fb-modal');
+                connection.on('ReceiveMessage', function (fromId, message) {
+                    if (chatModal.style.display !== 'flex') {
+                        showMessengerBadge();
+                    }
+                });
+                // Khi mở modal chat thì ẩn badge
+                document.getElementById('chat-fb-btn').onclick = function() {
+                    chatModal.style.display = 'flex';
+                    hideMessengerBadge();
+                    // Load lịch sử chat khi mở modal
+                    fetch('/api/chat/history').then(r=>r.json()).then(function(messages){
+                        const userId = '@HttpContextAccessor.HttpContext.Session.GetString("UserId")';
+                        let html = '';
+                        messages.forEach(function(m){
+                            const align = m.senderId == userId ? "right" : "left";
+                            const who = m.senderId == userId ? "Bạn" : "Admin";
+                            html += `<div style='text-align:${align};margin-bottom:4px;'><b>${who}:</b> ${m.content} <span style='font-size:smaller;color:gray;'>${m.timestamp}</span></div>`;
+                        });
+                        document.getElementById("chat-fb-box").innerHTML = html;
+                        document.getElementById("chat-fb-box").scrollTop = document.getElementById("chat-fb-box").scrollHeight;
+                    });
+                };
+    </script>
+
+    <!-- AI Chatbot JavaScript -->
+    <script src="~/js/chatbot.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model IEnumerable<test_2.Models.PaymentHistory>
+
+@{
+    ViewBag.Title = "Lịch sử thanh toán";
+    var query = Context.Request.Query;
+}
+
+<h2>Lịch sử thanh toán</h2>
+
+<a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary mb-3 mt-4">Quay về trang chính Admin</a>
+
+<form asp-action="PaymentHistories" method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-2">
+            <input name="userId" class="form-control" placeholder="User ID" value="@ViewBag.UserId" />
+        </div>
+        <div class="col-md-2">
+            <select name="status" class="form-control">
+                <option value="">-- Trạng thái --</option>
+                <option value="Pending" selected="@(ViewBag.Status == "Pending")">Pending</option>
+                <option value="Success" selected="@(ViewBag.Status == "Success")">Success</option>
+                <option value="Failed" selected="@(ViewBag.Status == "Failed")">Failed</option>
+                <option value="Cancelled" selected="@(ViewBag.Status == "Cancelled")">Cancelled</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="date" name="dateFrom" class="form-control" value="@ViewBag.DateFrom" placeholder="Từ ngày" />
+        </div>
+        <div class="col-md-2">
+            <input type="date" name="dateTo" class="form-control" value="@ViewBag.DateTo" placeholder="Đến ngày" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Lọc</button>
+        </div>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">Không có giao dịch nào khớp với tìm kiếm.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Payment ID</th>
+                <th>User ID</th>
+                <th>Tên User</th>
+                <th>Số tiền</th>
+                <th>Phương thức</th>
+                <th>Trạng thái</th>
+               
+                <th>Mô tả</th>
+                <th>Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.PaymentId</td>
+                    <td>@p.UserId</td>
+                    <td>@(p.User?.FullName ?? "-")</td>
+                    <td>@p.Amount.ToString("N0")</td>
+                    <td>@p.PaymentMethod</td>
+                    <td>@p.Status</td>
+                   
+                    <td>@p.Description</td>
+                    <td>@(p.CreatedAt?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} 

@@ -1,0 +1,32 @@
+/* Font Override - Simple and Effective */
+
+/* Import Roboto Mono for code elements */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;300;400;500;700&display=swap');
+
+/* Apply font to text elements only, exclude icon elements */
+html, body, h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+p, span, div, a, button, input, textarea, select, label,
+li, td, th, caption, legend, figcaption, blockquote, cite,
+address, time, mark, small, sub, sup, del, ins, u, strong, em, b, i, s, q, dfn, abbr, acronym, time, address, article, aside, footer, header, main, nav, section, summary, details, dialog, figure, figcaption, picture, source, track, map, area, canvas, embed, iframe, object, param, video, audio, svg, math, form, fieldset, legend, datalist, optgroup, option, output, progress, meter, menu, menuitem, command, keygen, wbr, bdi, bdo, ruby, rt, rp, data, template, slot, shadow, content, element, isindex, listing, plaintext, xmp, nextid, noembed, noframes, noscript, title, base, link, meta, head, html, body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+}
+
+/* Special handling for code elements */
+code, pre, kbd, samp, var, script, style {
+    font-family: 'Roboto Mono', 'Courier New', monospace !important;
+}
+
+/* Override specific font classes that might be used */
+.font-cairo,
+[class*="cairo"],
+[class*="Cairo"] {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+}
+
+/* Ensure font rendering is smooth */
+html, body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+} 
