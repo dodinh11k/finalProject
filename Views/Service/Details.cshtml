@@ -1,0 +1,214 @@
+﻿@model test_2.Models.Service
+
+@{
+    ViewData["Title"] = "Thông tin chi tiết dịch vụ";
+}
+
+<style>
+    body {
+        background-color: #EBE7DE;
+        color: #1B2E1A;
+    }
+
+    .service-details-container {
+        padding: 50px 20px;
+    }
+
+    .service-title {
+        color: #1B2E1A;
+        font-weight: 700;
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .service-image {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        max-height: 420px;
+        object-fit: cover;
+    }
+
+    dl dt {
+        font-weight: bold;
+        color: #1B2E1A;
+        font-size: 1.05rem;
+    }
+
+    dl dd {
+        color: #333;
+        margin-bottom: 16px;
+        font-size: 1.05rem;
+    }
+
+    .btn-back {
+        background-color: #1B2E1A;
+        color: #EBE7DE;
+        border: none;
+        font-weight: 600;
+        margin-top: 30px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        transition: background 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-back:hover {
+            background-color: #132012;
+            color: #fff;
+        }
+.rating-stars {
+    font-size: 1.4rem;
+    color: #FFD700;
+    margin-bottom: 6px;
+}
+.review-summary {
+    margin-top: 30px;
+    margin-bottom: 18px;
+    background: #fffbe7;
+    border-radius: 10px;
+    padding: 18px 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.review-list {
+    margin-top: 10px;
+}
+.review-item {
+    border-bottom: 1px solid #eee;
+    padding: 12px 0 8px 0;
+}
+.review-item:last-child {
+    border-bottom: none;
+}
+.review-user {
+    font-weight: 600;
+    color: #1B2E1A;
+}
+.review-date {
+    color: #888;
+    font-size: 0.95rem;
+    margin-left: 8px;
+}
+.review-comment {
+    margin-top: 2px;
+    color: #333;
+}
+</style>
+
+<div class="container service-details-container">
+    <h2 class="service-title">@Model.ServiceName</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <img src="@(
+                 !string.IsNullOrWhiteSpace(Model.image_url)
+                 ? Url.Content("~/" + Model.image_url.Trim())
+                 : Url.Content("~/images/RuaXe.png")
+                        )"
+                 alt="@Model.ServiceName"
+                 class="service-image" />
+        </div>
+
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">Mã dịch vụ:</dt>
+                <dd class="col-sm-8">@Model.ServiceId</dd>
+
+                <dt class="col-sm-4">Tên dịch vụ:</dt>
+                <dd class="col-sm-8">@Model.ServiceName</dd>
+
+                <dt class="col-sm-4">Giá:</dt>
+                <dd class="col-sm-8">@($"{Model.Price:N0} VNĐ")</dd>
+
+                <dt class="col-sm-4">Mô tả:</dt>
+                <dd class="col-sm-8">@Model.Description</dd>
+            </dl>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn-back" asp-controller="Service" asp-action="AdminList">← Quay lại</a>
+            }
+            else
+            {
+                <a class="btn-back" asp-controller="Service" asp-action="PublicList">← Quay lại</a>
+            }
+        </div>
+    </div>
+
+    <!-- Đánh giá dịch vụ -->
+    <div class="review-summary">
+        <div class="d-flex align-items-center mb-2">
+            <span class="rating-stars">
+                @if (ViewBag.AverageRating != null)
+                {
+                    double avg = (double)ViewBag.AverageRating;
+                    for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= Math.Floor(avg))
+                        {
+                            <i class="fa fa-star"></i>
+                        }
+                        else if (i - avg < 1 && i > avg)
+                        {
+                            <i class="fa fa-star-half-o"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star-o"></i>
+                        }
+                    }
+                }
+                else
+                {
+                    <span style="color:#888; font-size:1rem;">Chưa có đánh giá</span>
+                }
+            </span>
+            <span class="ms-2" style="color:#C6862B; font-weight:600; font-size:1.1rem;">
+                @((ViewBag.AverageRating != null ? ((double)ViewBag.AverageRating).ToString("0.0") : "-") + "/5")
+            </span>
+            <span class="ms-2" style="color:#888; font-size:1rem;">(@ViewBag.ReviewCount đánh giá)</span>
+        </div>
+        <div class="review-list">
+            @if (ViewBag.Reviews != null && ((List<test_2.Models.Review>)ViewBag.Reviews).Any())
+            {
+                foreach (var r in (List<test_2.Models.Review>)ViewBag.Reviews)
+                {
+                    <div class="review-item">
+                        <span class="review-user">
+                            @{
+                                var name = r.User?.FullName;
+                                if (string.IsNullOrWhiteSpace(name))
+                                {
+                                    name = "Ẩn danh";
+                                }
+                                @name
+                            }
+                        </span>
+                        <span class="review-date">@r.CreatedAt?.ToString("dd/MM/yyyy")</span>
+                        <span class="rating-stars" style="font-size:1.1rem; margin-left:8px;">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= r.Rating)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-star-o"></i>
+                                }
+                            }
+                        </span>
+                        <div class="review-comment">@r.Comment</div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div style="color:#888;">Chưa có đánh giá nào cho dịch vụ này.</div>
+            }
+        </div>
+    </div>
+</div>
