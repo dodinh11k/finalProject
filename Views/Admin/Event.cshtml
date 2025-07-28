@@ -1,0 +1,40 @@
+@model List<test_2.Models.PromoCode>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Quản lý Voucher (Event)";
+}
+<h2>Quản lý Voucher (Event)</h2>
+<a href="@Url.Action("AddVoucher", "Admin")" class="btn btn-success mb-3">+ Thêm voucher</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Loại giảm</th>
+            <th>Giá trị</th>
+            <th>Ngày hết hạn</th>
+            <th>Mô tả</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model)
+        {
+            <tr>
+                <td>@v.Code</td>
+                <td>@(v.DiscountPercent.HasValue ? "Phần trăm" : "Cố định")</td>
+                <td>
+                    @(v.DiscountPercent.HasValue ? ($"{v.DiscountPercent}%") : (v.DiscountAmount.HasValue ? v.DiscountAmount.Value.ToString("N0") + " đ" : ""))
+                </td>
+                <td>@(v.ExpiryDate?.ToString("dd/MM/yyyy") ?? "Không giới hạn")</td>
+                <td>@v.Description</td>
+                <td>
+                    <a href="@Url.Action("EditVoucher", "Admin", new { id = v.PromoCodeId })" class="btn btn-warning btn-sm">Sửa</a>
+                    <form asp-action="DeleteVoucher" asp-controller="Admin" method="post" style="display:inline;" onsubmit="return confirm('Xác nhận xóa voucher này?');">
+                        <input type="hidden" name="id" value="@v.PromoCodeId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> 

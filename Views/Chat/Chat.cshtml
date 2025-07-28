@@ -1,0 +1,234 @@
+@model List<test_2.Models.Message>
+@{
+    var isAdmin = ViewBag.IsAdmin as bool? ?? false;
+    Layout = isAdmin ? "~/Views/Shared/_AdminLayout.cshtml" : null;
+    ViewBag.Title = "Chat";
+    var adminId = ViewBag.AdminId;
+    var userId = ViewBag.UserId;
+    var chatUser = ViewBag.ChatUser;
+    var userList = ViewBag.UserList as List<test_2.Models.User>;
+}
+@if (isAdmin)
+{
+<style>
+    .admin-chat-outer {
+        flex: 1 0 auto;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .admin-chat-container {
+        display: flex;
+        height: 70vh;
+        background: #f4f6fb;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        overflow: hidden;
+        margin-bottom: 24px;
+    }
+    .admin-chat-users {
+        width: 320px;
+        background: #23272f;
+        color: #fff;
+        overflow-y: auto;
+        border-right: 1px solid #e0e0e0;
+        padding: 0;
+    }
+    .admin-chat-users h3 {
+        padding: 18px 20px 10px 20px;
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+        background: #23272f;
+        border-bottom: 1px solid #333;
+    }
+    .admin-chat-user-item {
+        padding: 14px 20px;
+        cursor: pointer;
+        border-bottom: 1px solid #2c2f36;
+        display: flex;
+        align-items: center;
+        transition: background 0.2s;
+    }
+    .admin-chat-user-item.active, .admin-chat-user-item:hover {
+        background: #363a43;
+    }
+    .admin-chat-user-avatar {
+        width: 36px; height: 36px; border-radius: 50%; background: #888; margin-right: 12px;
+    }
+    .admin-chat-user-name {
+        font-weight: 500;
+    }
+    .admin-chat-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+    }
+    .admin-chat-header {
+        padding: 18px 24px;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 1.1rem;
+        font-weight: bold;
+        background: #f7f8fa;
+    }
+    .admin-chat-messages {
+        flex: 1;
+        padding: 24px;
+        overflow-y: auto;
+        background: #f7f8fa;
+    }
+    .admin-chat-message {
+        margin-bottom: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .admin-chat-message.right {
+        align-items: flex-end;
+    }
+    .admin-chat-bubble {
+        padding: 10px 16px;
+        border-radius: 18px;
+        background: #0084ff;
+        color: #fff;
+        max-width: 60%;
+        font-size: 1rem;
+        margin-bottom: 4px;
+        word-break: break-word;
+    }
+    .admin-chat-message.right .admin-chat-bubble {
+        background: #e4e6eb;
+        color: #23272f;
+    }
+    .admin-chat-meta {
+        font-size: 0.85rem;
+        color: #888;
+        margin-left: 6px;
+        margin-right: 6px;
+    }
+    .admin-chat-input {
+        display: flex;
+        padding: 16px 24px;
+        border-top: 1px solid #e0e0e0;
+        background: #fff;
+    }
+    .admin-chat-input input {
+        flex: 1;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 16px;
+        font-size: 1rem;
+        background: #f4f6fb;
+        margin-right: 12px;
+        outline: none;
+    }
+    .admin-chat-input button {
+        background: #0084ff;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 24px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .admin-chat-input button:hover {
+        background: #005bb5;
+    }
+</style>
+<div class="container-fluid" style="min-height:80vh;display:flex;align-items:center;justify-content:center;">
+<div class="admin-chat-outer">
+    <div class="admin-chat-container">
+        <div class="admin-chat-users">
+            <h3>Danh sách User</h3>
+            @if (userList != null)
+            {
+                foreach (var u in userList)
+                {
+                    <a href="@Url.Action("Chat", "Admin", new { userId = u.UserId })" class="admin-chat-user-item @(u.UserId == userId ? "active" : "")">
+                        <div class="admin-chat-user-avatar"></div>
+                        <div class="admin-chat-user-name">@u.FullName (@u.Username)</div>
+                    </a>
+                }
+            }
+        </div>
+        <div class="admin-chat-main">
+            <div class="admin-chat-header">
+                Chat với @((chatUser != null) ? chatUser.FullName : "User")
+            </div>
+            <div class="admin-chat-messages" id="chatBox">
+                @foreach (var msg in Model)
+                {
+                    var isRight = msg.SenderId == adminId;
+                    <div class="admin-chat-message @(isRight ? "right" : "")">
+                        <div class="admin-chat-bubble">@msg.Content</div>
+                        <div class="admin-chat-meta">@((isRight ? "Bạn" : chatUser.FullName) + " • " + msg.Timestamp.ToString("HH:mm dd/MM"))</div>
+                    </div>
+                }
+            </div>
+            <div class="admin-chat-input">
+                <input type="text" id="messageInputAdmin" placeholder="Nhập tin nhắn..." autocomplete="off" />
+                <button id="sendBtnAdmin" type="button">Gửi</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const adminId = '@adminId';
+    const userId = '@userId';
+    const chatUserName = '@(chatUser?.FullName ?? chatUser?.Username ?? "User")';
+    const connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+    const chatBox = document.getElementById("chatBox");
+    connection.on("ReceiveMessage", function (fromId, message) {
+        let isRight = fromId == adminId;
+        const now = new Date().toLocaleTimeString();
+        const bubble = `<div class='admin-chat-message ${isRight ? "right" : ""}'>` +
+            `<div class='admin-chat-bubble'>${message}</div>` +
+            `<div class='admin-chat-meta'>${isRight ? "Bạn" : chatUserName} • ${now}</div>` +
+            `</div>`;
+        chatBox.innerHTML += bubble;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+    connection.start().then(function () {
+        document.getElementById("sendBtnAdmin").addEventListener("click", sendMsg);
+        document.getElementById("messageInputAdmin").addEventListener("keypress", function(e){ if(e.key==="Enter") sendMsg(); });
+    });
+    function sendMsg() {
+        const msg = document.getElementById("messageInputAdmin").value;
+        if (!msg) return;
+        connection.invoke("SendMessage", parseInt(adminId), parseInt(userId), msg)
+            .catch(function(err) { console.error("[ADMIN CHAT] SendMessage error:", err); });
+        document.getElementById("messageInputAdmin").value = "";
+    }
+});
+</script>
+}
+else
+{
+<div style="margin-top:10px;">
+    <div id="userChatMessages" style="margin-bottom:10px;">
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var msg in Model)
+            {
+                <div style="display:flex;align-items:center;margin-bottom:6px;">
+                    <img src="/images/messenger.png" alt="Messenger" style="width:28px;height:28px;margin-right:6px;" />
+                    <span style="background:#e4e6eb;padding:8px 14px;border-radius:16px;max-width:60%;display:inline-block;">
+                        @msg.Content
+                    </span>
+                    <span style="font-size:0.85rem;color:#888;margin-left:8px;">@msg.Timestamp.ToString("HH:mm dd/MM")</span>
+                </div>
+            }
+        }
+    </div>
+    <input type="text" id="messageInput" style="width:80%;" placeholder="Nhập tin nhắn..." />
+    <button id="sendBtn" type="button">
+        <img src="/images/messenger.png" alt="Messenger" style="width:20px;height:20px;margin-bottom:2px;" /> Gửi
+    </button>
+</div>
+    }
+</div> 

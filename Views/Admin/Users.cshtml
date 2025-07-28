@@ -1,0 +1,109 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model IEnumerable<test_2.Models.User>
+@{
+    ViewBag.Title = "Quản lý User/Staff/Tech";
+}
+
+<style>
+    .badge-active {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .badge-inactive {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .role-filter {
+        max-width: 200px;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
+<h2 class="text-center mt-4">Quản lý User / Staff / Tech</h2>
+
+<div class="d-flex justify-content-between align-items-center my-4">
+    <div>
+        <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary">
+            <i class="fa fa-arrow-left"></i> Quay về Dashboard
+        </a>
+    </div>
+
+    <form method="get" class="d-flex align-items-center">
+        <label class="me-2">Lọc theo vai trò:</label>
+        <select name="role" onchange="this.form.submit()" class="form-select role-filter">
+            <option value="">Tất cả</option>
+            <option value="Admin">Admin</option>
+            <option value="Staff">Staff</option>
+            <option value="Technician">Technician</option>
+            <option value="Customer">Customer</option>
+        </select>
+    </form>
+
+    <a href="@Url.Action("CreateUser")" class="btn btn-success">
+        <i class="fa fa-plus"></i> Thêm User
+    </a>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Tên đăng nhập</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.UserId</td>
+                <td>@u.Username</td>
+                <td>@u.FullName</td>
+                <td>@u.Email</td>
+                <td>@u.Phone</td>
+                <td>@u.Role</td>
+                <td>
+                    @if (u.IsActive.HasValue && u.IsActive.Value)
+                    {
+                        <span class="badge badge-active">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-inactive">Vô hiệu</span>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("EditUser", new { id = u.UserId })" class="btn btn-sm btn-primary me-1">
+                        <i class="fa fa-pencil"></i> Sửa
+                    </a>
+                    <a href="@Url.Action("DeleteUser", new { id = u.UserId })"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Bạn có chắc muốn xóa người dùng này?');">
+                        <i class="fa fa-trash"></i> Xóa
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
